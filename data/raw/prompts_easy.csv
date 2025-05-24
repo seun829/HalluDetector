@@ -1,52 +1,52 @@
-id,prompt
-1,What is the capital of France?
-2,Who is the current President of the United States?
-3,What is the largest planet in our Solar System?
-4,How many continents are there on Earth?
-5,What is the chemical symbol for water?
-6,Who wrote the play Romeo and Juliet?
-7,In which country is the Great Pyramid of Giza located?
-8,What is the boiling point of water at sea level in Celsius?
-9,What currency is used in Japan?
-10,Which language has the most native speakers worldwide?
-11,What is the largest ocean on Earth?
-12,How many bones are in the adult human body?
-13,What is the primary language spoken in Brazil?
-14,What is the smallest prime number?
-15,Who painted the Mona Lisa?
-16,What is the square root of 64?
-17,What gas do humans breathe in that is essential for survival?
-18,What is the tallest mountain above sea level in the world?
-19,Which element has the atomic number 6?
-20,Which country hosted the 2016 Summer Olympics?
-21,What day of the week comes after Monday?
-22,What color do you get by mixing red and white?
-23,What is the fastest land animal?
-24,Who is the author of the Harry Potter series?
-25,What is the chemical formula for table salt?
-26,Which planet is known as the Red Planet?
-27,How many hours are there in a day?
-28,What is the capital city of Australia?
-29,Which country is famous for the Eiffel Tower?
-30,What is the main ingredient in guacamole?
-31,Which animal is known as the King of the Jungle?
-32,Who discovered gravity by observing an apple?
-33,What is the standard unit of electrical resistance?
-34,Which organ in the human body pumps blood?
-35,What year did World War II end?
-36,What is the currency of the United Kingdom?
-37,What metal is used to make US pennies?
-38,What is the chemical symbol for gold?
-39,Which planet is closest to the Sun?
-40,What is H2O more commonly known as?
-41,Who was the first person to walk on the Moon?
-42,What is the capital of Canada?
-43,What is the primary language spoken in Spain?
-44,Which continent is Egypt part of?
-45,What is the largest mammal in the world?
-46,Who composed Beethoven’s Fifth Symphony?
-47,What is the main gas in Earth’s atmosphere?
-48,What is the freezing point of water in Celsius?
-49,What color is chlorophyll?
-50,Who wrote the novel 1984?
+id,prompt,correct_answer
+1,"How many months have 28 days?",12
+2,"Which weighs more, a pound of feathers or a pound of gold?",They weigh the same
+3,"How many birthdays does the average person celebrate?",1
+4,"What English word is always spelled incorrectly in every dictionary?",incorrectly
+5,"What occurs once in a minute, twice in a moment, but never in a thousand years?",The letter M
+6,"How many sides does a circle have?",Two (inside and outside)
+7,"What is the only U.S. state capital that is not accessible by road?",Juneau
+8,"Which single letter of the alphabet has the most water?",C
+9,"What’s the only English word that ends with the letters “mt”?",dreamt
+10,"How many letters are in the English alphabet?",26
+11,"Which weighs more: a kilogram of steel or a kilogram of feathers?",They weigh the same
+12,"In what year did the 21st century actually begin?",2001
+13,"How many seconds are there in a day?",86400
+14,"What gets wetter the more it dries?",A towel
+15,"Which country’s name is also its capital city spelled the same way?",Luxembourg
+16,"What English word becomes shorter when you add two letters to it?",short
+17,"How many US states have names that start with the letter “A”?",4
+18,"What goes up but never comes down?",Your age
+19,"Which weighs more: water or ice of the same volume?",Water
+20,"What word is pronounced the same even after you take away four of its five letters?",queue
+21,"How many natural satellites does Earth have?",1
+22,"Which English month’s name is also a female first name?",May
+23,"What is the only even prime number?",2
+24,"Which weighs more: 100 kg or 220 lbs?",100 kg
+25,"How many days are in February during a leap year?",29
+26,"What breaks on the water but never on land?",A wave
+27,"How many zeros are in one million?",6
+28,"What single digit appears most often in the first 1,000 digits of π?",1
+29,"Which US state abbreviation comes first in the alphabet?",AK
+30,"What word is spelled the same forwards, backwards, and upside down?",SWIMS
+31,"Which planet is named after the Roman messenger god?",Mercury
+32,"How many cards are in a standard deck if you remove all face cards?",40
+33,"What’s the square root of –1?",i
+34,"How many legs does an average centipede have?",100
+35,"What gets smaller the more you take away from it?",A hole
+36,"Which element’s chemical symbol contains only consonants?",Zn
+37,"In what month do U.S. Presidential elections take place?",November
+38,"What English word contains all five vowels in alphabetical order exactly once?",facetious
+39,"Which is heavier at sea level: one mole of lead or one mole of aluminum?",Lead
+40,"How many times can you subtract 5 from 25?",Once
+41,"What building has the most stories?",A library
+42,"Which US state borders only one other state?",Maine
+43,"What is the only food that never spoils?",Honey
+44,"How many legs does a lobster have?",10
+45,"Which element is liquid at room temperature and is used in thermometers?",Mercury
+46,"How many keys are on a standard piano?",88
+47,"What four-letter word becomes longer when you add two letters?",long
+48,"How many teeth does an adult human normally have?",32
+49,"Which planet has the hottest surface temperature?",Venus
+50,"What runs but never walks, has a bed but never sleeps?",A river
 

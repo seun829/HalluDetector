@@ -1,37 +1,67 @@
-import pandas as pd
+"""
+Read prompts CSV, generate model responses (HF or OpenAI) and save to CSV.
+"""
+import argparse
 import os
+import logging
+import pandas as pd
+from tqdm import tqdm
 from hallu_detector.generate import simple_generate_hf, simple_generate_openai
 
-# SETTINGS
-USE_OPENAI = False  # Set to True if using OpenAI API
-MODEL_NAME = "gpt2"  # Or "gpt-3.5-turbo" if using OpenAI
-INPUT_FILE = "data/raw/prompts_easy.csv"
-INPUT_FILE2 = "data/raw/prompts_hard.csv"
-OUTPUT_FILE = "data/raw/responses_raw_easy.csv"
-OUTPUT_FILE2 = "data/raw/responses_raw_hard.csv"
+def setup_logging():
+    logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO
+    )
 
 
-# Load prompts from CSV
-df = pd.read_csv(INPUT_FILE)
-df2 = pd.read_csv(INPUT_FILE2)
-prompt_list = list(df[['id', 'prompt']].itertuples(index=False, name=None))
-prompt_list2 = list(df2[['id', 'prompt']].itertuples(index=False, name=None))
+def batch_generate(
+    df: pd.DataFrame, model: str, use_openai: bool
+) -> pd.DataFrame:
+    prompt_list = list(df[['id', 'prompt', 'correct_answer']].itertuples(index=False, name=None))
+    if use_openai:
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            logging.error("OPENAI_API_KEY not set. Exiting.")
+            raise EnvironmentError("Missing OpenAI API key.")
+        gen_fn = simple_generate_openai
+    else:
+        gen_fn = simple_generate_hf
 
-# Generate responses
-if USE_OPENAI:
-    os.environ["OPENAI_API_KEY"] = "your_api_key_here"  # or export it beforehand
-    responses = simple_generate_openai(prompt_list, model_name=MODEL_NAME)
-    responses2 = simple_generate_openai(prompt_list2, model_name = MODEL_NAME)
-else:
-    responses = simple_generate_hf(prompt_list, model_name=MODEL_NAME)
-    responses2 = simple_generate_hf(prompt_list2, model_name=MODEL_NAME)
+    results = []
+    for pid, prompt, correct_answer in tqdm(prompt_list, desc="Generating responses"):
+        try:
+            out = gen_fn([(pid, prompt)], model_name=model)[0]
+            is_correct = correct_answer.lower() in out[2].lower()  # Simple correctness check
+            results.append((pid, prompt, out[2], correct_answer, is_correct))
+        except Exception as e:
+            logging.warning(f"Failed to generate for prompt {pid}: {e}")
+            results.append((pid, prompt, "", correct_answer, False))
+    return pd.DataFrame(results, columns=["id", "prompt", "model_response", "correct_answer", "is_correct"])
 
-# Save responses to new CSV
-df_out = pd.DataFrame(responses, columns=["id", "prompt", "model_response"])
-df_out2 = pd.DataFrame(responses2, columns=["id", "prompt", "model_response"])
 
-df_out.to_csv(OUTPUT_FILE, index=False)
-df_out.to_csv(OUTPUT_FILE2, index = False)
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate model responses from prompts"
+    )
+    parser.add_argument("in_csv", help="Input prompts CSV (id,prompt)")
+    parser.add_argument("out_csv", help="Output responses CSV")
+    parser.add_argument(
+        "--model", default="gpt2", help="Model name (HF or OpenAI)"
+    )
+    parser.add_argument(
+        "--use-openai", action='store_true', help="Toggle OpenAI API"
+    )
+    args = parser.parse_args()
 
-print(f"Saved {len(df_out)} responses to {OUTPUT_FILE}")
-print(f"Saved {len(df_out)} responses to {OUTPUT_FILE2}")
+    setup_logging()
+    logging.info("Loading prompts...")
+    df = pd.read_csv(args.in_csv)
+
+    logging.info(f"Generating with model={args.model}, openai={args.use_openai}")
+    out_df = batch_generate(df, args.model, args.use_openai)
+    out_df.to_csv(args.out_csv, index=False)
+    logging.info(f"Saved {len(out_df)} responses to {args.out_csv}")
+
+
+if __name__ == '__main__':
+    main()

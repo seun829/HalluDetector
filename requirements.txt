@@ -1,8 +1,13 @@
 transformers
 torch
+torchvision
+torchaudio
 pandas
 numpy
 matplotlib
+seaborn
 scikit-learn
 jupyter
 openai
+tqdm
+pyyaml

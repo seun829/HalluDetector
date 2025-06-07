@@ -1,6 +1,5 @@
-# src/hallu_detector/evaluate.py
 """
-Script to compute hallucination metrics from labeled data.
+Script to compute hallucination metrics from labeled response files.
 """
 import argparse
 import logging
@@ -9,54 +8,41 @@ import pandas as pd
 
 def compute_metrics(labels):
     """
-    Given a list of labels like ['correct', 'hallucinated', 'correct'],
-    return a dictionary with hallucination rate.
+    Compute the hallucination rate.
     """
     total = len(labels)
     if total == 0:
         return {"hallucination_rate": None}
-    
     hallu_count = sum(1 for label in labels if label == "hallucinated")
     return {"hallucination_rate": hallu_count / total}
 
-def setup_logging():
-    logging.basicConfig(
-        format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO
-    )
-
+def process_files(response_files, metric_files):
+    """
+    Process each response file, compute metrics, and save them to JSON.
+    """
+    for response_file, metric_file in zip(response_files, metric_files):
+        logging.info(f"Processing {response_file}...")
+        df = pd.read_csv(response_file)
+        if "label" not in df.columns:
+            logging.error(f"Missing 'label' column in {response_file}. Skipping.")
+            continue
+        metrics = compute_metrics(df["label"].tolist())
+        with open(metric_file, "w") as f:
+            json.dump(metrics, f, indent=2)
+        logging.info(f"Metrics saved to {metric_file}.")
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate hallucination detection performance"
-    )
-    parser.add_argument(
-        "--input", required=True,
-        help="Input CSV with 'label' column"
-    )
-    parser.add_argument(
-        "--output", required=True,
-        help="Output JSON metrics file"
-    )
+    parser = argparse.ArgumentParser(description="Compute hallucination metrics for response files.")
+    parser.add_argument("--response-files", nargs='+', required=True, help="List of input response CSV files.")
+    parser.add_argument("--metric-files", nargs='+', required=True, help="List of output JSON metric files.")
     args = parser.parse_args()
 
-    setup_logging()
-    logging.info(f"Loading labeled data from {args.input}...")
-    df = pd.read_csv(args.input)
-
-    if 'label' not in df.columns:
-        logging.error("Missing 'label' column in input CSV.")
+    if len(args.response_files) != len(args.metric_files):
+        logging.error("Number of response files and metric files must match.")
         return
 
-    logging.info("Computing metrics...")
-    metrics = compute_metrics(df['label'].tolist())
-    logging.info(f"Metrics: {metrics}")
+    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    process_files(args.response_files, args.metric_files)
 
-    with open(args.output, 'w') as f:
-        json.dump(metrics, f, indent=2)
-    logging.info(f"Saved metrics to {args.output}")
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-
-

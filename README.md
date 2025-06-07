@@ -17,6 +17,8 @@ Collect and fact-check the AI responses.
 
 Analyze hallucination frequency, severity, and topic sensitivity.
 
+Use a model using Pytorch to graph patterns in Jupityer Notebook. 
+
 ## Future Work:
 Automating hallucination detection using uncertainty estimation or output features.
 

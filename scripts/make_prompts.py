@@ -1,12 +1,18 @@
+#!/usr/bin/env python
 import argparse
 import pandas as pd
 import yaml
 import logging
 import os
+import re
 
 # External dependencies
 import wikipedia  # pip install wikipedia
-import openai     # pip install openai
+from openai import OpenAI  # pip install openai
+
+# If you’re using python-dotenv, uncomment these lines:
+# from dotenv import load_dotenv
+# load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -16,8 +22,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     logging.error("OPENAI_API_KEY not set. Exiting...")
     exit(1)
-else:
-    openai.api_key = OPENAI_API_KEY
+
+# Instantiate v1.x client
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def load_config(config_path: str) -> dict:
@@ -38,25 +45,26 @@ def generate_questions_for_seed(seed: str, count: int) -> list:
     Ask OpenAI to generate `count` tricky, weirdly worded questions about `seed`.
     Expects a numbered list in the response.
     """
-    system_msg = ("You are a creative prompt generator. "
-                  "Generate exactly {n} unique, tricky, weirdly worded questions that ask about '{seed}'."
-                  .format(n=count, seed=seed))
+    system_msg = (
+        f"You are a creative prompt generator. "
+        f"Generate exactly {count} unique, tricky, weirdly worded questions that ask about '{seed}'."
+    )
     try:
-        resp = openai.ChatCompletion.create(
+        # Use new v1.x chat completion endpoint
+        resp = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": system_msg}],
             temperature=0.8,
             max_tokens=150
         )
         content = resp.choices[0].message.content.strip()
-        # Split by lines and strip numbering
         questions = []
         for line in content.splitlines():
             line = line.strip()
             if not line:
                 continue
-            # remove leading numbering e.g. '1.', '1)'
-            q = line.lstrip('0123456789. )')
+            # Strip leading numbering like '1. ' or '1)'
+            q = re.sub(r"^\d+[\.)]\s*", "", line)
             questions.append(q)
         return questions
     except Exception as e:
@@ -69,12 +77,10 @@ def determine_correct_answer(question: str, seed: str) -> str:
     Use Wikipedia to find a concise answer to `question`, fallback to Unknown.
     """
     try:
-        # search by question, fallback to seed
         results = wikipedia.search(question) or wikipedia.search(seed)
         if not results:
             return "Unknown"
         page = wikipedia.page(results[0])
-        # take first sentence
         ans = page.summary.split('. ')[0]
         return ans + ('.' if not ans.endswith('.') else '')
     except Exception:
@@ -100,15 +106,20 @@ def main():
     parser = argparse.ArgumentParser(
         description="Generate 50 hallucination-detection prompts without templates; questions are invented by the model."
     )
-    parser.add_argument("--config", required=True, help="YAML with 'seeds' and 'questions_per_seed'.")
-    parser.add_argument("--out-csv", default="data/raw/prompts_auto-generated.csv",
-                        help="Output CSV path")
+    parser.add_argument(
+        "--config", required=True,
+        help="YAML with 'seeds' and 'questions_per_seed'."
+    )
+    parser.add_argument(
+        "--out-csv", default="data/raw/prompts_auto-generated.csv",
+        help="Output CSV path"
+    )
     args = parser.parse_args()
 
     config = load_config(args.config)
     df = build_prompts(config['seeds'], config['questions_per_seed'])
     os.makedirs(os.path.dirname(args.out_csv), exist_ok=True)
-    df.to_csv(args.out_csv, index=False)
+    df.to_csv(args.out_csv, index=False, encoding='utf-8')
     logging.info(f"Wrote {len(df)} prompts to {args.out_csv}")
 
 

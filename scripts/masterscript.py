@@ -18,7 +18,7 @@ def main():
     # Step 1: Auto-generate prompts using make_prompts.py
     # The config file may not exist; make_prompts.py will then use a default config.
     auto_prompts_config = "config/prompts_config.yaml"  # This file need not exist.
-    auto_prompts_out = "data/processed/prompts_auto-generated.csv"
+    auto_prompts_out = "data/raw/prompts_auto-generated.csv"
     run_step("Generate auto prompts", 
              ["python", "scripts/make_prompts.py", 
               "--config", auto_prompts_config, 

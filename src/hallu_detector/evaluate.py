@@ -1,48 +1,62 @@
-"""
-Script to compute hallucination metrics from labeled response files.
-"""
 import argparse
-import logging
 import json
+import logging
 import pandas as pd
 
-def compute_metrics(labels):
-    """
-    Compute the hallucination rate.
-    """
-    total = len(labels)
-    if total == 0:
-        return {"hallucination_rate": None}
-    hallu_count = sum(1 for label in labels if label == "hallucinated")
-    return {"hallucination_rate": hallu_count / total}
+"""
+Script to compute hallucination detection metrics from labeled responses.
+"""
 
-def process_files(response_files, metric_files):
+def compute_metrics(input_csv: str) -> dict:
     """
-    Process each response file, compute metrics, and save them to JSON.
+    Reads a CSV with a 'label' column ('hallucinated' or 'correct') and computes:
+    - total responses
+    - number hallucinated
+    - number correct
+    - hallucination rate
     """
-    for response_file, metric_file in zip(response_files, metric_files):
-        logging.info(f"Processing {response_file}...")
-        df = pd.read_csv(response_file)
-        if "label" not in df.columns:
-            logging.error(f"Missing 'label' column in {response_file}. Skipping.")
-            continue
-        metrics = compute_metrics(df["label"].tolist())
-        with open(metric_file, "w") as f:
-            json.dump(metrics, f, indent=2)
-        logging.info(f"Metrics saved to {metric_file}.")
+    df = pd.read_csv(input_csv)
+    total = len(df)
+    hallucinated = int((df['label'] == 'hallucinated').sum())
+    correct = total - hallucinated
+    rate = hallucinated / total if total > 0 else 0.0
+
+    return {
+        'total_responses': total,
+        'hallucinated': hallucinated,
+        'correct': correct,
+        'hallucination_rate': rate
+    }
+
 
 def main():
-    parser = argparse.ArgumentParser(description="Compute hallucination metrics for response files.")
-    parser.add_argument("--response-files", nargs='+', required=True, help="List of input response CSV files.")
-    parser.add_argument("--metric-files", nargs='+', required=True, help="List of output JSON metric files.")
+    parser = argparse.ArgumentParser(
+        description="Compute and save hallucination detection metrics."
+    )
+    parser.add_argument(
+        '--input', '-i', required=True,
+        help="Path to labeled CSV with a 'label' column."
+    )
+    parser.add_argument(
+        '--output', '-o', required=True,
+        help="Path to output JSON file for metrics."
+    )
     args = parser.parse_args()
 
-    if len(args.response_files) != len(args.metric_files):
-        logging.error("Number of response files and metric files must match.")
-        return
+    logging.basicConfig(
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        level=logging.INFO
+    )
 
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
-    process_files(args.response_files, args.metric_files)
+    metrics = compute_metrics(args.input)
 
-if __name__ == "__main__":
+    # Write metrics to JSON
+    with open(args.output, 'w') as f:
+        json.dump(metrics, f, indent=4)
+    logging.info(f"Saved metrics to {args.output}")
+    # Also print to stdout
+    print(json.dumps(metrics, indent=4))
+
+
+if __name__ == '__main__':
     main()

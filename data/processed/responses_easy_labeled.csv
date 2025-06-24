@@ -1,51 +1,51 @@
-id,prompt,model_response,correct_answer
-1,How many months have 28 days?,28 days.,12
-2,"Which weighs more, a pound of feathers or a pound of gold?",The answer to the question is the same as the answer to the question.,They weigh the same
-3,How many birthdays does the average person celebrate?,The average person celebrates every day.,1
-4,What English word is always spelled incorrectly in every dictionary?,"The English word ""English"" is always spelled incorrectly.",incorrectly
-5,"What occurs once in a minute, twice in a moment, but never in a thousand years?",The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer,The letter M
-6,How many sides does a circle have?,The circle has a total of 6 sides.,Two (inside and outside)
-7,What is the only U.S. state capital that is not accessible by road?,The U.S. capital of New York City is the New York State capital.,Juneau
-8,Which single letter of the alphabet has the most water?,"The letters A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,",C
-9,What’s the only English word that ends with the letters “mt”?,"“mt” is the English word for ""to be.""",dreamt
-10,How many letters are in the English alphabet?,"The number of letters in the English alphabet is 1,000.",26
-11,Which weighs more: a kilogram of steel or a kilogram of feathers?,The kilogram of steel is the weight of the feathers. The feathers are the weight of the feathers.,They weigh the same
-12,In what year did the 21st century actually begin?,The year of the first moon landing.,2001
-13,How many seconds are there in a day?,The average time is about 1.5 seconds.,86400
-14,What gets wetter the more it dries?,"The more wet the water, the more it dries.",A towel
-15,Which country’s name is also its capital city spelled the same way?,The United States.,Luxembourg
-16,What English word becomes shorter when you add two letters to it?,"The answer is: ""English words are shorter when you add two letters to them.""",short
-17,How many US states have names that start with the letter “A”?,"The US has over 1,000 different names for the letter “A”.",4
-18,What goes up but never comes down?,The answer is always the same.,Your age
-19,Which weighs more: water or ice of the same volume?,Water is the most important factor in determining the weight of a given object. Ice is the most important factor in determining the weight of a given object.,Water
-20,What word is pronounced the same even after you take away four of its five letters?,"The word ""t"" is pronounced the same as the word ""t"" in the English language.",queue
-21,How many natural satellites does Earth have?,"The Earth has about 1,000 satellites.",1
-22,Which English month’s name is also a female first name?,The following question is a question that is not a question.,May
-23,What is the only even prime number?,The only even prime number is 1.,2
-24,Which weighs more: 100 kg or 220 lbs?,The weight of a person is determined by the weight of the body.,100 kg
-25,How many days are in February during a leap year?,The average leap year is 2.5 years.,29
-26,What breaks on the water but never on land?,The water is not broken.,A wave
-27,How many zeros are in one million?,One million.,6
-28,"What single digit appears most often in the first 1,000 digits of π?","The first 1,000 digits of π are the most common.",1
-29,Which US state abbreviation comes first in the alphabet?,The US state abbreviation is the same as the US state abbreviation.,AK
-30,"What word is spelled the same forwards, backwards, and upside down?","The word ""forward"" is spelled backwards.",SWIMS
-31,Which planet is named after the Roman messenger god?,"The Roman messenger god is named after the Roman god, the Roman god of the Roman Empire.",Mercury
-32,How many cards are in a standard deck if you remove all face cards?,The number of cards in a standard deck is determined by the number of cards in the deck.,40
-33,What’s the square root of –1?,The square root of –1 is the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root,i
-34,How many legs does an average centipede have?,The average centipede has about 1.5 legs.,100
-35,What gets smaller the more you take away from it?,"The more you take away from it, the more you will be able to understand it.",A hole
-36,Which element’s chemical symbol contains only consonants?,The chemical symbol is the same as the chemical symbol in the dictionary.,Zn
-37,In what month do U.S. Presidential elections take place?,November.,November
-38,What English word contains all five vowels in alphabetical order exactly once?,"The word ""English"" is a combination of the words ""English"" and ""English"" in the English alphabet.",facetious
-39,Which is heavier at sea level: one mole of lead or one mole of aluminum?,The answer is the same as the answer to the question.,Lead
-40,How many times can you subtract 5 from 25?,You can subtract 5 from 25 by adding 5 to 25.,Once
-41,What building has the most stories?,The most stories are the ones that are most important to you.,A library
-42,Which US state borders only one other state?,The US is the only country in the world that does not have a border with Mexico.,Maine
-43,What is the only food that never spoils?,The only food that never spoils is the chicken.,Honey
-44,How many legs does a lobster have?,It is a very small lobster.,10
-45,Which element is liquid at room temperature and is used in thermometers?,The liquid at room temperature is the liquid that is used in thermometers.,Mercury
-46,How many keys are on a standard piano?,The number of keys on a standard piano is 1.,88
-47,What four-letter word becomes longer when you add two letters?,The answer is:,long
-48,How many teeth does an adult human normally have?,"The average adult human has about 1,000 teeth.",32
-49,Which planet has the hottest surface temperature?,Earth.,Venus
-50,"What runs but never walks, has a bed but never sleeps?",The answer is that the answer is not the same as the answer.,A river
+id,prompt,model_response,correct_answer,label
+1,How many months have 28 days?,28 days.,12,hallucinated
+2,"Which weighs more, a pound of feathers or a pound of gold?",The answer to the question is the same as the answer to the question.,They weigh the same,hallucinated
+3,How many birthdays does the average person celebrate?,The average person celebrates every day.,1,hallucinated
+4,What English word is always spelled incorrectly in every dictionary?,"The English word ""English"" is always spelled incorrectly.",incorrectly,correct
+5,"What occurs once in a minute, twice in a moment, but never in a thousand years?",The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer is: The answer,The letter M,hallucinated
+6,How many sides does a circle have?,The circle has a total of 6 sides.,Two (inside and outside),hallucinated
+7,What is the only U.S. state capital that is not accessible by road?,The U.S. capital of New York City is the New York State capital.,Juneau,hallucinated
+8,Which single letter of the alphabet has the most water?,"The letters A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,",C,correct
+9,What’s the only English word that ends with the letters “mt”?,"“mt” is the English word for ""to be.""",dreamt,hallucinated
+10,How many letters are in the English alphabet?,"The number of letters in the English alphabet is 1,000.",26,hallucinated
+11,Which weighs more: a kilogram of steel or a kilogram of feathers?,The kilogram of steel is the weight of the feathers. The feathers are the weight of the feathers.,They weigh the same,hallucinated
+12,In what year did the 21st century actually begin?,The year of the first moon landing.,2001,hallucinated
+13,How many seconds are there in a day?,The average time is about 1.5 seconds.,86400,hallucinated
+14,What gets wetter the more it dries?,"The more wet the water, the more it dries.",A towel,hallucinated
+15,Which country’s name is also its capital city spelled the same way?,The United States.,Luxembourg,hallucinated
+16,What English word becomes shorter when you add two letters to it?,"The answer is: ""English words are shorter when you add two letters to them.""",short,correct
+17,How many US states have names that start with the letter “A”?,"The US has over 1,000 different names for the letter “A”.",4,hallucinated
+18,What goes up but never comes down?,The answer is always the same.,Your age,hallucinated
+19,Which weighs more: water or ice of the same volume?,Water is the most important factor in determining the weight of a given object. Ice is the most important factor in determining the weight of a given object.,Water,correct
+20,What word is pronounced the same even after you take away four of its five letters?,"The word ""t"" is pronounced the same as the word ""t"" in the English language.",queue,hallucinated
+21,How many natural satellites does Earth have?,"The Earth has about 1,000 satellites.",1,correct
+22,Which English month’s name is also a female first name?,The following question is a question that is not a question.,May,hallucinated
+23,What is the only even prime number?,The only even prime number is 1.,2,hallucinated
+24,Which weighs more: 100 kg or 220 lbs?,The weight of a person is determined by the weight of the body.,100 kg,hallucinated
+25,How many days are in February during a leap year?,The average leap year is 2.5 years.,29,hallucinated
+26,What breaks on the water but never on land?,The water is not broken.,A wave,hallucinated
+27,How many zeros are in one million?,One million.,6,hallucinated
+28,"What single digit appears most often in the first 1,000 digits of π?","The first 1,000 digits of π are the most common.",1,correct
+29,Which US state abbreviation comes first in the alphabet?,The US state abbreviation is the same as the US state abbreviation.,AK,hallucinated
+30,"What word is spelled the same forwards, backwards, and upside down?","The word ""forward"" is spelled backwards.",SWIMS,hallucinated
+31,Which planet is named after the Roman messenger god?,"The Roman messenger god is named after the Roman god, the Roman god of the Roman Empire.",Mercury,hallucinated
+32,How many cards are in a standard deck if you remove all face cards?,The number of cards in a standard deck is determined by the number of cards in the deck.,40,hallucinated
+33,What’s the square root of –1?,The square root of –1 is the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root of the square root,i,correct
+34,How many legs does an average centipede have?,The average centipede has about 1.5 legs.,100,hallucinated
+35,What gets smaller the more you take away from it?,"The more you take away from it, the more you will be able to understand it.",A hole,hallucinated
+36,Which element’s chemical symbol contains only consonants?,The chemical symbol is the same as the chemical symbol in the dictionary.,Zn,hallucinated
+37,In what month do U.S. Presidential elections take place?,November.,November,correct
+38,What English word contains all five vowels in alphabetical order exactly once?,"The word ""English"" is a combination of the words ""English"" and ""English"" in the English alphabet.",facetious,hallucinated
+39,Which is heavier at sea level: one mole of lead or one mole of aluminum?,The answer is the same as the answer to the question.,Lead,hallucinated
+40,How many times can you subtract 5 from 25?,You can subtract 5 from 25 by adding 5 to 25.,Once,hallucinated
+41,What building has the most stories?,The most stories are the ones that are most important to you.,A library,hallucinated
+42,Which US state borders only one other state?,The US is the only country in the world that does not have a border with Mexico.,Maine,hallucinated
+43,What is the only food that never spoils?,The only food that never spoils is the chicken.,Honey,hallucinated
+44,How many legs does a lobster have?,It is a very small lobster.,10,hallucinated
+45,Which element is liquid at room temperature and is used in thermometers?,The liquid at room temperature is the liquid that is used in thermometers.,Mercury,hallucinated
+46,How many keys are on a standard piano?,The number of keys on a standard piano is 1.,88,hallucinated
+47,What four-letter word becomes longer when you add two letters?,The answer is:,long,hallucinated
+48,How many teeth does an adult human normally have?,"The average adult human has about 1,000 teeth.",32,hallucinated
+49,Which planet has the hottest surface temperature?,Earth.,Venus,hallucinated
+50,"What runs but never walks, has a bed but never sleeps?",The answer is that the answer is not the same as the answer.,A river,hallucinated

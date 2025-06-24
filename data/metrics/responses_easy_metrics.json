@@ -1,0 +1,6 @@
+{
+    "total_responses": 50,
+    "hallucinated": 42,
+    "correct": 8,
+    "hallucination_rate": 0.84
+}

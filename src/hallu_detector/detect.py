@@ -1,61 +1,71 @@
-"""
-Script to detect hallucinations in model responses.
-"""
 import argparse
 import logging
 import pandas as pd
+import string
 from tqdm import tqdm
+
+"""
+Script to detect hallucinations in model responses.
+"""
+
+def normalize_text(text):
+    """
+    Normalize text for comparison: lowercase, remove punctuation, collapse whitespace.
+    """
+    if text is None:
+        return ""
+    text = text.lower()
+    # Remove punctuation
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    # Collapse multiple spaces
+    text = ' '.join(text.split())
+    return text
+
 
 def is_hallucinated(answer, correct_answer):
     """
-    Check if the model's answer matches the correct answer (roughly).
-    Ignores case and extra punctuation.
+    Determine if the model's answer is a hallucination compared to the correct answer.
+    Returns True if hallucinated (i.e., the answer does not match the correct answer).
     """
-    if not answer and correct_answer:
-        return True  # empty answer = hallucination
+    ans = normalize_text(answer)
+    corr = normalize_text(correct_answer)
 
-    if not correct_answer:
-        return False  # no ground truth = can't call it hallucinated
-
-    answer = answer.strip().lower()
-    correct_answer = correct_answer.strip().lower()
-
-    return correct_answer not in answer
-
-def setup_logging():
-    logging.basicConfig(
-        format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO
-    )
+    # If there is no ground truth, assume not hallucinated
+    if not corr:
+        return False
+    # Empty answer when a correct answer exists => hallucination
+    if not ans:
+        return True
+    # If the correct answer is contained in the answer, or vice versa, consider it correct
+    if corr in ans or ans in corr:
+        return False
+    # Otherwise, mark as hallucinated
+    return True
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Detect hallucinations in model responses"
-    )
+    parser = argparse.ArgumentParser(description="Label model responses as hallucinated or correct.")
     parser.add_argument(
         "--input", required=True,
-        help="Input CSV with columns id,prompt,model_response,correct_answer"
+        help="Path to input CSV with at least 'model_response' and 'correct_answer' columns."
     )
     parser.add_argument(
         "--output", required=True,
-        help="Output CSV path for labeled results"
+        help="Path to output CSV where labeled responses will be saved."
     )
     args = parser.parse_args()
 
-    setup_logging()
-    logging.info(f"Loading responses from {args.input}...")
+    logging.basicConfig(
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        level=logging.INFO
+    )
+
     df = pd.read_csv(args.input)
-
-    if 'correct_answer' not in df.columns:
-        logging.error("Missing 'correct_answer' column in input CSV.")
-        return
-
-    logging.info("Detecting hallucinations...")
     labels = []
-    for _, row in tqdm(df.iterrows(), total=len(df), desc="Detecting"):
-        label = 'hallucinated' if is_hallucinated(
-            row['model_response'], row['correct_answer']
-        ) else 'correct'
+    for _, row in tqdm(df.iterrows(), total=len(df), desc="Labeling responses"):
+        resp = row.get('model_response', '')
+        truth = row.get('correct_answer', '')
+        label = 'hallucinated' if is_hallucinated(resp, truth) else 'correct'
         labels.append(label)
 
     df['label'] = labels
@@ -65,5 +75,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

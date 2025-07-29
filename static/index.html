@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AI Hallucination Toolkit</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Hallucination Toolkit</h1>
+
+    <div class="card">
+      <h2>1) Detect with Ground Truth</h2>
+      <textarea id="detect-response" placeholder="Model Response…"></textarea>
+      <textarea id="detect-correct"  placeholder="Correct Answer…"></textarea>
+      <button id="detect-btn">Detect</button>
+      <div id="detect-result" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>2) Predict from Prompt</h2>
+      <textarea id="predict-prompt" placeholder="Enter prompt/question…"></textarea>
+      <button id="predict-btn">Predict</button>
+      <div id="predict-result" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>3) Full Pipeline</h2>
+      <button id="run-pipeline-btn">Run Entire Pipeline</button>
+      <pre id="pipeline-logs"></pre>
+      <div id="pipeline-graphs" class="graphs"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

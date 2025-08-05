@@ -1,40 +1,161 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --primary: #0066FF;
+  --primary-hover: #0052CC;
+  --bg: #F0F2F5;
+  --card-bg: #FFFFFF;
+  --text: #333333;
+  --muted: #6E6E6E;
+}
+
+/* Global Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base Styles */
 body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f5f6fa; color: #333;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
 }
+
+/* Layout Container */
 .container {
-  max-width: 900px; margin: 40px auto; padding: 0 20px;
+  max-width: 960px;
+  margin: 60px auto;
+  padding: 0 16px;
 }
+
+/* Heading Styles */
 h1 {
-  text-align: center; margin-bottom: 30px; font-size: 2.4em;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.75rem;
+  font-weight: 700;
 }
+
+/* Card Component */
 .card {
-  background: #fff; padding: 20px; border-radius: 8px;
-  margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 .card h2 {
-  margin-bottom: 15px; font-size: 1.4em; color: #2d3436;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text);
+  font-weight: 600;
 }
+
+/* Text Inputs */
 textarea {
-  width: 100%; padding: 12px; border: 1px solid #ccc;
-  border-radius: 4px; margin-bottom: 12px; resize: vertical;
-  font-size: 1em; min-height: 80px;
+  width: 100%;
+  min-height: 100px;
+  padding: 16px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 16px;
+  background: #FAFAFA;
+  color: var(--text);
 }
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #FFF;
+}
+
+/* Select Inputs */
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  background: #FFF;
+  color: var(--text);
+}
+
+/* Buttons */
 button {
-  background: #0984e3; color: #fff; border: none;
-  border-radius: 4px; padding: 10px 20px;
-  cursor: pointer; font-size: 1em;
-  transition: background 0.2s ease;
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFF;
+  background: var(--primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-bottom: 16px;
 }
-button:hover { background: #74b9ff; }
+button:hover {
+  background: var(--primary-hover);
+}
+button:active {
+  transform: scale(0.98);
+}
+
+/* Result Text */
 .result {
-  margin-top: 10px; font-weight: bold; font-size: 1.1em;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
 }
+
+/* Preformatted Output */
 pre {
-  background: #dfe6e9; padding: 15px; border-radius: 4px;
-  max-height: 250px; overflow-y: auto; font-size: 0.9em;
+  width: 100%;
+  background: #F3F4F6;
+  padding: 20px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  overflow-x: auto;
+  color: var(--text);
+  margin-top: 12px;
+}
+
+/* Graph Images Grid */
+.graphs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
 }
 .graphs img {
-  max-width: 100%; margin-top: 15px; border-radius: 4px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+.graphs img:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 32px;
+  }
 }

@@ -5,8 +5,15 @@ import argparse
 import logging
 import pandas as pd
 
-# allow importing your generate logic
-sys.path.append(os.path.abspath(os.path.join(__file__, "../src")))
+# — Fix import path for hallu_detector —
+SCRIPT_DIR = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+SRC_DIR = os.path.join(PROJECT_ROOT, 'src')
+
+# Prefer src directory (if using src/ layout), then project root
+sys.path.insert(0, SRC_DIR)
+sys.path.insert(0, PROJECT_ROOT)
+
 from hallu_detector.generate import simple_generate_hf, simple_generate_openai
 
 logging.basicConfig(
@@ -31,9 +38,22 @@ def clean_response(resp: str, prompt: str) -> str:
 def process_files(prompt_files, response_files, model, use_openai):
     for pth_in, pth_out in zip(prompt_files, response_files):
         logging.info(f"Reading prompts from {pth_in}")
-        df_prompts = pd.read_csv(pth_in)
+        # Ensure the prompt file exists
+        if not os.path.exists(pth_in):
+            logging.error(f"Prompt file not found: {pth_in}")
+            continue
+        # Attempt to read the CSV, catching common errors
+        try:
+            df_prompts = pd.read_csv(pth_in)
+        except pd.errors.EmptyDataError:
+            logging.warning(f"No data in prompt file: {pth_in}")
+            continue
+        except Exception as e:
+            logging.error(f"Failed to parse CSV {pth_in}: {e}")
+            continue
+
         if df_prompts.empty:
-            logging.warning(f"Skipping {pth_in}: empty")
+            logging.warning(f"Skipping {pth_in}: empty DataFrame")
             continue
 
         # wrap prompts
@@ -50,12 +70,25 @@ def process_files(prompt_files, response_files, model, use_openai):
         backend = "OpenAI" if use_openai else "HF"
         logging.info(f"Generating {len(wrapped)} responses with {backend}::{model}")
 
+        # delegate to the appropriate backend
         if use_openai:
             results = simple_generate_openai(wrapped, model_name=model)
         else:
             results = simple_generate_hf(wrapped, model_name=model)
 
         df_out = pd.DataFrame(results, columns=["id", "wrapped_prompt", "model_response_raw"])
+        # label hallucination by comparing model_response to correct_answer
+        df_out = df_out.merge(
+            df_prompts[["id", "correct_answer"]], on="id", how="left"
+        )
+        from hallu_detector.detect import is_hallucinated
+        df_out['hallucinated'] = df_out.apply(
+            lambda row: is_hallucinated(row['model_response'], row['correct_answer']), axis=1
+        )
+        # now merge prompt and other fields
+        df_out = df_out.merge(
+            df_prompts[["id", "prompt"]], on="id", how="left"
+        )
         df_out["model_response"] = df_out.apply(
             lambda row: clean_response(
                 row["model_response_raw"],
@@ -75,14 +108,14 @@ def process_files(prompt_files, response_files, model, use_openai):
 
 
 def main():
-    p = argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(
         description="Generate concise model responses for prompt CSVs"
     )
-    p.add_argument(
+    parser.add_argument(
         "--prompt-files", "-i", nargs="+", required=True,
         help="Input prompt CSV(s) (id,prompt,correct_answer)"
     )
-    group = p.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         "--response-files", "-o", nargs="+",
         help="Explicit output CSV path(s), matching count of prompt-files"
@@ -91,17 +124,21 @@ def main():
         "--output-dir",
         help="Directory to write labeled response CSVs (filenames derived)"
     )
-    p.add_argument(
+    parser.add_argument(
         "--model", "-m", default="gpt-3.5-turbo",
-        help="Model name for HuggingFace or OpenAI"
+        help="Model name for HuggingFace or OpenAI (e.g., gpt-3.5-turbo, gpt-4)"
     )
-    p.add_argument(
+    parser.add_argument(
         "--use-openai", action="store_true",
-        help="Use OpenAI API instead of HF"
+        help="Force use of OpenAI API (otherwise auto-detected from model name)"
     )
-    args = p.parse_args()
+    args = parser.parse_args()
 
-    # build response_files list
+    # Auto-detect OpenAI usage if model is a known GPT model or --use-openai flag is set
+    openai_models = {"gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k"}
+    use_openai = args.use_openai or args.model in openai_models
+
+    # Build response_files list
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
         response_files = [
@@ -118,7 +155,7 @@ def main():
         prompt_files=args.prompt_files,
         response_files=response_files,
         model=args.model,
-        use_openai=args.use_openai
+        use_openai=use_openai
     )
 
 

@@ -12,3 +12,4 @@ openai
 tqdm
 pyyaml
 wikipedia
+sentence_transformers

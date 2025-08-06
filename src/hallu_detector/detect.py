@@ -1,77 +1,68 @@
-import argparse
-import logging
-import pandas as pd
+import torch
+from sentence_transformers import SentenceTransformer, util
+from transformers import pipeline
 import string
-from tqdm import tqdm
 
 """
-Script to detect hallucinations in model responses.
+Hallucination detection using semantic similarity and NLI.
 """
 
-def normalize_text(text):
+# Load models
+st_model = SentenceTransformer('all-MiniLM-L6-v2')
+nli = pipeline(
+    'text-classification',
+    model='roberta-large-mnli',
+    device=0 if torch.cuda.is_available() else -1
+)
+
+def normalize_text(text: str) -> str:
     """
-    Normalize text for comparison: lowercase, remove punctuation, collapse whitespace.
+    Lowercase, strip punctuation, collapse whitespace.
     """
     if text is None:
         return ""
     text = text.lower()
-    # Remove punctuation
     text = text.translate(str.maketrans('', '', string.punctuation))
-    # Collapse multiple spaces
-    text = ' '.join(text.split())
-    return text
+    return ' '.join(text.split())
 
 
-def is_hallucinated(answer, correct_answer):
+def semantic_similarity(a: str, b: str) -> float:
+    """Return cosine similarity between embeddings of a and b."""
+    emb1 = st_model.encode(a, convert_to_tensor=True)
+    emb2 = st_model.encode(b, convert_to_tensor=True)
+    return util.cos_sim(emb1, emb2).item()
+
+
+def nli_entailment_probability(premise: str, hypothesis: str) -> float:
     """
-    Determine if the model's answer is a hallucination compared to the correct answer.
-    Returns True if hallucinated (i.e., the answer does not match the correct answer).
+    Returns probability that premise entails hypothesis using MNLI model.
+    """
+    res = nli(f"{premise} </s></s> {hypothesis}")
+    for r in res:
+        if r['label'].upper() == 'ENTAILMENT':
+            return r['score']
+    return 0.0
+
+
+def is_hallucinated(answer: str, correct_answer: str,
+                    sem_thresh: float = 0.75,
+                    nli_thresh: float = 0.80) -> bool:
+    """
+    Return True if answer is hallucinated relative to correct_answer.
     """
     ans = normalize_text(answer)
     corr = normalize_text(correct_answer)
 
-    # If there is no ground truth, assume not hallucinated
     if not corr:
         return False
-    # Empty answer when a correct answer exists => hallucination
     if not ans:
         return True
-    # If the correct answer is contained in the answer, or vice versa, consider it correct
     if corr in ans or ans in corr:
         return False
-    # Otherwise, mark as hallucinated
-    return True
 
+    sim = semantic_similarity(ans, corr)
+    if sim < sem_thresh:
+        return True
 
-def main():
-    parser = argparse.ArgumentParser(description="Label model responses as hallucinated or correct.")
-    parser.add_argument(
-        "--input", required=True,
-        help="Path to input CSV with at least 'model_response' and 'correct_answer' columns."
-    )
-    parser.add_argument(
-        "--output", required=True,
-        help="Path to output CSV where labeled responses will be saved."
-    )
-    args = parser.parse_args()
-
-    logging.basicConfig(
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        level=logging.INFO
-    )
-
-    df = pd.read_csv(args.input)
-    labels = []
-    for _, row in tqdm(df.iterrows(), total=len(df), desc="Labeling responses"):
-        resp = row.get('model_response', '')
-        truth = row.get('correct_answer', '')
-        label = 'hallucinated' if is_hallucinated(resp, truth) else 'correct'
-        labels.append(label)
-
-    df['label'] = labels
-    df.to_csv(args.output, index=False)
-    logging.info(f"Saved {len(df)} labeled rows to {args.output}")
-
-
-if __name__ == '__main__':
-    main()
+    entail_p = nli_entailment_probability(correct_answer, answer)
+    return entail_p < nli_thresh

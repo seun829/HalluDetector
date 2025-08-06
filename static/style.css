@@ -7,6 +7,8 @@
   --card-bg: #FFFFFF;
   --text: #333333;
   --muted: #6E6E6E;
+  --success: #28A745;
+  --error: #DC3545;
 }
 
 /* Global Resets */
@@ -21,21 +23,21 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 /* Layout Container */
 .container {
-  max-width: 960px;
-  margin: 60px auto;
-  padding: 0 16px;
+  max-width: 1080px;
+  margin: 80px auto;
+  padding: 0 24px;
 }
 
 /* Heading Styles */
 h1 {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 2.75rem;
+  margin-bottom: 56px;
+  font-size: 3rem;
   font-weight: 700;
 }
 
@@ -44,17 +46,17 @@ h1 {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 64px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 .card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 1.75rem;
+  margin-bottom: 24px;
   color: var(--text);
   font-weight: 600;
 }
@@ -62,13 +64,13 @@ h1 {
 /* Text Inputs */
 textarea {
   width: 100%;
-  min-height: 100px;
-  padding: 16px;
+  min-height: 120px;
+  padding: 20px;
   border: 1px solid #D1D5DB;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   resize: vertical;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   background: #FAFAFA;
   color: var(--text);
 }
@@ -81,11 +83,11 @@ textarea:focus {
 /* Select Inputs */
 select {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border: 1px solid #D1D5DB;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   background: #FFF;
   color: var(--text);
 }
@@ -93,16 +95,16 @@ select {
 /* Buttons */
 button {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 14px 28px;
   font-size: 1rem;
   font-weight: 600;
   color: #FFF;
   background: var(--primary);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 button:hover {
   background: var(--primary-hover);
@@ -113,7 +115,7 @@ button:active {
 
 /* Result Text */
 .result {
-  margin-top: 12px;
+  margin-top: 20px;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text);
@@ -123,39 +125,83 @@ button:active {
 pre {
   width: 100%;
   background: #F3F4F6;
-  padding: 20px;
-  border-radius: 6px;
-  font-size: 0.95em;
+  padding: 24px;
+  border-radius: 8px;
+  font-size: 1rem;
   overflow-x: auto;
   color: var(--text);
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 /* Graph Images Grid */
 .graphs {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
 }
 .graphs img {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: transform 0.2s ease;
 }
 .graphs img:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
+}
+
+/* Pipeline Steps List */
+#pipeline-steps {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+#pipeline-steps li {
+  font-weight: 600;
+  margin: 0.5em 0;
+}
+#pipeline-steps li.step-pending {
+  color: var(--muted);
+}
+#pipeline-steps li.step-success {
+  color: var(--success);
+}
+#pipeline-steps li.step-fail {
+  color: var(--error);
+}
+
+/* Pipeline Logs */
+#pipeline-logs {
+  background: #F3F4F6;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  max-height: 240px;
+  overflow: auto;
+  margin-bottom: 24px;
+}
+
+/* Processed CSV iframes */
+#pipeline-processed iframe {
+  display: block;
+  width: 100%;
+  height: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 24px;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
   .card {
-    padding: 16px;
-    margin-bottom: 24px;
+    padding: 20px;
+    margin-bottom: 32px;
   }
   h1 {
-    font-size: 2rem;
-    margin-bottom: 32px;
+    font-size: 2.25rem;
+    margin-bottom: 40px;
   }
 }

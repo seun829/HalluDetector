@@ -8,21 +8,22 @@
 </head>
 <body>
   <div class="container">
-    <h1>AI Hallucination Toolkit</h1>
+    <h1>AI Hallucination Detection Toolkit</h1>
 
     <div class="card">
       <h2>1) Detect with Ground Truth</h2>
       <textarea id="detect-response" placeholder="Model Response…"></textarea>
-      <textarea id="detect-correct" placeholder="Correct Answer…"></textarea>
-      <button id="detect-btn">Detect</button>
-      <div id="detect-result" class="result"></div>
+      <textarea id="detect-correct"  placeholder="Correct Answer…"></textarea>
+      <button    id="detect-btn">Detect</button>
+      <div      id="detect-result" class="result"></div>
     </div>
 
     <div class="card">
-      <h2>2) Predict from Prompt</h2>
+      <h2>2) Predict Whether a Hallucination Will Occur<br/>
+      (Model Trained on GPT-4 Responses)</h2>
       <textarea id="predict-prompt" placeholder="Enter prompt/question…"></textarea>
-      <button id="predict-btn">Predict</button>
-      <div id="predict-result" class="result"></div>
+      <button    id="predict-btn">Predict</button>
+      <div      id="predict-result" class="result"></div>
     </div>
 
     <div class="card">
@@ -32,13 +33,23 @@
         <option value="gpt2">GPT-2</option>
         <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
         <option value="gpt-4">GPT-4</option>
-        <option value="gpt-4-32k">GPT-4 32k</option>
+        <option value="gpt-4-32k">GPT-4-32k</option>
       </select>
       <button id="run-pipeline-btn">Run Entire Pipeline</button>
-      <pre id="pipeline-logs"></pre>
+
+      <!-- NEW: show pipeline steps -->
+      <ul id="pipeline-steps" class="steps"></ul>
+
+      <pre id="pipeline-logs" class="logs"></pre>
+
+      <!-- graphs go here -->
       <div id="pipeline-graphs" class="graphs"></div>
+
+      <!-- NEW: processed CSVs go here -->
+      <div id="pipeline-processed" class="processed"></div>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

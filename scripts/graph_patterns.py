@@ -4,6 +4,7 @@ import os
 import logging
 import re
 import pandas as pd
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -78,12 +79,15 @@ def analyze_keywords_tfidf(df, top_n=10):
     )
     X = vect.fit_transform(corpus)
     features = vect.get_feature_names_out()
-    is_hallu = df["is_correct"] == 0
-    hallu_avg = X[is_hallu].mean(axis=0).A1
+
+    # Use a numpy boolean mask for sparse indexing
+    is_hallu_mask = (df["is_correct"] == 0).to_numpy()
+    hallu_avg = X[is_hallu_mask].mean(axis=0).A1
+
     pairs = list(zip(features, hallu_avg))
     pairs.sort(key=lambda x: x[1], reverse=True)
     top = pairs[:top_n]
-    kws = [w for w,_ in top]
+    kws = [w for w, _ in top]
 
     rows = []
     for kw in kws:
@@ -138,14 +142,14 @@ def visualize_results(df, x, y, title, xlabel, ylabel, output):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Visualize hallucination patterns.")
+    p = argparse.ArgumentParser(description="Visualize hallucination patterns and generate webpage.")
     p.add_argument(
         "--input-dir", "-i", required=True,
         help="Directory with labeled response CSVs"
     )
     p.add_argument(
         "--output-dir", "-o", required=True,
-        help="Directory to write PNG graphs"
+        help="Directory to write PNG graphs, processed data, and webpage"
     )
     p.add_argument(
         "--top-keywords", type=int, default=10,
@@ -164,9 +168,45 @@ def main():
         logging.error("No valid data; exiting.")
         return
 
+    # compute correctness
     df = compute_correctness(df)
 
-    # by question type
+    # Save processed data (questions, AI responses, correctness)
+    processed_dir = os.path.join(args.output_dir, "user", "processed")
+    os.makedirs(processed_dir, exist_ok=True)
+    proc_csv = os.path.join(processed_dir, "processed_data.csv")
+    proc_html = os.path.join(processed_dir, "processed_data.html")
+    df[["prompt", "model_response", "is_correct"]].to_csv(proc_csv, index=False)
+    df[["prompt", "model_response", "is_correct"]].to_html(
+        proc_html, index=False, classes="table table-striped"
+    )
+    logging.info(f"Saved processed CSV to {proc_csv} and HTML to {proc_html}")
+
+    # Generate index.html
+    index_fp = os.path.join(args.output_dir, "index.html")
+    with open(index_fp, "w", encoding="utf-8") as f:
+        f.write("<html><head><title>Hallucination Analysis</title>"
+                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>"
+                "</head><body class='m-4'>\n")
+        f.write("<h1>Processed Data</h1>\n")
+        rel_path = os.path.relpath(proc_html, args.output_dir)
+        f.write(f"<iframe src='{rel_path}' width='100%' height='400'></iframe>\n")
+        # embed graphs
+        graphs = [
+            "accuracy_by_question_type.png",
+            "accuracy_by_template.png",
+            "accuracy_by_keywords.png",
+            "feature_correlation_heatmap.png"
+        ]
+        for g in graphs:
+            gfp = os.path.join(args.output_dir, g)
+            if os.path.exists(gfp):
+                f.write(f"<h2>{g.replace('_', ' ').replace('.png', '').title()}</h2>\n")
+                f.write(f"<img src='{g}' class='img-fluid mb-4'/><br/>\n")
+        f.write("</body></html>")
+    logging.info(f"Generated webpage at {index_fp}")
+
+    # Generate visualizations
     qta = analyze_by_question_type(df)
     if qta is not None:
         visualize_results(
@@ -175,7 +215,6 @@ def main():
             output=os.path.join(args.output_dir, "accuracy_by_question_type.png")
         )
 
-    # by template
     ta = analyze_by_template(df)
     if ta is not None:
         visualize_results(
@@ -184,7 +223,6 @@ def main():
             output=os.path.join(args.output_dir, "accuracy_by_template.png")
         )
 
-    # keyword TF-IDF
     kwa = analyze_keywords_tfidf(df, top_n=args.top_keywords)
     if not kwa.empty:
         visualize_results(
@@ -193,7 +231,6 @@ def main():
             output=os.path.join(args.output_dir, "accuracy_by_keywords.png")
         )
 
-    # feature correlation heatmap
     df_feat = extract_features(df)
     feats = [c for c in df_feat.columns if c.startswith("extracted_feature_")]
     corr = df_feat[feats + ["is_correct"]].corr()
@@ -201,12 +238,11 @@ def main():
     sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
     plt.title("Correlation of Extracted Features and Accuracy")
     out = os.path.join(args.output_dir, "feature_correlation_heatmap.png")
-    os.makedirs(os.path.dirname(out), exist_ok=True)
     plt.tight_layout()
     plt.savefig(out)
     plt.close()
 
-    logging.info(f"✅ Graphs written to {args.output_dir}")
+    logging.info(f"✅ Graphs and webpage written to {args.output_dir}")
 
 
 if __name__ == "__main__":

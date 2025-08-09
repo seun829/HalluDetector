@@ -32,7 +32,7 @@ def simple_generate_openai(prompt_list, model_name="gpt-3.5-turbo"):
     # Adjust parameters for GPT-4 vs GPT-3.5
     if model.startswith("gpt-4"):
         # GPT-4 base context ~8k, -32k variant
-        max_tok = 2000 if model == "gpt-4" else 32000
+        max_tok = 2000 if model == "gpt-4" else 4000
         temperature = 0.8
     else:
         # Default for GPT-3.5-turbo

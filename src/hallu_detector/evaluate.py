@@ -13,7 +13,7 @@ def compute_metrics(labels):
     total = len(labels)
     if total == 0:
         return {"hallucination_rate": None}
-    hallu_count = sum(1 for label in labels if label == "hallucinated")
+    hallu_count = sum(1 for label in labels if label == "True")
     return {"hallucination_rate": hallu_count / total}
 
 def process_files(response_files, metric_files):
@@ -23,10 +23,10 @@ def process_files(response_files, metric_files):
     for response_file, metric_file in zip(response_files, metric_files):
         logging.info(f"Processing {response_file}...")
         df = pd.read_csv(response_file)
-        if "label" not in df.columns:
-            logging.error(f"Missing 'label' column in {response_file}. Skipping.")
+        if "hallucinated" not in df.columns:
+            logging.error(f"Missing 'hallucinated' column in {response_file}. Skipping.")
             continue
-        metrics = compute_metrics(df["label"].tolist())
+        metrics = compute_metrics(df["hallucinated"].tolist())
         with open(metric_file, "w") as f:
             json.dump(metrics, f, indent=2)
         logging.info(f"Metrics saved to {metric_file}.")

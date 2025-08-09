@@ -231,16 +231,23 @@ def main():
             output=os.path.join(args.output_dir, "accuracy_by_keywords.png")
         )
 
-    df_feat = extract_features(df)
-    feats = [c for c in df_feat.columns if c.startswith("extracted_feature_")]
-    corr = df_feat[feats + ["is_correct"]].corr()
-    plt.figure(figsize=(12, 8))
-    sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
-    plt.title("Correlation of Extracted Features and Accuracy")
-    out = os.path.join(args.output_dir, "feature_correlation_heatmap.png")
-    plt.tight_layout()
-    plt.savefig(out)
-    plt.close()
+    # Use actual, interpretable features for the heatmap
+    actual_feats = ["prompt_length", "response_length"] + [
+        c for c in df.columns if c.startswith("contains_")
+    ]
+    actual_feats = [c for c in actual_feats if c in df.columns]  # keep only those that exist
+
+    if actual_feats:  # only plot if we have at least one feature
+        corr = df[actual_feats + ["is_correct"]].corr()
+        plt.figure(figsize=(12, 8))
+        sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
+        plt.title("Correlation of Features and Accuracy")
+        out = os.path.join(args.output_dir, "feature_correlation_heatmap.png")
+        plt.tight_layout()
+        plt.savefig(out)
+        plt.close()
+    else:
+        logging.info("No interpretable features found for heatmap; skipping.")
 
     logging.info(f"✅ Graphs and webpage written to {args.output_dir}")
 

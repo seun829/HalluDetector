@@ -45,13 +45,15 @@ def generate_questions_for_seed(seed: str, count: int) -> list[str]:
     system_msg = (
         f"You are a creative prompt generator."
         f" Generate exactly {count} unique, tricky, weirdly worded questions that ask about '{seed}'."
+        f" Each question should be concise and on a new line"
+        f" Do not add any commentary or additional text."
     )
     try:
         resp = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "system", "content": system_msg}],
             temperature=0.8,
-            max_tokens=150
+            max_tokens=4000
         )
         content = resp.choices[0].message.content.strip()
         questions = []

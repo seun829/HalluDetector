@@ -26,7 +26,7 @@ This project explores how often and why AI language models hallucinate—i.e., g
 ai-hallucination-detection-main/
 ├── README.md
 ├── app.py                        # Flask app: serves UI + /detect, /predict, /run_pipeline
-├── requirements.txt              # Core Python deps (note: Flask not listed here; see install)
+├── requirements.txt              # Core Python deps
 ├── docs/
 │   └── methodology.md            # (empty placeholder)
 ├── scripts/
@@ -45,7 +45,7 @@ ai-hallucination-detection-main/
 │       ├── evaluate.py            # compute hallucination metrics from labeled CSVs
 │       └── generate.py            # HF/OpenAI helpers (OpenAI uses old ChatCompletion API)
 ├── static/
-│   ├── index.html                 # minimal UI (3 panels)
+│   ├── index.html                 # frontend UI (3 panels)
 │   ├── script.js                  # front-end logic
 │   └── style.css                  # styling
 ├── tests/
@@ -222,10 +222,6 @@ Covers baseline behaviors of `is_hallucinated`.
 - Apply/adapt techniques in high-risk fields (medical, legal).  
 - Harden the detector and complete the abridged sections.
 
----
-
-## License:
-No license file is included. Add a `LICENSE` (e.g., MIT/Apache-2.0) if you intend to open-source.
 
 ---
 

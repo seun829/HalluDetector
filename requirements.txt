@@ -13,3 +13,5 @@ tqdm
 pyyaml
 wikipedia
 sentence_transformers
+flask
+datasets

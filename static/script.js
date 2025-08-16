@@ -74,7 +74,7 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
 
     // update steps & logs
     for (const step of PIPELINE_STEPS) {
-      const lg = res.logs[step] || {};
+      const lg = res.logs?.[step] || {};
       const ok = lg.returncode===0;
       const li = document.getElementById(`step-${step}`);
       if (li) {
@@ -125,9 +125,9 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
         }
       }
     }
-  } catch(err){
-    console.error(err);
-    logsDiv.textContent='❌ Pipeline error – see console';
+  } catch (err) {
+    console.error("Pipeline error:", err);
+    logsDiv.textContent = `❌ Pipeline error: ${err.message || err}`;
   } finally {
     btn.disabled    = false;
     btn.textContent = 'Run Entire Pipeline';

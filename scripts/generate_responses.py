@@ -5,7 +5,7 @@ import argparse
 import logging
 import pandas as pd
 import re
-import csv  # NEW: for delimiter sniffing
+import csv
 
 # — Fix import path for hallu_detector —
 SCRIPT_DIR   = os.path.dirname(__file__)
@@ -55,6 +55,12 @@ def process_files(prompt_files, response_files, model_name, use_openai):
             continue
         if os.path.getsize(pth_in) == 0:
             logging.warning(f"Skipping empty file: {pth_in}")
+            continue
+
+        # Optionally skip legacy file named 'prompts.csv' so only auto-generated file is used
+        basename = os.path.basename(pth_in).lower()
+        if basename == "prompts.csv":
+            logging.info(f"Skipping legacy prompts file: {pth_in}")
             continue
 
         # Try to sniff delimiter to handle CSV/TSV/; or | without new helpers
@@ -168,14 +174,10 @@ def process_files(prompt_files, response_files, model_name, use_openai):
             axis=1
         )
 
-
         # Write outputs
         try:
             os.makedirs(os.path.dirname(pth_out), exist_ok=True)
-            df_out[[
-                'id','prompt','model_response','correct_answer',
-                'hallucinated'
-            ]].to_csv(pth_out, index=False, encoding='utf-8')
+            df_out[[ 'id','prompt','model_response','correct_answer', 'hallucinated']].to_csv(pth_out, index=False, encoding='utf-8')
             logging.info(f"Wrote {len(df_out)} rows to {pth_out}")
         except Exception as e:
             logging.error(f"Failed to write {pth_out}: {e}")
@@ -200,7 +202,7 @@ def main():
     )
     parser.add_argument(
         "--model", "-m", required=True,
-        help="Model name for HF or OpenAI (e.g., gpt-4o, gpt-4o-mini, roberta-large-mnli)"
+        help="Model name for HF or OpenAI (e.g., gpt-4-o, gpt-4-mini, roberta-large-mnli)"
     )
     parser.add_argument(
         "--use-openai", action="store_true",
@@ -208,22 +210,27 @@ def main():
     )
     args = parser.parse_args()
 
-    openai_models = {"gpt-3.5-turbo","gpt-4", "gpt-4o"}
-    use_openai    = args.use_openai or (args.model in openai_models)
+    # Remap legacy model identifier "gpt-4-32k" to "gpt-4-o"
+    if args.model.lower() == "gpt-4-32k":
+        logging.info("Replacing model 'gpt-4-32k' with 'gpt-4-o'")
+        args.model = "gpt-4-o"
+
+    # Instead of using a fixed set, allow any model name starting with "gpt-"
+    use_openai = args.use_openai or args.model.lower().startswith("gpt-")
+    logging.info(f"Using OpenAI backend: {use_openai} (model: {args.model})")
 
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
         response_files = [
             os.path.join(
                 args.output_dir,
-                os.path.basename(pf).replace("prompts","responses_labeled")
+                os.path.basename(pf).replace("prompts", "responses_labeled")
             )
             for pf in args.prompt_files
         ]
         logging.info(f"Outputs will be written under: {args.output_dir}")
     else:
         response_files = args.response_files or []
-        # Guard mismatched counts early
         if len(args.prompt_files) != len(response_files):
             parser.error("When using --response-files, the count must match --prompt-files.")
 

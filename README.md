@@ -7,7 +7,7 @@ This project explores how often and why AI language models hallucinate—i.e., g
 ---
 
 ## Objectives:
-- Measure hallucination rates across **pre-made** and **auto-generated** question sets.  
+- Measure hallucination rates across **pre-made** and **auto-generated** question sets that are made to trick the AI with logic.  
 - Analyze patterns in hallucination behavior (topics, keywords, lengths).  
 - Explore preliminary methods to **predict** hallucinations from output and prompt characteristics.
 

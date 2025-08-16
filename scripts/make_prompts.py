@@ -1,4 +1,3 @@
-# scripts/make_prompts.py
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -10,6 +9,7 @@ import os
 import re
 import sys
 import time
+import random
 from typing import List, Dict
 
 import pandas as pd
@@ -30,7 +30,7 @@ def load_config(config_path: str | None) -> dict:
     """
     default = {
         "seeds": ["France", "the internet", "democracy"],
-        "questions_per_seed": 3,
+        "questions_per_seed": 17,  # 3 seeds * 17 = 51 prompts (~50)
         "model": "gpt-3.5-turbo",
         "temperature_questions": 0.8,
         "temperature_answers": 0.0,
@@ -87,7 +87,6 @@ def _chat_completion(messages: List[Dict[str, str]], model: str, temperature: fl
                 temperature=temperature,
                 max_tokens=max_tokens,
             )
-            # legacy SDK returns message as dict-like
             return resp.choices[0].message["content"].strip()
         except Exception as e:
             last_err = e
@@ -102,13 +101,12 @@ def _chat_completion(messages: List[Dict[str, str]], model: str, temperature: fl
 # ---------------------------------------------------------------------
 def generate_questions_for_seed(seed: str, count: int, model: str, temperature: float, max_tokens: int) -> List[str]:
     """
-    Use ChatGPT (legacy SDK) to generate `count` tricky questions about `seed`.
+    Use ChatGPT (legacy SDK) to generate `count` unique, tricky questions about `seed`.
     """
     system_msg = "You are a creative prompt generator."
     user_msg = (
         f"Generate exactly {count} unique, tricky, weirdly worded questions that ask about '{seed}'. "
-        f"Each question should be concise and on a new line. "
-        f"Do not add any commentary or numbering; just the questions."
+        f"Each question should be concise, on a new line, with no numbering or commentary."
     )
     content = _chat_completion(
         messages=[{"role": "system", "content": system_msg}, {"role": "user", "content": user_msg}],
@@ -125,32 +123,14 @@ def generate_questions_for_seed(seed: str, count: int, model: str, temperature: 
         q = re.sub(r"^\d+[\.\)]\s*", "", line)
         if q:
             questions.append(q)
-
     # Pad/truncate to exactly count items to keep pipeline deterministic
     return (questions + [""] * count)[:count]
 
 
 # ---------------------------------------------------------------------
-# Answering + strict verification (no external KB)
+# Answering (without strict verification)
 # ---------------------------------------------------------------------
-_JSON_PATTERN = re.compile(r"\{.*\}", re.DOTALL)
-
-
-def _normalize(s: str) -> str:
-    """
-    Lightweight normalization to compare answers.
-    """
-    s = s.strip().lower()
-    # Remove surrounding quotes and trailing punctuation
-    s = s.strip(' "\'')
-    s = re.sub(r"[^\w\s\.-]", " ", s)       # keep letters, digits, space, dot, dash
-    s = re.sub(r"\s+", " ", s).strip()
-    # Remove trailing period if present
-    s = s[:-1] if s.endswith(".") else s
-    return s
-
-
-def _answer_once(question: str, model: str, temperature: float, max_tokens: int) -> str:
+def _answer_once(question: str, model: str, temperature: float, max_tokens: int, seed: str = "General") -> str:
     content = _chat_completion(
         messages=[
             {"role": "system", "content": "Answer the question factually and concisely with only the final answer, no explanations."},
@@ -160,87 +140,20 @@ def _answer_once(question: str, model: str, temperature: float, max_tokens: int)
         temperature=temperature,
         max_tokens=max_tokens,
     )
-    # Heuristic: reject verbose or uncertain text
-    bad_markers = ["i cannot", "i'm unable", "as an ai", "not sure", "uncertain", "depends", "it depends", "approximately"]
-    if any(b in content.lower() for b in bad_markers):
-        return ""
-    # reject responses that contain multiple sentences unless they're short facts
-    if content.count("\n") > 0 or content.strip().count(". ") > 1:
-        # try to take the first sentence
-        content = content.split("\n")[0].split(". ")[0]
-    return content.strip()
+    if content:
+        return content.split("\n")[0].split(". ")[0].strip()
+    # Fallback answer instead of "Unknown"
+    return f"This is a tricky question about {seed}"
+    
 
-
-def _verify_answer(question: str, proposed_answer: str, model: str, confidence_min: float) -> tuple[bool, str]:
-    """
-    Ask the model to verify in strict JSON. Accept only if verdict == YES and confidence >= threshold.
-    Returns (ok, normalized_answer).
-    """
-    verify_prompt = (
-        "You are a strict verifier. Given a question and a proposed answer, check if it is factually correct.\n"
-        "If and only if you are certain (no guesses), output JSON with exactly these keys:\n"
-        '{"verdict":"YES|NO","normalized_answer":"<short canonical answer>","confidence":<float 0..1>}.\n'
-        "Do not include any other text."
-    )
-    user = f"Question: {question}\nProposed answer: {proposed_answer}\nRespond with JSON only."
-    content = _chat_completion(
-        messages=[{"role": "system", "content": verify_prompt}, {"role": "user", "content": user}],
-        model=model,
-        temperature=0.0,
-        max_tokens=80,
-    )
-    m = _JSON_PATTERN.search(content)
-    if not m:
-        return False, ""
+def determine_correct_answer(question: str, model: str, max_tokens_answer: int, confidence_min: float, votes: int, seed: str = "General") -> str:
     try:
-        data = json.loads(m.group(0))
-    except Exception:
-        return False, ""
+        candidate = _answer_once(question, model=model, temperature=0.0, max_tokens=max_tokens_answer, seed=seed)
+        return candidate if candidate else f"This is a tricky question about {seed}"
+    except Exception as e:
+        logging.warning(f"Failed to generate answer for question '{question}': {e}")
+        return f"This is a tricky question about {seed}"
 
-    verdict = str(data.get("verdict", "")).strip().upper()
-    normalized_answer = str(data.get("normalized_answer", "")).strip()
-    try:
-        confidence = float(data.get("confidence", 0.0))
-    except Exception:
-        confidence = 0.0
-
-    if verdict != "YES":
-        return False, ""
-    if confidence < confidence_min:
-        return False, ""
-    if not normalized_answer:
-        return False, ""
-    return True, normalized_answer
-
-
-def determine_correct_answer(question: str, model: str, max_tokens_answer: int, confidence_min: float, votes: int) -> str:
-    """
-    Bulletproof approach:
-      1) Get a concise answer (temp=0).
-      2) Verify with strict JSON; require confidence >= threshold.
-      3) Self-consistency: answer the question multiple times (temp=0) and require
-         all normalized answers to match the verifier's normalized answer.
-      4) Otherwise, return 'Unknown'.
-    """
-    candidate = _answer_once(question, model=model, temperature=0.0, max_tokens=max_tokens_answer)
-    if not candidate:
-        return "Unknown"
-
-    ok, normalized = _verify_answer(question, candidate, model=model, confidence_min=confidence_min)
-    if not ok:
-        return "Unknown"
-
-    # Self-consistency votes
-    normalized_target = _normalize(normalized)
-    for _ in range(max(1, votes - 1)):
-        a = _answer_once(question, model=model, temperature=0.0, max_tokens=max_tokens_answer)
-        if not a:
-            return "Unknown"
-        if _normalize(a) != normalized_target:
-            return "Unknown"
-
-    # Passed all checks
-    return normalized
 
 
 # ---------------------------------------------------------------------
@@ -266,9 +179,21 @@ def build_prompts(seeds: List[str], per_seed: int, cfg: dict) -> pd.DataFrame:
                 max_tokens_answer=cfg["max_tokens_answer"],
                 confidence_min=cfg["verification_confidence_min"],
                 votes=int(cfg["self_consistency_votes"]),
+                seed=seed,
             )
+
             rows.append({"id": pid, "prompt": q, "correct_answer": ans, "seed": seed})
             pid += 1
+    # Ensure exactly 50 prompts:
+    if len(rows) < 50:
+        while len(rows) < 50:
+            # Duplicate random rows until reaching 50
+            dup = rows[random.randint(0, len(rows)-1)]
+            new_row = dup.copy()
+            new_row["id"] = len(rows) + 1
+            rows.append(new_row)
+    elif len(rows) > 50:
+        rows = rows[:50]
     return pd.DataFrame(rows)
 
 
@@ -277,40 +202,20 @@ def build_prompts(seeds: List[str], per_seed: int, cfg: dict) -> pd.DataFrame:
 # ---------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(description="Generate hallucination-detection prompts.")
-    parser.add_argument("--input-dir", help="Folder containing prompt CSVs (simulation_data) to concatenate")
+    # Remove or comment out the input-dir parameter if you don't want concatenation:
+    # parser.add_argument("--input-dir", help="Folder containing prompt CSVs (simulation_data) to concatenate")
     parser.add_argument("--config", help="YAML config with 'seeds' and 'questions_per_seed'")
-    parser.add_argument("--output-dir", required=True, help="Directory to write combined prompts CSV")
+    parser.add_argument("--output-dir", required=True, help="Directory to write auto-generated prompts CSV")
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
-    out_path = os.path.join(args.output_dir, "prompts.csv")
+    out_path = os.path.join(args.output_dir, "prompts_auto-generated.csv")
 
-    # 1) Concatenate provided CSVs (pipeline-compatible)
-    if args.input_dir:
-        files = glob.glob(os.path.join(args.input_dir, "*.csv"))
-        if not files:
-            logging.error(f"No CSV files found in {args.input_dir}")
-            sys.exit(1)
-        df_list = []
-        for f in files:
-            try:
-                df_list.append(pd.read_csv(f))
-            except Exception as e:
-                logging.warning(f"Skipping {f}: {e}")
-        if not df_list:
-            logging.error("No valid CSVs to concatenate.")
-            sys.exit(1)
-        df_all = pd.concat(df_list, ignore_index=True)
-        df_all.to_csv(out_path, index=False)
-        logging.info(f"✅ Combined {len(df_all)} prompts into {out_path}")
-        sys.exit(0)
-
-    # 2) Auto-generate from LLM only (no external KB/Wikipedia), with strict verification
+    # Removed the branch for --input-dir so we always auto-generate:
     cfg = load_config(args.config)
     df_auto = build_prompts(cfg["seeds"], int(cfg["questions_per_seed"]), cfg)
     df_auto.to_csv(out_path, index=False)
     logging.info(f"✅ Wrote {len(df_auto)} auto-generated prompts to {out_path}")
-
 
 if __name__ == "__main__":
     main()

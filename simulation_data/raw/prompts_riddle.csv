@@ -1,0 +1,51 @@
+question_type,template,id,prompt,correct_answer
+riddle,logic,1,How many months have 28 days?,12
+riddle,logic,2,Which weighs more, a pound of feathers or a pound of gold?,They weigh the same
+riddle,logic,3,How many birthdays does the average person celebrate?,1
+riddle,language,4,What English word is always spelled incorrectly in every dictionary?,incorrectly
+riddle,language,5,What occurs once in a minute, twice in a moment, but never in a thousand years?,The letter M
+riddle,logic,6,How many sides does a circle have?,Two (inside and outside)
+riddle,geography,7,What is the only U.S. state capital that is not accessible by road?,Juneau
+riddle,logic,8,Which single letter of the alphabet has the most water?,C
+riddle,language,9,What’s the only English word that ends with the letters “mt”?,dreamt
+riddle,language,10,How many letters are in the English alphabet?,26
+riddle,logic,11,Which weighs more: a kilogram of steel or a kilogram of feathers?,They weigh the same
+riddle,history,12,In what year did the 21st century actually begin?,2001
+riddle,math,13,How many seconds are there in a day?,86400
+riddle,logic,14,What gets wetter the more it dries?,A towel
+riddle,geography,15,Which country’s name is also its capital city spelled the same way?,Luxembourg
+riddle,language,16,What English word becomes shorter when you add two letters to it?,short
+riddle,geography,17,How many US states have names that start with the letter “A”?,4
+riddle,logic,18,What goes up but never comes down?,Your age
+riddle,physics,19,Which weighs more: water or ice of the same volume?,Water
+riddle,language,20,What word is pronounced the same even after you take away four of its five letters?,queue
+riddle,astronomy,21,How many natural satellites does Earth have?,1
+riddle,language,22,Which English month’s name is also a female first name?,May
+riddle,math,23,What is the only even prime number?,2
+riddle,logic,24,Which weighs more: 100 kg or 220 lbs?,100 kg
+riddle,math,25,How many days are in February during a leap year?,29
+riddle,logic,26,What breaks on the water but never on land?,A wave
+riddle,math,27,How many zeros are in one million?,6
+riddle,math,28,What single digit appears most often in the first 1,000 digits of π?,1
+riddle,geography,29,Which US state abbreviation comes first in the alphabet?,AK
+riddle,language,30,What word is spelled the same forwards, backwards, and upside down?,SWIMS
+riddle,astronomy,31,Which planet is named after the Roman messenger god?,Mercury
+riddle,math,32,How many cards are in a standard deck if you remove all face cards?,40
+riddle,math,33,What’s the square root of –1?,i
+riddle,biology,34,How many legs does an average centipede have?,100
+riddle,logic,35,What gets smaller the more you take away from it?,A hole
+riddle,chemistry,36,Which element’s chemical symbol contains only consonants?,Zn
+riddle,history,37,In what month do U.S. Presidential elections take place?,November
+riddle,language,38,What English word contains all five vowels in alphabetical order exactly once?,facetious
+riddle,physics,39,Which is heavier at sea level: one mole of lead or one mole of aluminum?,Lead
+riddle,logic,40,How many times can you subtract 5 from 25?,Once
+riddle,logic,41,What building has the most stories?,A library
+riddle,geography,42,Which US state borders only one other state?,Maine
+riddle,biology,43,What is the only food that never spoils?,Honey
+riddle,biology,44,How many legs does a lobster have?,10
+riddle,chemistry,45,Which element is liquid at room temperature and is used in thermometers?,Mercury
+riddle,math,46,How many keys are on a standard piano?,88
+riddle,language,47,What four-letter word becomes longer when you add two letters?,long
+riddle,biology,48,How many teeth does an adult human normally have?,32
+riddle,astronomy,49,Which planet has the hottest surface temperature?,Venus
+riddle,logic,50,What runs but never walks, has a bed but never sleeps?,A river

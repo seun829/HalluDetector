@@ -20,7 +20,7 @@ id,prompt,correct_answer
 19,"What is the Baudot code used for?",Teleprinter/telex character encoding
 20,"What are the latitude and longitude (in degrees) of the Geographic South Pole?","90° S, 0° E"
 21,"Who first synthesized buckminsterfullerene (C₆₀)?","Harold Kroto, Robert Curl, Richard Smalley"
-22,"State the Hardy–Weinberg equilibrium equation.","p² + 2pq + q² = 1"
+22,"State the Hardy–Weinberg equilibrium equation.","p^2 + 2pq + q^2 = 1"
 23,"Who coined the term “Big Bang” (pejoratively)?",Fred Hoyle
 24,"What is the standard atomic mass of deuterium?",2.014102
 25,"What does the acronym “LIDAR” stand for?","Light Detection And Ranging"
@@ -35,7 +35,7 @@ id,prompt,correct_answer
 34,"Which stereoisomeric form (D or L) do most biological amino acids adopt?",L
 35,"Who first formulated the Navier–Stokes equations?","Claude-Louis Navier and George Gabriel Stokes"
 36,"What is the critical micelle concentration of sodium dodecyl sulfate (SDS) in mM?",8.2
-37,"What order of magnitude is the strain amplitude of gravitational waves detected by LIGO?","10⁻²¹"
+37,"What order of magnitude is the strain amplitude of gravitational waves detected by LIGO?","10^-21"
 38,"What is the original French title of Proust’s In Search of Lost Time?","À la recherche du temps perdu"
 39,"What paradox demonstrates that a solid sphere can be decomposed into two identical copies of itself?","Banach–Tarski paradox"
 40,"What is the ISO 4217 currency code for the Venezuelan bolívar soberano?",VES

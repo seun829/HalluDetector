@@ -14,7 +14,7 @@ This project explores how often and why AI language models hallucinate—i.e., g
 ---
 
 ## Methods:
-- Prompt a language model with sets of **easy** and **hard** factual questions.  
+- Prompt a language model with sets of logic-based factual and riddle questions.  
 - Collect and fact-check responses; label with a rule-based detector (semantic similarity + NLI).  
 - Analyze hallucination frequency, severity, and topic sensitivity; visualize keyword/feature correlations.  
 - (Optional) Train a prompt-only BERT classifier to predict hallucination risk from prompts alone.
@@ -36,8 +36,8 @@ ai-hallucination-detection-main/
 ├── simulation_data/
 │   └── raw/
 │       ├── prompts_auto-generated.csv  # placeholder
-│       ├── prompts_easy.csv            # example prompts (truncated)
-│       └── prompts_hard.csv            # example prompts (truncated)
+│       ├── prompts_factual.csv            # example prompts (truncated)
+│       └── prompts_riddle.csv            # example prompts (truncated)
 ├── src/
 │   └── hallu_detector/
 │       ├── __init__.py
@@ -87,7 +87,7 @@ pip install flask datasets
 ### Prompts (CSV)
 Required columns:
 ```csv
-id,prompt,correct_answer
+question_type, template, id,prompt,correct_answer
 1,"How many months have 28 days?",12
 2,"Which weighs more, a pound of feathers or a pound of gold?",They weigh the same
 ```
@@ -95,7 +95,7 @@ id,prompt,correct_answer
 ### Labeled Responses (CSV)
 Produced by `generate_responses.py`:
 ```csv
-id,prompt,model_response,correct_answer,hallucinated[,label]
+question_type, template, id, prompt, correct_answer, model_response, hallucinated[,label]
 ```
 - `hallucinated` is `"True"`/`"False"` from the rule-based detector.
 - Some outputs also include `label` mirroring `hallucinated` for training convenience.
@@ -122,7 +122,7 @@ python app.py
   Body: `{"prompt":"..."}` → `{"hallucination_probability": 0.xx, "will_hallucinate": false}`  
   *(Requires a model saved in `./bert_model`.)*
 - `POST /run_pipeline`  
-  Body: `{"model":"gpt2"}` or `{"model":"gpt-4o"}`  
+  Body: `{"model":"gpt2"}` `{"model":"gpt-3.5-turbo"}`  `{"model":"gpt-4"}`   `{"model":"gpt-4o"}`  
   Returns `{ stage, run_id, logs, graphs, metrics, processed_csvs }` and writes files under `static/output/<run_id>/...`.
 
 ---

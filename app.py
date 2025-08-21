@@ -79,7 +79,6 @@ def predict():
     })
 
 
-# 3) Full pipeline: generate → analyze → evaluate
 @app.route('/run_pipeline', methods=['POST'])
 def run_pipeline():
     data       = request.get_json() or {}
@@ -87,18 +86,17 @@ def run_pipeline():
     if not model_name:
         return jsonify({'error': 'No model specified.'}), 400
 
-    # create run directories
     run_id    = uuid.uuid4().hex
     run_raw   = os.path.join('output', run_id, 'raw')
     run_proc  = os.path.join('output', run_id, 'processed')
     run_graph = os.path.join('output', run_id, 'graphs')
-    for d in (run_raw, run_proc, run_graph):
+    metrics_dir = os.path.join('output', run_id, 'metrics')
+    for d in (run_raw, run_proc, run_graph, metrics_dir):
         os.makedirs(d, exist_ok=True)
 
     logs = {}
 
-    # 3a) Auto-generate prompts via make_prompts.py
-    # This step calls make_prompts.py, which now writes its output as "prompts_auto-generated.csv"
+    # --- Step 1: make_prompts ---
     auto_prompts_config = os.path.join(PROJECT_ROOT, 'config', 'prompts_config.yaml')
     logs['make_prompts'] = run_script(
         os.path.join(SCRIPTS_DIR, 'make_prompts.py'),
@@ -107,26 +105,36 @@ def run_pipeline():
     if logs['make_prompts']['returncode'] != 0:
         return jsonify({'stage': 'make_prompts', 'logs': logs}), 500
 
-    # 3b) Copy additional prompts from simulation_data/raw (if any)
-    raw_dir = os.path.join(PROJECT_ROOT, 'simulation_data', 'raw')
+    expected_auto = os.path.join(run_raw, 'prompts_auto-generated.csv')
+    if not os.path.exists(expected_auto):
+        logs['make_prompts']['stderr'] += "Expected prompts_auto-generated.csv not found.\n"
+        logs['make_prompts']['returncode'] = 1
+        return jsonify({'stage': 'make_prompts', 'logs': logs}), 500
+
+    # --- Step 2: prompts_copied ---
     logs['prompts_copied'] = {'stdout': '', 'stderr': '', 'returncode': 0}
-    for fname in os.listdir(raw_dir):
-        if not fname.endswith('.csv'):
-            continue
-        try:
-            shutil.copyfile(
-                os.path.join(raw_dir, fname),
-                os.path.join(run_raw, fname)
-            )
-            logs['prompts_copied']['stdout'] += f"Copied {fname}\n"
-        except Exception as e:
-            logs['prompts_copied']['stderr'] += f"{e}\n"
-            logs['prompts_copied']['returncode'] = 1
+    raw_dir = os.path.join(PROJECT_ROOT, 'simulation_data', 'raw')
+    if os.path.isdir(raw_dir):
+        for fname in os.listdir(raw_dir):
+            if fname.endswith('.csv'):
+                try:
+                    shutil.copyfile(
+                        os.path.join(raw_dir, fname),
+                        os.path.join(run_raw, fname)
+                    )
+                    logs['prompts_copied']['stdout'] += f"Copied {fname}\n"
+                except Exception as e:
+                    logs['prompts_copied']['stderr'] += f"{e}\n"
+                    logs['prompts_copied']['returncode'] = 1
+    else:
+        logs['prompts_copied']['stdout'] = "No additional prompts directory found.\n"
     if logs['prompts_copied']['returncode'] != 0:
         return jsonify({'stage': 'prompts_copied', 'logs': logs}), 500
 
-    # 3c) generate responses
+    # --- Step 3: generate_responses ---
     prompt_files = [os.path.join(run_raw, f) for f in os.listdir(run_raw) if f.endswith('.csv')]
+    if not prompt_files:
+        return jsonify({'stage': 'generate_responses', 'error': 'No prompt CSVs found.'}), 500
     logs['generate_responses'] = run_script(
         os.path.join(SCRIPTS_DIR, 'generate_responses.py'),
         ['--prompt-files', *prompt_files,
@@ -136,52 +144,43 @@ def run_pipeline():
     if logs['generate_responses']['returncode'] != 0:
         return jsonify({'stage': 'generate_responses', 'logs': logs}), 500
 
-    # 3d) analyze patterns
+    # --- Step 4: analyze_patterns ---
     logs['analyze_patterns'] = run_script(
         os.path.join(SCRIPTS_DIR, 'graph_patterns.py'),
-        ['--input-dir', run_proc,
-         '--output-dir', run_graph]
+        ['--input-dir', run_proc, '--output-dir', run_graph]
     )
     if logs['analyze_patterns']['returncode'] != 0:
         return jsonify({'stage': 'analyze_patterns', 'logs': logs}), 500
+    if not any(os.scandir(run_graph)):
+        logs['analyze_patterns']['stderr'] += "No graphs produced.\n"
+        logs['analyze_patterns']['returncode'] = 1
+        return jsonify({'stage': 'analyze_patterns', 'logs': logs}), 500
 
-    # 3e) evaluate metrics (correct evaluate.py path)
+    # --- Step 5: evaluate_metrics ---
     response_csvs = [os.path.abspath(os.path.join(run_proc, f))
                     for f in os.listdir(run_proc)
                     if f.lower().endswith('.csv')]
     if not response_csvs:
         return jsonify({'stage': 'evaluate_metrics', 'error': 'No response CSV files found.'}), 500
-
-    metrics_dir = os.path.join('output', run_id, 'metrics')
-    os.makedirs(metrics_dir, exist_ok=True)
     metric_files = [os.path.join(metrics_dir, os.path.splitext(os.path.basename(r))[0] + '_metrics.json')
                     for r in response_csvs]
-
-    # Debug log to ensure files are found
-    print("Response CSVs:", response_csvs)
-    print("Metric Files:", metric_files)
-
     logs['evaluate_metrics'] = run_script(
         os.path.join(SRC_DIR, 'hallu_detector', 'evaluate.py'),
         ['--response-files', *response_csvs,
-        '--metric-files', *metric_files]
+         '--metric-files', *metric_files]
     )
     if logs['evaluate_metrics']['returncode'] != 0:
         return jsonify({'stage': 'evaluate_metrics', 'logs': logs}), 500
 
-    # Collect outputs for returning before sending the JSON response.
-    graphs         = sorted(os.listdir(run_graph))
-    metrics        = sorted(os.listdir(metrics_dir))
-    processed_csvs = sorted([f for f in os.listdir(run_proc) if f.endswith('.csv')])
-
     return jsonify({
-        'stage':          'complete',
-        'run_id':         run_id,
-        'logs':           logs,
-        'graphs':         graphs,
-        'metrics':        metrics,
-        'processed_csvs': processed_csvs
+        'stage': 'complete',
+        'run_id': run_id,
+        'logs': logs,
+        'graphs': sorted(os.listdir(run_graph)),
+        'metrics': sorted(os.listdir(metrics_dir)),
+        'processed_csvs': sorted(f for f in os.listdir(run_proc) if f.endswith('.csv'))
     })
+
 
 if __name__ == '__main__':
     app.run(debug=True)

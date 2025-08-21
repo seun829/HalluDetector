@@ -124,6 +124,7 @@ def process_files(prompt_files, response_files, model_name, use_openai):
             instruction = (
                 "You are an expert quiz assistant. "
                 "Answer the following question with a single concise statement. "
+                "If your answer is a number, please write it as a numeral (e.g 3 instead of three)."
                 "Do not repeat the question or add any commentary.\n"
             )
             full = f"{instruction}Question: {prompt}\nAnswer:"
@@ -154,7 +155,7 @@ def process_files(prompt_files, response_files, model_name, use_openai):
         # Merge back on id; validate to catch accidental one-to-many joins
         try:
             df_out = df_out.merge(
-                df_prompts[['id','prompt','correct_answer']],
+                df_prompts[["question_type", "template", "id", "prompt", "correct_answer"]],
                 on='id', how='left', validate='many_to_one'
             )
         except Exception as e:
@@ -202,7 +203,7 @@ def main():
     )
     parser.add_argument(
         "--model", "-m", required=True,
-        help="Model name for HF or OpenAI (e.g., gpt-4-o, gpt-4-mini, roberta-large-mnli)"
+        help="Model name for HF or OpenAI (e.g., gpt-4o, gpt-4-mini, roberta-large-mnli)"
     )
     parser.add_argument(
         "--use-openai", action="store_true",
@@ -210,10 +211,10 @@ def main():
     )
     args = parser.parse_args()
 
-    # Remap legacy model identifier "gpt-4-32k" to "gpt-4-o"
+    # Remap legacy model identifier "gpt-4-32k" to "gpt-4o"
     if args.model.lower() == "gpt-4-32k":
-        logging.info("Replacing model 'gpt-4-32k' with 'gpt-4-o'")
-        args.model = "gpt-4-o"
+        logging.info("Replacing model 'gpt-4-32k' with 'gpt-4o'")
+        args.model = "gpt-4o"
 
     # Instead of using a fixed set, allow any model name starting with "gpt-"
     use_openai = args.use_openai or args.model.lower().startswith("gpt-")

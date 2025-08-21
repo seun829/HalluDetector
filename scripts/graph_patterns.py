@@ -46,8 +46,8 @@ def load_data(filepaths):
 def compute_correctness(df):
     df["is_correct"] = df.apply(
         lambda r: int(
-            str(r["model_response"]).strip().lower() ==
-            str(r["correct_answer"]).strip().lower()
+            str(r["hallucinated"]).strip().lower() == "false" or
+            str(r["correct_answer"]).strip().lower() == str(r["model_response"]).strip().lower()
         ),
         axis=1
     )

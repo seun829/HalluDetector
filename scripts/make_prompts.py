@@ -14,6 +14,8 @@ from typing import List, Dict
 
 import pandas as pd
 import yaml
+from openai import OpenAI
+client= OpenAI()
 
 # ---------------------------------------------------------------------
 # Logging
@@ -29,7 +31,7 @@ def load_config(config_path: str | None) -> dict:
     Load YAML config or fallback to defaults if none provided.
     """
     default = {
-        "seeds": ["France", "the internet", "democracy"],
+        "seeds": ["math", "science", "philosophy"],
         "questions_per_seed": 17,  # 3 seeds * 17 = 51 prompts (~50)
         "model": "gpt-3.5-turbo",
         "temperature_questions": 0.8,
@@ -48,52 +50,45 @@ def load_config(config_path: str | None) -> dict:
 
 
 # ---------------------------------------------------------------------
-# OpenAI (legacy SDK) helpers — Option A
+# OpenAI client (modern SDK)
 # ---------------------------------------------------------------------
-def ensure_openai():
-    """
-    Import legacy OpenAI SDK lazily and ensure key is present.
-    (Option A: openai==0.28.1 style, no client object.)
-    """
-    import importlib
+_client = None
 
-    try:
-        openai = importlib.import_module("openai")
-    except ImportError:
-        logging.error("The 'openai' package is not installed. Run: pip install 'openai==0.28.1'")
-        sys.exit(1)
-
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        logging.error("OPENAI_API_KEY not set. Exiting...")
-        sys.exit(1)
-
-    openai.api_key = api_key
-    return openai
+def get_client():
+    global _client
+    if _client is None:
+        try:
+            _client = OpenAI()  # modern SDK: picks up OPENAI_API_KEY from environment
+        except Exception as e:
+            logging.error(f"Failed to initialize OpenAI client: {e}")
+            sys.exit(1)
+    return _client
 
 
 def _chat_completion(messages: List[Dict[str, str]], model: str, temperature: float, max_tokens: int, retries: int = 3) -> str:
     """
-    Call openai.ChatCompletion.create with basic retries and return text content.
+    Call OpenAI Chat API with retries and return text content.
     """
-    openai = ensure_openai()
+    client = get_client()
     backoff = 1.0
     last_err = None
     for _ in range(max(1, retries)):
         try:
-            resp = openai.ChatCompletion.create(
+            resp = client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens,
             )
-            return resp.choices[0].message["content"].strip()
+            return resp.choices[0].message.content.strip()
         except Exception as e:
             last_err = e
+            logging.warning(f"Retrying after error: {e}")
             time.sleep(backoff)
             backoff = min(backoff * 2.0, 8.0)
     logging.error(f"OpenAI call failed after retries: {last_err}")
     return ""
+
 
 
 # ---------------------------------------------------------------------

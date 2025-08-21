@@ -10,6 +10,7 @@ async function postJSON(url, data) {
 }
 
 const PIPELINE_STEPS = [
+  'make_prompts',
   'prompts_copied',
   'generate_responses',
   'analyze_patterns',

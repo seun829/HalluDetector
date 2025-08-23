@@ -1,0 +1,47 @@
+template,id,prompt,model_response,correct_answer,hallucinated
+chemistry,1,What is the official IUPAC name of element 113?,Nihonium,nihonium,False
+science,2,What is the SCOPUS Source ID for the journal Science?,The SCOPUS Source ID for the journal Science is 24862,22678,True
+law,3,In which year did the EU’s GDPR come into force?,2018,2018,False
+chemistry,4,What is the pKa of acetic acid (CH₃COOH)?,4.76,4.76,False
+physics,5,Who first proposed the Chandrasekhar limit?,Subrahmanyan Chandrasekhar first proposed the Chandrasekhar limit,Subrahmanyan Chandrasekhar,False
+physics,6,What does the Gödel metric describe in general relativity?,The Gödel metric describes a rotating universe solution in general relativity,A rotating cosmological solution with closed timelike curves,True
+astronomy,8,What is the annual parallax of Proxima Centauri in arcseconds?,0.7687 arcseconds,0.7687,False
+networking,9,How is the IPv6 loopback address written in full hexadecimal?,0000:0000:0000:0000:0000:0000:0000:0001,0000:0000:0000:0000:0000:0000:0000:0001,False
+physics,11,At what altitude (in km) is the Kármán line defined?,100,100,False
+history,12,Which treaty ended the Russo-Japanese War?,Treaty of Portsmouth,Treaty of Portsmouth,False
+history,13,How many days difference existed between the Julian and Gregorian calendars in 1582?,10,10,False
+chemistry,14,What is the common (trivial) name for butan-2-ol?,Sec-butanol,sec-butanol,False
+physics,15,Who first formulated the principle of least action?,Pierre Maupertuis first formulated the principle of least action,Pierre Louis Maupertuis,True
+geography,17,What is the UN M49 numeric code for “Western Europe”?,155,155,False
+astronomy,18,Who first detected the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,Arno Penzias and Robert Wilson,False
+technology,19,What is the Baudot code used for?,The Baudot code is used for telegraphy and early digital communication systems,Teleprinter/telex character encoding,True
+geography,20,What are the latitude and longitude (in degrees) of the Geographic South Pole?,"Latitude: -90 degrees, Longitude: Undefined","90° S, 0° E",True
+chemistry,21,Who first synthesized buckminsterfullerene (C₆₀)?,"Harry Kroto, Richard Smalley, and Robert Curl","Harold Kroto, Robert Curl, Richard Smalley",False
+biology,22,State the Hardy–Weinberg equilibrium equation.,p² + 2pq + q² = 1,p^2 + 2pq + q^2 = 1,True
+astronomy,23,Who coined the term “Big Bang” (pejoratively)?,Fred Hoyle,Fred Hoyle,False
+chemistry,24,What is the standard atomic mass of deuterium?,2.014 amu,2.014102,True
+technology,25,What does the acronym “LIDAR” stand for?,Light Detection and Ranging,Light Detection And Ranging,False
+chemistry,26,What is the molar mass of glucose (C₆H₁₂O₆)?,180.16 g/mol,180.16 g/mol,False
+mathematics,27,What is the Euler characteristic of a torus?,0,0,False
+computer_science,28,Who first posed the P vs NP problem?,Stephen Cook first posed the P vs NP problem,Stephen Cook,False
+economics,29,What economic measure represents the total value of goods/services produced within a nation’s borders in a year?,Gross Domestic Product (GDP),Gross Domestic Product (GDP),False
+law,30,What is the formal name of the 1935 U.S. “Wagner Act”?,The National Labor Relations Act,National Labor Relations Act,False
+meteorology,31,Explain the difference between a cyclone and an anticyclone.,"A cyclone is a system of winds rotating inward to an area of low atmospheric pressure, while an anticyclone is a system of winds rotating outward from an area of high atmospheric pressure","Cyclone: low-pressure, inward-spiraling winds; anticyclone: high-pressure, outward-spiraling winds",False
+chemistry,32,What was Dmitri Mendeleev’s middle name?,Ivanovich,Ivanovich,False
+engineering,33,In what year was Chernobyl’s New Safe Confinement completed?,2016,2016,False
+biology,34,Which stereoisomeric form (D or L) do most biological amino acids adopt?,L,L,False
+physics,35,Who first formulated the Navier–Stokes equations?,Claude-Louis Navier and George Gabriel Stokes formulated the Navier–Stokes equations,Claude-Louis Navier and George Gabriel Stokes,False
+chemistry,36,What is the critical micelle concentration of sodium dodecyl sulfate (SDS) in mM?,8.2,8.2,False
+physics,37,What order of magnitude is the strain amplitude of gravitational waves detected by LIGO?,The order of magnitude of the strain amplitude of gravitational waves detected by LIGO is 10^-21,10^-21,False
+literature,38,What is the original French title of Proust’s In Search of Lost Time?,À la recherche du temps perdu,À la recherche du temps perdu,False
+mathematics,39,What paradox demonstrates that a solid sphere can be decomposed into two identical copies of itself?,Banach-Tarski paradox,Banach–Tarski paradox,False
+finance,40,What is the ISO 4217 currency code for the Venezuelan bolívar soberano?,VES,VES,False
+physics,41,What is the speed of sound in dry air at 20 °C (in m/s)?,343 m/s,343,False
+physics,42,Write down the Euler–Lagrange equation.,The Euler–Lagrange equation is \(\frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}} \right) - \frac{\partial L}{\partial q} = 0\),(d/dx)(∂L/∂y′) – ∂L/∂y = 0,True
+physics,43,Who first measured the speed of light using a rotating-mirror experiment?,Léon Foucault first measured the speed of light using a rotating-mirror experiment,Léon Foucault,False
+astronomy,44,What is the name of the galaxy cluster that contains the Milky Way?,The Local Group,Local Group,False
+technology,46,Who introduced the concept of the memristor?,Leon Chua introduced the concept of the memristor,Leon Chua,False
+chemistry,47,Draw the structural (skeletal) formula of ascorbic acid (vitamin C).,I'm unable to draw images or structural formulas directly. Please refer to a chemistry resource or drawing tool for the skeletal structure of ascorbic acid,C1=CC(=C(C(=C1O)O)O)C(=O)O (skeletal SMILES),True
+biology,48,What protein complex in eukaryotes is responsible for initiating transcription?,Transcription factor IID (TFIID),RNA polymerase II,True
+physics,49,What is the Sackur–Tetrode equation used to calculate?,The Sackur–Tetrode equation is used to calculate the entropy of an ideal monatomic gas,Absolute entropy of a monatomic ideal gas,True
+physics,50,What does the Derjaguin approximation estimate in colloid science?,The Derjaguin approximation estimates the force between curved surfaces in terms of the force between parallel plates,Force (interaction energy) between curved surfaces from planar-surface data,True

@@ -35,7 +35,6 @@ ai-hallucination-detection-main/
 │   └── make_prompts.py           # Combine CSVs or auto-generate via OpenAI + Wikipedia
 ├── simulation_data/
 │   └── raw/
-│       ├── prompts_auto-generated.csv  # placeholder
 │       ├── prompts_factual.csv            # example prompts (truncated)
 │       └── prompts_riddle.csv            # example prompts (truncated)
 ├── src/

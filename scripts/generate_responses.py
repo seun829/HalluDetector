@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import sys
 import os
 import argparse
@@ -6,6 +8,7 @@ import logging
 import pandas as pd
 import re
 import csv
+from typing import List
 
 # — Fix import path for hallu_detector —
 SCRIPT_DIR   = os.path.dirname(__file__)
@@ -22,16 +25,55 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-def clean_response(raw: str, prompt: str) -> str:
+# -------------------- helpers --------------------
+HEADER_ALIASES = {
+    "prompt": {"prompt", "text", "question"},
+    "correct_answer": {"correct_answer", "answer", "gold", "ground_truth", "label"},
+    "id": {"id", "index", "qid"},
+    "template": {"template", "domain", "topic", "seed"},
+}
+
+def _find_col(df: pd.DataFrame, target: str) -> str | None:
+    want = HEADER_ALIASES[target]
+    lower_map = {c.lower(): c for c in df.columns}
+    for cand in want:
+        if cand in lower_map:
+            return lower_map[cand]
+    return None
+
+def _sniff_delimiter(path: str) -> str:
+    try:
+        with open(path, 'r', encoding='utf-8', errors='replace') as f:
+            sample = f.read(4096)
+        try:
+            dialect = csv.Sniffer().sniff(sample, delimiters=",\t;|")
+            return dialect.delimiter
+        except csv.Error:
+            return ","
+    except Exception:
+        return ","
+
+def _read_csv_robust(path: str) -> pd.DataFrame | None:
+    sep = _sniff_delimiter(path)
+    try:
+        return pd.read_csv(path, sep=sep, keep_default_na=False)
+    except Exception:
+        pass
+    try:
+        return pd.read_csv(path, sep=sep, engine="python", on_bad_lines="skip", keep_default_na=False)
+    except Exception as e:
+        logging.error(f"Failed to read {path}: {e}")
+        return None
+
+def _clean_response(raw: str, prompt: str) -> str:
     """
-    Extract the first non-empty line after 'Answer:' (case-insensitive).
-    Fallback to the first non-empty line if no 'Answer:' marker.
-    Then strip any echoed prompt text.
+    Extract first concise answer. Prefer text after 'Answer:' (case-insensitive),
+    else first non-empty line. Strip echoed prompt and trailing punctuation.
     """
     text = raw or ""
-    match = re.search(r'Answer:\s*(.*)', text, flags=re.IGNORECASE|re.DOTALL)
-    if match:
-        after = match.group(1).strip()
+    m = re.search(r'Answer:\s*(.*)', text, flags=re.IGNORECASE | re.DOTALL)
+    if m:
+        after = m.group(1).strip()
         lines = [ln.strip() for ln in after.splitlines() if ln.strip()]
         text = lines[0] if lines else after
     else:
@@ -39,17 +81,75 @@ def clean_response(raw: str, prompt: str) -> str:
         text = lines[0] if lines else text.strip()
     if prompt and text.startswith(prompt):
         text = text[len(prompt):].strip()
+    text = re.sub(r"[.\s]+$", "", text)
     return text
 
-def process_files(prompt_files, response_files, model_name, use_openai):
-    # Hard fail on mismatched counts rather than letting zip() silently drop items
+def _wrap_prompt(base_q: str) -> str:
+    instruction = (
+        "You are an expert quiz assistant. "
+        "Answer the following question with a single concise statement. "
+        "If your answer is a number, write it as a numeral (e.g., 3). "
+        "Do not repeat the question or add commentary.\n"
+    )
+    return f"{instruction}Question: {base_q}\nAnswer:"
+
+def _derive_template_from_filename(path: str) -> str:
+    stem = os.path.splitext(os.path.basename(path))[0]  # e.g., prompts_riddle
+    if "prompts_" in stem:
+        return stem.split("prompts_", 1)[1].strip() or stem
+    return stem
+
+def _normalize_schema(df: pd.DataFrame, src_path: str) -> pd.DataFrame | None:
+    col_prompt = _find_col(df, "prompt")
+    col_answer = _find_col(df, "correct_answer")
+    col_id     = _find_col(df, "id")
+    col_tpl    = _find_col(df, "template")
+
+    if col_prompt is None:
+        logging.error(f"{src_path} is missing a prompt/text/question column.")
+        return None
+    if col_answer is None:
+        logging.error(f"{src_path} is missing a correct_answer/answer/gold column.")
+        return None
+
+    out = pd.DataFrame({
+        "prompt": df[col_prompt].astype(str),
+        "correct_answer": df[col_answer].astype(str),
+    })
+
+    if col_id is not None:
+        out["id"] = pd.to_numeric(df[col_id], errors="coerce").fillna(0).astype(int)
+    else:
+        out["id"] = range(1, len(out) + 1)
+
+    if col_tpl is not None:
+        out["template"] = df[col_tpl].astype(str)
+    else:
+        out["template"] = _derive_template_from_filename(src_path)
+
+    n_before = len(out)
+    out = out[out["prompt"].str.strip() != ""].copy()
+    if out.empty:
+        logging.warning(f"All prompts empty after normalization: {src_path}")
+        return None
+    if len(out) < n_before:
+        logging.info(f"Filtered {n_before - len(out)} empty prompts in {src_path}")
+
+    if out["id"].duplicated(keep=False).any():
+        logging.warning(f"{src_path} contains duplicate ids; reassigning sequential ids.")
+        out = out.reset_index(drop=True)
+        out["id"] = range(1, len(out) + 1)
+
+    return out[["template", "id", "prompt", "correct_answer"]]
+
+# -------------------- core --------------------
+def process_files(prompt_files: List[str], response_files: List[str], model_name: str, use_openai: bool):
     if len(prompt_files) != len(response_files):
         raise ValueError("prompt_files and response_files must have the same length.")
 
     for pth_in, pth_out in zip(prompt_files, response_files):
         logging.info(f"Reading prompts from {pth_in}")
 
-        # Existence + non-empty check, with clear logs
         if not os.path.exists(pth_in):
             logging.error(f"Input file not found: {pth_in}")
             continue
@@ -57,166 +157,77 @@ def process_files(prompt_files, response_files, model_name, use_openai):
             logging.warning(f"Skipping empty file: {pth_in}")
             continue
 
-        # Optionally skip legacy file named 'prompts.csv' so only auto-generated file is used
-        basename = os.path.basename(pth_in).lower()
-        if basename == "prompts.csv":
-            logging.info(f"Skipping legacy prompts file: {pth_in}")
+        df_raw = _read_csv_robust(pth_in)
+        if df_raw is None or df_raw.shape[1] == 0:
+            logging.error(f"Skipping unreadable file: {pth_in}")
             continue
 
-        # Try to sniff delimiter to handle CSV/TSV/; or | without new helpers
-        sep = ","
-        try:
-            with open(pth_in, 'r', encoding='utf-8', errors='replace') as f:
-                sample = f.read(4096)
-            try:
-                dialect = csv.Sniffer().sniff(sample, delimiters=",\t;|")
-                sep = dialect.delimiter
-            except csv.Error:
-                sep = ","
-        except Exception as e:
-            logging.warning(f"Failed to peek {pth_in} for delimiter ({e}); defaulting to comma.")
-
-        # Robust read with clear error handling
-        try:
-            df_prompts = pd.read_csv(pth_in, sep=sep)
-        except pd.errors.EmptyDataError:
-            logging.warning(f"Skipping file with no columns/data: {pth_in}")
-            continue
-        except Exception as e:
-            logging.error(f"Failed to read {pth_in}: {e}")
+        df_prompts = _normalize_schema(df_raw, pth_in)
+        if df_prompts is None or df_prompts.empty:
+            logging.error(f"Skipping {pth_in}: cannot normalize schema.")
             continue
 
-        if df_prompts is None or df_prompts.shape[1] == 0:
-            logging.warning(f"Skipping file that parsed to zero columns: {pth_in}")
-            continue
-        if df_prompts.empty:
-            logging.warning(f"Skipping empty dataframe from: {pth_in}")
-            continue
-
-        # Validate required columns
-        required_cols = {"id", "prompt", "correct_answer"}
-        missing = required_cols - set(df_prompts.columns)
-        if missing:
-            logging.error(f"{pth_in} is missing required column(s): {sorted(missing)}")
-            continue
-
-        # Normalize and filter rows
-        df_prompts["prompt"] = df_prompts["prompt"].fillna("").astype(str)
-        df_prompts["correct_answer"] = df_prompts["correct_answer"].fillna("").astype(str)
-
-        n_before = len(df_prompts)
-        df_prompts = df_prompts[df_prompts["prompt"].str.strip() != ""].copy()
-        if df_prompts.empty:
-            logging.warning(f"Skipping {pth_in}: all prompts are empty.")
-            continue
-        if len(df_prompts) < n_before:
-            logging.info(f"Filtered {n_before - len(df_prompts)} empty-prompt rows in {pth_in}")
-
-        # Warn on duplicate ids (can cause many-to-many merges)
-        dups = df_prompts["id"].duplicated(keep=False)
-        if dups.any():
-            bad = df_prompts.loc[dups, "id"].unique().tolist()
-            logging.warning(f"{pth_in} contains duplicate ids: {bad}")
-
-        # Wrap prompts
-        wrapped = []
-        for idx, prompt, corr in df_prompts[['id','prompt','correct_answer']].itertuples(index=False):
-            instruction = (
-                "You are an expert quiz assistant. "
-                "Answer the following question with a single concise statement. "
-                "If your answer is a number, please write it as a numeral (e.g 3 instead of three)."
-                "Do not repeat the question or add any commentary.\n"
-            )
-            full = f"{instruction}Question: {prompt}\nAnswer:"
-            wrapped.append((idx, full, None))
-
-        if not wrapped:
-            logging.warning(f"No prompts to generate for {pth_in}")
-            continue
+        wrapped = [(int(row["id"]), _wrap_prompt(row["prompt"]), None) for _, row in df_prompts.iterrows()]
 
         backend = "OpenAI" if use_openai else "HF"
         logging.info(f"Generating {len(wrapped)} responses via {backend}::{model_name}")
 
         try:
             if use_openai:
-                results = simple_generate_openai(wrapped, model_name=model_name)
+                gen = simple_generate_openai(wrapped, model_name=model_name)
             else:
-                results = simple_generate_hf(wrapped, model_name=model_name)
+                gen = simple_generate_hf(wrapped, model_name=model_name)
         except Exception as e:
             logging.error(f"Generation failed for {pth_in}: {e}")
             continue
 
-        if not results:
+        if not gen:
             logging.error(f"No results generated for {pth_in}")
             continue
 
-        df_out = pd.DataFrame(results, columns=['id','wrapped_prompt','model_response_raw'])
+        df_gen = pd.DataFrame(gen, columns=["id", "wrapped_prompt", "model_response_raw"])
 
-        # Merge back on id; validate to catch accidental one-to-many joins
         try:
-            df_out = df_out.merge(
-                df_prompts[["question_type", "template", "id", "prompt", "correct_answer"]],
-                on='id', how='left', validate='many_to_one'
-            )
+            df = df_prompts.merge(df_gen[["id", "model_response_raw"]], on="id", how="left", validate="one_to_one")
         except Exception as e:
             logging.error(f"Merge failed for {pth_in}: {e}")
             continue
 
-        # Clean raw outputs
-        df_out['model_response'] = df_out.apply(
-            lambda r: clean_response(r['model_response_raw'], r['prompt']),
+        df["model_response"] = df.apply(lambda r: _clean_response(r["model_response_raw"], r["prompt"]), axis=1)
+
+        df["hallucinated"] = df.apply(
+            lambda r: is_hallucinated((r["model_response"] or "").strip(), (r["correct_answer"] or "").strip()),
             axis=1
         )
 
-        # Label hallucinations (inputs sanitized above)
-        df_out['hallucinated'] = df_out.apply(
-            lambda r: is_hallucinated((r['model_response'] or "").strip(),
-                                      (r['correct_answer'] or "").strip()),
-            axis=1
-        )
+        # Write with model_response included
+        out_df = df[["template", "id", "prompt", "model_response", "correct_answer", "hallucinated"]].copy()
 
-        # Write outputs
         try:
             os.makedirs(os.path.dirname(pth_out), exist_ok=True)
-            df_out[[ 'id','prompt','model_response','correct_answer', 'hallucinated']].to_csv(pth_out, index=False, encoding='utf-8')
-            logging.info(f"Wrote {len(df_out)} rows to {pth_out}")
+            out_df.to_csv(pth_out, index=False, encoding="utf-8")
+            logging.info(f"Wrote {len(out_df)} rows to {pth_out}")
         except Exception as e:
             logging.error(f"Failed to write {pth_out}: {e}")
             continue
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate model responses, clean them, and label hallucinations."
+        description="Generate model responses, label hallucinations, and write outputs with model_response."
     )
-    parser.add_argument(
-        "--prompt-files", "-i", nargs="+", required=True,
-        help="Input CSV(s) with columns: id,prompt,correct_answer"
-    )
+    parser.add_argument("--prompt-files", "-i", nargs="+", required=True,
+                        help="Input CSV(s) (headers may be prompt/text/question and correct_answer/answer/gold)")
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument(
-        "--response-files", "-o", nargs="+",
-        help="Exact output CSV path(s), matching the count of prompt-files"
-    )
-    group.add_argument(
-        "--output-dir",
-        help="Directory to write labeled response CSVs (filenames derived)"
-    )
-    parser.add_argument(
-        "--model", "-m", required=True,
-        help="Model name for HF or OpenAI (e.g., gpt-4o, gpt-4-mini, roberta-large-mnli)"
-    )
-    parser.add_argument(
-        "--use-openai", action="store_true",
-        help="Force use of OpenAI API instead of HuggingFace"
-    )
+    group.add_argument("--response-files", "-o", nargs="+",
+                       help="Exact output CSV path(s), matching the count of prompt-files")
+    group.add_argument("--output-dir",
+                       help="Directory to write labeled response CSVs (filenames derived)")
+    parser.add_argument("--model", "-m", required=True,
+                        help="Model name, e.g., gpt-4o, gpt-4-mini, or a HF model id")
+    parser.add_argument("--use-openai", action="store_true",
+                        help="Force OpenAI API; otherwise auto when model starts with 'gpt-'")
     args = parser.parse_args()
 
-    # Remap legacy model identifier "gpt-4-32k" to "gpt-4o"
-    if args.model.lower() == "gpt-4-32k":
-        logging.info("Replacing model 'gpt-4-32k' with 'gpt-4o'")
-        args.model = "gpt-4o"
-
-    # Instead of using a fixed set, allow any model name starting with "gpt-"
     use_openai = args.use_openai or args.model.lower().startswith("gpt-")
     logging.info(f"Using OpenAI backend: {use_openai} (model: {args.model})")
 

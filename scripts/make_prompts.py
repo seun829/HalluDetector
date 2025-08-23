@@ -172,6 +172,7 @@ def answer_question_api(question: str, cfg: dict) -> str:
     """
     sys_msg = (
         "Answer the user's question with ONLY the final answer as a short phrase/number/name. "
+        "It must be super concise. "
         "No punctuation at the end, no units unless necessary, no explanation."
     )
     votes = max(1, int(cfg.get("self_consistency_votes", 3)))

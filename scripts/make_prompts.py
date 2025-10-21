@@ -109,12 +109,77 @@ def _atomic_write_csv(df: pd.DataFrame, path: str):
     tmp = path + ".tmp"
     # enforce column order & quoting
     ordered = df[["template","id","prompt","correct_answer"]]
-    ordered.to_csv(tmp, index=False, encoding="utf-8", quoting=csv.QUOTE_MINIMAL)
+    ordered.to_csv(
+        tmp,
+        index=False,
+        encoding="utf-8",
+        quoting=csv.QUOTE_ALL,      # more robust for downstream consumers
+        lineterminator="\n",
+        escapechar="\\",
+    )
     if ordered.shape[0] == 0:
         raise RuntimeError("Refusing to write empty prompts CSV.")
     if os.path.exists(path):
         os.remove(path)
     os.rename(tmp, path)
+
+# ---------- Robust JSON-array extraction from model output ----------
+_CODE_FENCE_RE = re.compile(r"```(?:json|javascript|js|python)?\s*(.*?)```", re.S | re.I)
+
+def _unfence(s: str) -> str:
+    """Return the first fenced block contents if present; else original string."""
+    m = _CODE_FENCE_RE.search(s)
+    return m.group(1) if m else s
+
+def _extract_json_array_text(s: str) -> str | None:
+    """Return substring spanning the first balanced JSON array; else None."""
+    start = s.find('[')
+    if start == -1:
+        return None
+    depth = 0
+    for i, ch in enumerate(s[start:], start=start):
+        if ch == '[':
+            depth += 1
+        elif ch == ']':
+            depth -= 1
+            if depth == 0:
+                return s[start:i+1]
+    return None
+
+def _parse_questions_text(txt: str) -> List[str]:
+    """Best-effort to obtain a list[str] of questions from possibly noisy model text."""
+    txt = _unfence(txt)
+
+    # Try strict JSON
+    try:
+        data = json.loads(txt)
+        if isinstance(data, list):
+            return [_norm(x) for x in data if isinstance(x, str) and x.strip()]
+    except Exception:
+        pass
+
+    # Try extracting the first JSON array region
+    arr_txt = _extract_json_array_text(txt)
+    if arr_txt:
+        try:
+            data = json.loads(arr_txt)
+            if isinstance(data, list):
+                return [_norm(x) for x in data if isinstance(x, str) and x.strip()]
+        except Exception:
+            pass
+
+    # Fallback: line-based, ignore fence/bracket noise and trailing commas
+    out = []
+    for line in txt.splitlines():
+        line = _strip_numbering(_norm(line.rstrip(',')))
+        if not line:
+            continue
+        if line in ('```', '```json', '```javascript', '```js', '[', ']', ','):
+            continue
+        if re.fullmatch(r'^[\[\]{}(),]+$', line):
+            continue
+        out.append(line)
+    return out
 
 # -------------------- API logic --------------------
 def generate_questions_for_seed_api(seed: str, count: int, cfg: dict) -> List[str]:
@@ -126,8 +191,9 @@ def generate_questions_for_seed_api(seed: str, count: int, cfg: dict) -> List[st
         user_msg = (
             "Generate exactly {k} unique, tricky, one-sentence questions ABOUT the topic: '{seed}'. "
             "Do NOT include answers. Do NOT number them. "
-            "Return a JSON array of strings, no extra text."
-            "They must be linked to a straightforward and short answer"
+            "Return a JSON array ONLY (no code fences, no markdown, no extra text), exactly like "
+            "[\"q1\", \"q2\", ...]. "
+            "Each question must be answerable with a short, unambiguous phrase."
         ).format(k=k, seed=seed)
         txt = _chat(
             messages=[{"role":"system","content":sys_msg},{"role":"user","content":user_msg}],
@@ -135,19 +201,7 @@ def generate_questions_for_seed_api(seed: str, count: int, cfg: dict) -> List[st
             temperature=cfg["temperature_questions"],
             max_tokens=cfg["max_tokens_questions"],
         )
-        out: List[str] = []
-        # Try JSON first
-        try:
-            data = json.loads(txt)
-            if isinstance(data, list):
-                out = [_norm(x) for x in data if isinstance(x, str) and x.strip()]
-        except Exception:
-            # fallback: split lines
-            for line in txt.splitlines():
-                line = _norm(_strip_numbering(line))
-                if line:
-                    out.append(line)
-        return out
+        return _parse_questions_text(txt)
 
     seen, out = set(), []
     attempts = 0
@@ -155,7 +209,8 @@ def generate_questions_for_seed_api(seed: str, count: int, cfg: dict) -> List[st
     while len(out) < count and attempts < 3:
         batch = _ask(need)
         for q in batch:
-            if q not in seen:
+            q = q.strip()
+            if q and q not in seen:
                 out.append(q); seen.add(q)
                 if len(out) == count:
                     break

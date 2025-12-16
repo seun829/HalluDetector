@@ -163,7 +163,7 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
             procDiv.appendChild(table);
           } catch (e) {
             const errP = document.createElement('p');
-            errP.textContent = `⚠️ Could not render ${fn}: ${e.message || e}`;
+            errP.textContent = `Could not render ${fn}: ${e.message || e}`;
             procDiv.appendChild(errP);
           }
         }
@@ -172,7 +172,7 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
   } catch (err) {
     console.error("Pipeline error:", err);
     const logsDiv = document.getElementById('pipeline-logs');
-    logsDiv.textContent = `❌ Pipeline error: ${err && err.message ? err.message : String(err)}`;
+    logsDiv.textContent = `Pipeline error: ${err && err.message ? err.message : String(err)}`;
   } finally {
     btn.disabled    = false;
     btn.textContent = 'Run Entire Pipeline';

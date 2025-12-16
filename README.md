@@ -42,7 +42,7 @@ ai-hallucination-detection-main/
 │       ├── __init__.py
 │       ├── detect.py              # similarity (all-MiniLM-L6-v2) + NLI (roberta-large-mnli)
 │       ├── evaluate.py            # compute hallucination metrics from labeled CSVs
-│       └── generate.py            # HF/OpenAI helpers (OpenAI uses old ChatCompletion API)
+│       └── generate.py            # HF/OpenAI helpers (OpenAI uses old ChatCompletion API)    
 ├── static/
 │   ├── index.html                 # frontend UI (3 panels)
 │   ├── script.js                  # front-end logic
@@ -221,6 +221,10 @@ Covers baseline behaviors of `is_hallucinated`.
 - Apply/adapt techniques in high-risk fields (medical, legal).  
 - Harden the detector and complete the abridged sections.
 
+---
+
+## Important Note
+In order for the hallucination detection to work at it's intended function you must already have the SentenceTransformers models "all-MiniLM-L6-v2" and "roberta-large-mnli" downloaded on your computer.
 
 ---
 

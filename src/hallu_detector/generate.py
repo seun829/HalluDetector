@@ -34,6 +34,10 @@ def simple_generate_openai(prompt_list, model_name):
         # GPT-4 base context ~8k, -32k variant
         max_tok = 2000 if model_name == "gpt-4" else 4000
         temperature = 0.8
+        
+    if model_name.startswith("gpt-5"):
+        max_tok = 8000
+        temperature = 0.7
     else:
         # Default for GPT-3.5-turbo
         max_tok = 512

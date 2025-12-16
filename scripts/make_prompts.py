@@ -308,7 +308,9 @@ def main():
 
     out_csv = os.path.join(args.output_dir, "prompts_auto-generated.csv")
     _atomic_write_csv(df, out_csv)
-    logging.info("✅ Wrote %d prompts to %s", len(df), out_csv)
+
+    #update
+    logging.info("Wrote %d prompts to %s", len(df), out_csv)
 
 if __name__ == "__main__":
     main()

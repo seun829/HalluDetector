@@ -1,0 +1,47 @@
+template,id,prompt,model_response,correct_answer,hallucinated
+logic,1,How many months have 28 days?,12,12,False
+logic,3,How many birthdays does the average person celebrate?,1,1,False
+language,4,What English word is always spelled incorrectly in every dictionary?,Incorrectly,incorrectly,False
+logic,6,How many sides does a circle have?,A circle has 0 sides,Two (inside and outside),True
+geography,7,What is the only U.S. state capital that is not accessible by road?,Juneau,Juneau,False
+logic,8,Which single letter of the alphabet has the most water?,C,C,False
+language,9,What’s the only English word that ends with the letters “mt”?,Dreamt,dreamt,False
+language,10,How many letters are in the English alphabet?,26,26,False
+logic,11,Which weighs more: a kilogram of steel or a kilogram of feathers?,They weigh the same,They weigh the same,False
+history,12,In what year did the 21st century actually begin?,2001,2001,False
+math,13,How many seconds are there in a day?,86400,86400,False
+logic,14,What gets wetter the more it dries?,A towel,A towel,False
+geography,15,Which country’s name is also its capital city spelled the same way?,Singapore,Luxembourg,True
+language,16,What English word becomes shorter when you add two letters to it?,Short,short,False
+geography,17,How many US states have names that start with the letter “A”?,4,4,False
+logic,18,What goes up but never comes down?,Age,Your age,False
+physics,19,Which weighs more: water or ice of the same volume?,Water weighs more than ice of the same volume,Water,False
+language,20,What word is pronounced the same even after you take away four of its five letters?,Queue,queue,False
+astronomy,21,How many natural satellites does Earth have?,1,1,False
+language,22,Which English month’s name is also a female first name?,May,May,False
+math,23,What is the only even prime number?,2,2,False
+logic,24,Which weighs more: 100 kg or 220 lbs?,100 kg weighs more,100 kg,False
+math,25,How many days are in February during a leap year?,29,29,False
+logic,26,What breaks on the water but never on land?,A wave,A wave,False
+math,27,How many zeros are in one million?,6,6,False
+geography,29,Which US state abbreviation comes first in the alphabet?,AK,AK,False
+astronomy,31,Which planet is named after the Roman messenger god?,Mercury,Mercury,False
+math,32,How many cards are in a standard deck if you remove all face cards?,40,40,False
+math,33,What’s the square root of –1?,i,i,False
+biology,34,How many legs does an average centipede have?,An average centipede has approximately 30 legs,100,True
+logic,35,What gets smaller the more you take away from it?,A hole,A hole,False
+chemistry,36,Which element’s chemical symbol contains only consonants?,Tungsten (W),Zn,True
+history,37,In what month do U.S. Presidential elections take place?,November,November,False
+language,38,What English word contains all five vowels in alphabetical order exactly once?,Facetious,facetious,False
+physics,39,Which is heavier at sea level: one mole of lead or one mole of aluminum?,One mole of lead,Lead,False
+logic,40,How many times can you subtract 5 from 25?,Once,Once,False
+logic,41,What building has the most stories?,"The Burj Khalifa has the most stories, with 163 floors",A library,True
+geography,42,Which US state borders only one other state?,Maine,Maine,False
+biology,43,What is the only food that never spoils?,Honey,Honey,False
+biology,44,How many legs does a lobster have?,10,10,False
+chemistry,45,Which element is liquid at room temperature and is used in thermometers?,Mercury is liquid at room temperature and is used in thermometers,Mercury,False
+math,46,How many keys are on a standard piano?,88,88,False
+language,47,What four-letter word becomes longer when you add two letters?,Long,long,False
+biology,48,How many teeth does an adult human normally have?,32,32,False
+astronomy,49,Which planet has the hottest surface temperature?,Venus,Venus,False
+logic,50,What runs but never walks and has a bed but never sleeps?,A river,A river,False

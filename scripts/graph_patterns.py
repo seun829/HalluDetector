@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+#currently has question type analysis, but no collumn for that in the data
+
 import argparse
 import os
 import logging
@@ -97,33 +99,6 @@ def analyze_keywords_tfidf(df, top_n=10):
             "accuracy": df.loc[mask, "is_correct"].mean()
         })
     return pd.DataFrame(rows)
-
-
-class FeatureExtractor(nn.Module):
-    def __init__(self, input_dim):
-        super().__init__()
-        self.fc = nn.Sequential(
-            nn.Linear(input_dim, 128), nn.ReLU(),
-            nn.Linear(128, 64),  nn.ReLU(),
-            nn.Linear(64, 32)
-        )
-
-    def forward(self, x):
-        return self.fc(x)
-
-
-def extract_features(df):
-    feat_cols = [
-        "prompt_length", "response_length"
-    ] + [c for c in df.columns if c.startswith("contains_")]
-    sub = df[feat_cols].fillna(0).astype(float)
-    t = torch.tensor(sub.values, dtype=torch.float32)
-    model = FeatureExtractor(t.shape[1])
-    with torch.no_grad():
-        feats = model(t).numpy()
-    for i in range(feats.shape[1]):
-        df[f"extracted_feature_{i}"] = feats[:, i]
-    return df
 
 
 def visualize_results(df, x, y, title, xlabel, ylabel, output):
@@ -249,7 +224,9 @@ def main():
     else:
         logging.info("No interpretable features found for heatmap; skipping.")
 
-    logging.info(f"✅ Graphs and webpage written to {args.output_dir}")
+
+    #update
+    logging.info(f"Graphs and webpage written to {args.output_dir}")
 
 
 if __name__ == "__main__":

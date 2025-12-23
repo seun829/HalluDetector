@@ -20,37 +20,56 @@ def simple_generate_hf(prompt_list, model_name="gpt2"):
         results.append((pid, prompt, answer))
     return results
 
-
-def simple_generate_openai(prompt_list, model_name):
+def simple_generate_openai(prompt_list, model_name: str):
     """
     Generate text using an OpenAI GPT model.
     Expects OPENAI_API_KEY to be set in the environment.
-    Model name is taken directly from a dropdown, so it should be valid (e.g., 'gpt-3.5-turbo' or 'gpt-4').
     """
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    # Adjust parameters for GPT-4 vs GPT-3.5
-    if model_name.startswith("gpt-4"):
-        # GPT-4 base context ~8k, -32k variant
-        max_tok = 2000 if model_name == "gpt-4" else 4000
-        temperature = 0.8
-        
-    if model_name.startswith("gpt-5"):
-        max_tok = 8000
-        temperature = 0.7
-    else:
-        # Default for GPT-3.5-turbo
-        max_tok = 512
-        temperature = 1.0
+    m = (model_name or "").strip()
 
+    # Decide endpoint: GPT-5 family works best with Responses API
+    use_responses = m.startswith("gpt-5")
     results = []
+
     for pid, prompt, _ in prompt_list:
+        if use_responses:
+            # GPT-5 models: use Responses API and max_output_tokens
+            req = {
+                "model": m,
+                "input": [{"role": "user", "content": prompt}],
+                "max_output_tokens": 512,  # your prompts want short answers; bump if needed
+            }
+
+            # Temperature compatibility:
+            # - GPT-5.2 supports temperature only when reasoning effort is "none"
+            # - Older GPT-5 (gpt-5, gpt-5-mini, gpt-5-nano) will error if you include temperature
+            #   per OpenAI docs. :contentReference[oaicite:4]{index=4}
+            if m.startswith(("gpt-5.2", "gpt-5.1")):
+                req["reasoning"] = {"effort": "none"}
+                req["temperature"] = 0.7
+
+            r = client.responses.create(**req)
+            answer = (getattr(r, "output_text", "") or "").strip()
+            results.append((pid, prompt, answer))
+            continue
+
+        # Non-GPT-5: keep Chat Completions
+        if m.startswith("gpt-4"):
+            max_tok = 2000 if m == "gpt-4" else 4000
+            temperature = 0.8
+        else:
+            max_tok = 512
+            temperature = 1.0
+
         response = client.chat.completions.create(
-            model=model_name,
+            model=m,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
-            max_tokens=max_tok
+            max_tokens=max_tok,
         )
         answer = response.choices[0].message.content.strip()
         results.append((pid, prompt, answer))
+
     return results

@@ -242,7 +242,7 @@ def run_pipeline():
         return jsonify({"error": "No model specified. Provide {'model': '<name>'} in JSON body."}), 400
 
     run_id = datetime.utcnow().strftime("%Y%m%d_%H%M%S") + "_" + uuid.uuid4().hex[:8]
-    run_root = os.path.join("output", run_id)
+    run_root = os.path.join(PROJECT_ROOT, "output", run_id)
     run_raw = os.path.join(run_root, "raw")
     run_proc = os.path.join(run_root, "processed")
     run_graph = os.path.join(run_root, "graphs")

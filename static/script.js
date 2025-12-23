@@ -20,6 +20,14 @@ const PIPELINE_STEPS = [
   'evaluate_metrics'
 ];
 
+const STEP_LABELS = {
+  make_prompts: 'Create Auto-Generated Prompts',
+  prompts_copied: 'Copied Prompts in the Appropriate Directory',
+  generate_responses: 'Generate Responses from the Appropriate Model',
+  analyze_patterns: 'Analyze Patterns',
+  evaluate_metrics: 'Evaluate Metrics'
+};
+
 // 1) Detect with GT
 document.getElementById('detect-btn').onclick = async () => {
   const out = document.getElementById('detect-result');
@@ -67,14 +75,16 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
   btn.disabled        = true;
   btn.textContent     = 'Running…';
 
-  // build step list
+  // build step list (always show labels)
   for (const step of PIPELINE_STEPS) {
     const li = document.createElement('li');
-    li.id          = `step-${step}`;
-    li.textContent = `⚪ ${step}`;
+    li.id = `step-${step}`;
+    const label = STEP_LABELS[step] || step;
+    li.textContent = `⚪ ${label}`;
     li.classList.add('step-pending');
     stepsDiv.appendChild(li);
   }
+
 
   try {
     const model = document.getElementById('pipeline-model').value;
@@ -87,18 +97,23 @@ document.getElementById('run-pipeline-btn').onclick = async () => {
     const runId  = (res && res.run_id) || '';
 
     // update steps & logs
+
     for (const step of PIPELINE_STEPS) {
       const lg = logs[step] || {};
       const ok = (lg && lg.returncode === 0);
+
       const li = document.getElementById(`step-${step}`);
       if (li) {
-        li.textContent = `${ok ? '✅' : '❌'} ${step}`;
-        li.classList.remove('step-pending','step-success','step-fail');
+        const label = STEP_LABELS[step] || step;
+        li.textContent = `${ok ? '🟢' : '🔴'} ${label}`;
+        li.classList.remove('step-pending', 'step-success', 'step-fail');
         li.classList.add(ok ? 'step-success' : 'step-fail');
       }
+
       const stdOut = (lg && lg.stdout) ? String(lg.stdout) : '';
       const stdErr = (lg && lg.stderr) ? String(lg.stderr) : '';
-      logsDiv.textContent += `--- ${step} ---\n${stdOut}${stdErr}\n\n`;
+      logsDiv.textContent += `--- ${STEP_LABELS[step] || step} (${step}) ---\n${stdOut}${stdErr}\n\n`;
+
       if (!ok) break;
     }
 

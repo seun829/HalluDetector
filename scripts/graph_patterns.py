@@ -168,9 +168,9 @@ def main():
         f.write(f"<iframe src='{rel_path}' width='100%' height='400'></iframe>\n")
         # embed graphs
         graphs = [
-            "accuracy_by_question_type.png",
-            "accuracy_by_template.png",
-            "accuracy_by_keywords.png",
+            "hallucinations_by_question_type.png",
+            "hallucinations_by_template.png",
+            "hallucinations_by_keywords.png",
             "feature_correlation_heatmap.png"
         ]
         for g in graphs:
@@ -185,24 +185,24 @@ def main():
     qta = analyze_by_question_type(df)
     if qta is not None:
         visualize_results(
-            qta, "question_type", "accuracy",
-            "Accuracy by Question Type", "Question Type", "Accuracy",
+            qta, "question_type", "hallucination rate",
+            "Accuracy by Question Type", "Question Type", "Hallucination Rate",
             output=os.path.join(args.output_dir, "accuracy_by_question_type.png")
         )
 
     ta = analyze_by_template(df)
     if ta is not None:
         visualize_results(
-            ta, "template", "accuracy",
-            "Accuracy by Template", "Template", "Accuracy",
+            ta, "template", "hallucination rate",
+            "Accuracy by Template", "Template", "Hallucination Rate",
             output=os.path.join(args.output_dir, "accuracy_by_template.png")
         )
 
     kwa = analyze_keywords_tfidf(df, top_n=args.top_keywords)
     if not kwa.empty:
         visualize_results(
-            kwa, "keyword", "accuracy",
-            "Accuracy by Top TF-IDF Keywords", "Keyword", "Accuracy",
+            kwa, "keyword", "hallucination rate",
+            "Accuracy by Top TF-IDF Keywords", "Keyword", "Hallucination Rate",
             output=os.path.join(args.output_dir, "accuracy_by_keywords.png")
         )
 
@@ -216,7 +216,7 @@ def main():
         corr = df[actual_feats + ["is_correct"]].corr()
         plt.figure(figsize=(12, 8))
         sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
-        plt.title("Correlation of Features and Accuracy")
+        plt.title("Correlation of Features and Hallucination Rate")
         out = os.path.join(args.output_dir, "feature_correlation_heatmap.png")
         plt.tight_layout()
         plt.savefig(out)

@@ -190,7 +190,9 @@ def generate_questions_for_seed_api(seed: str, count: int, cfg: dict) -> List[st
     def _ask(k: int) -> List[str]:
         user_msg = (
             "Generate exactly {k} unique, tricky, one-sentence questions ABOUT the topic: '{seed}'. "
-            "Do NOT include answers. Do NOT number them. "
+            "I repeat, these questions must be tricky and niche topics that are unlikely to be answered correctly"
+            "Avoid yes or no questions of any sort."
+            "Do NOT include answers. Do NOT number them. However make sure you do know the answer to these questions."
             "Return a JSON array ONLY (no code fences, no markdown, no extra text), exactly like "
             "[\"q1\", \"q2\", ...]. "
             "Each question must be answerable with a short, unambiguous phrase."

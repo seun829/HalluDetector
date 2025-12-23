@@ -88,6 +88,7 @@ def _wrap_prompt(base_q: str) -> str:
     instruction = (
         "You are an expert quiz assistant. "
         "Answer the following question with a single concise statement. "
+        "If it is asking for a term, simply state the term and nothing else"
         "If your answer is a number, write it as a numeral (e.g., 3). "
         "Do not repeat the question or add commentary.\n"
     )

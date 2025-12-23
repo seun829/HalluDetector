@@ -30,26 +30,37 @@ from dataclasses import dataclass, asdict
 from typing import Dict, Any, List
 
 # --- Optional heavy deps (graceful degradation) -------------------------------
+# NOTE: Soft fallbacks are disabled. Missing deps/models now raise at runtime.
+_TORCH_IMPORT_ERROR = None
+_ST_IMPORT_ERROR = None
+_TR_IMPORT_ERROR = None
+
 try:
     import torch
-except Exception:
+except Exception as e:
     torch = None
+    _TORCH_IMPORT_ERROR = e
 
 try:
     from sentence_transformers import SentenceTransformer, util
-except Exception:
+except Exception as e:
     SentenceTransformer, util = None, None
+    _ST_IMPORT_ERROR = e
 
 try:
-    from transformers import pipeline
-except Exception:
-    pipeline = None
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification
+except Exception as e:
+    AutoTokenizer, AutoModelForSequenceClassification = None, None
+    _TR_IMPORT_ERROR = e
 
 # ---------------------------------------------------------------------
 # Lazy singletons for models (thread-safe)
 # ---------------------------------------------------------------------
-_ST = None        # SentenceTransformer encoder
-_NLI = None       # MNLI text-classification pipeline
+_ST = None              # SentenceTransformer encoder
+_NLI_MODEL = None       # MNLI model
+_NLI_TOK = None         # MNLI tokenizer
+_NLI_LABEL2ID = None    # label mapping
+_DEVICE = None          # torch.device
 _LOCK = threading.Lock()
 
 
@@ -59,25 +70,61 @@ def _ensure_models():
     Works on CPU by default; uses GPU if available.
     Soft-fails if libraries are missing.
     """
-    global _ST, _NLI
-    if _ST is not None and _NLI is not None:
+    global _ST, _NLI_MODEL, _NLI_TOK, _NLI_LABEL2ID, _DEVICE
+    if _ST is not None and _NLI_MODEL is not None and _NLI_TOK is not None:
         return
     with _LOCK:
-        if _ST is None and SentenceTransformer is not None:
+        if _ST is not None and _NLI_MODEL is not None and _NLI_TOK is not None:
+            return
+
+        # Fail fast if deps are missing (no soft fallback).
+        if torch is None:
+            raise RuntimeError(f"Missing dependency: torch. Import error: {_TORCH_IMPORT_ERROR!r}")
+        if SentenceTransformer is None or util is None:
+            raise RuntimeError(f"Missing dependency: sentence-transformers. Import error: {_ST_IMPORT_ERROR!r}")
+        if AutoTokenizer is None or AutoModelForSequenceClassification is None:
+            raise RuntimeError(f"Missing dependency: transformers. Import error: {_TR_IMPORT_ERROR!r}")
+
+        _DEVICE = torch.device("cuda:0" if (hasattr(torch, "cuda") and torch.cuda.is_available()) else "cpu")
+
+        if _ST is None:
             try:
-                _ST = SentenceTransformer("all-MiniLM-L6-v2")
-            except Exception:
-                _ST = None
-        if _NLI is None and pipeline is not None:
+                _ST = SentenceTransformer("all-MiniLM-L6-v2", device=str(_DEVICE))
+            except Exception as e:
+                raise RuntimeError(f"Failed to load SentenceTransformer(all-MiniLM-L6-v2): {e!r}") from e
+
+        if _NLI_MODEL is None or _NLI_TOK is None:
             try:
-                device = 0 if (torch is not None and hasattr(torch, "cuda") and torch.cuda.is_available()) else -1
-                _NLI = pipeline(
-                    task="text-classification",
-                    model="roberta-large-mnli",
-                    device=device,
-                )
-            except Exception:
-                _NLI = None
+                name = "roberta-large-mnli"
+                _NLI_TOK = AutoTokenizer.from_pretrained(name)
+                _NLI_MODEL = AutoModelForSequenceClassification.from_pretrained(name)
+                _NLI_MODEL.to(_DEVICE)
+                _NLI_MODEL.eval()
+                _NLI_LABEL2ID = getattr(_NLI_MODEL.config, "label2id", None) or {
+                    "CONTRADICTION": 0,
+                    "NEUTRAL": 1,
+                    "ENTAILMENT": 2,
+                }
+            except Exception as e:
+                raise RuntimeError(f"Failed to load MNLI model(roberta-large-mnli): {e!r}") from e
+
+        # Warmup: catches device/cache issues early and avoids first-call latency spikes.
+        try:
+            _ = _ST.encode("warmup", convert_to_tensor=True, normalize_embeddings=True)
+            toks = _NLI_TOK("warmup", "warmup", return_tensors="pt", truncation=True, max_length=256)
+            toks = {k: v.to(_DEVICE) for k, v in toks.items()}
+            with torch.no_grad():
+                _ = _NLI_MODEL(**toks).logits
+        except Exception as e:
+            raise RuntimeError(f"Model warmup failed: {e!r}") from e
+
+        import logging
+        logging.info(
+            "Hallucination detector models loaded. device=%s ST=%s NLI=%s",
+            _DEVICE,
+            "all-MiniLM-L6-v2",
+            "roberta-large-mnli",
+        )
 
 
 # ---------------------------------------------------------------------
@@ -213,14 +260,12 @@ def _semantic_similarity(a: str, b: str) -> float:
     Soft-fails to lexical Jaccard if ST is unavailable.
     """
     _ensure_models()
-    if _ST is None or util is None:
-        return _jaccard(a, b)  # graceful degradation
     try:
         e1 = _ST.encode(_normalize_text(a), convert_to_tensor=True, normalize_embeddings=True)
         e2 = _ST.encode(_normalize_text(b), convert_to_tensor=True, normalize_embeddings=True)
         return float(util.cos_sim(e1, e2).item())
-    except Exception:
-        return _jaccard(a, b)
+    except Exception as e:
+        raise RuntimeError(f"Embedding similarity failed: {e!r}") from e
 
 # --- NLI helpers --------------------------------------------------------------
 def _map_mnli_label(label: str) -> str:
@@ -253,63 +298,22 @@ def _nli_probs(premise: str, hypothesis: str) -> Dict[str, float]:
     Soft-fails to neutral if pipeline is unavailable.
     """
     _ensure_models()
-    if _NLI is None:
-        return {"entail": 0.0, "neutral": 1.0, "contradict": 0.0}
-
-    inputs = {"text": (premise or ""), "text_pair": (hypothesis or "")}
-
-    # Try modern call first (top_k=None + padding/truncation to avoid tensor shape errors)
     try:
-        out = _NLI(inputs, top_k=None, padding=True, truncation=True, max_length=256)
-    except TypeError:
-        try:
-            out = _NLI(inputs, padding=True, truncation=True, max_length=256)
-        except TypeError:
-            out = _NLI(inputs)
-    except Exception:
-        return {"entail": 0.0, "neutral": 1.0, "contradict": 0.0}
+        toks = _NLI_TOK(premise or "", hypothesis or "", return_tensors="pt",
+                        truncation=True, max_length=256)
+        toks = {k: v.to(_DEVICE) for k, v in toks.items()}
+        with torch.no_grad():
+            logits = _NLI_MODEL(**toks).logits.squeeze(0)  # [3]
+        probs = torch.softmax(logits, dim=-1).detach().cpu().tolist()
 
-    # Normalize to a flat list of dicts {label, score} or logits
-    if isinstance(out, dict):
-        arr = [out]
-    elif isinstance(out, list):
-        arr = out[0] if out and isinstance(out[0], list) else out
-    else:
-        arr = []
+        lid = _NLI_LABEL2ID or {"CONTRADICTION": 0, "NEUTRAL": 1, "ENTAILMENT": 2}
+        c = probs[int(lid.get("CONTRADICTION", 0))]
+        n = probs[int(lid.get("NEUTRAL", 1))]
+        e = probs[int(lid.get("ENTAILMENT", 2))]
 
-    probs = {"ENTAILMENT": 0.0, "NEUTRAL": 0.0, "CONTRADICTION": 0.0}
-    bucket = {"ENTAILMENT": [], "NEUTRAL": [], "CONTRADICTION": []}
-
-    for item in arr:
-        if not isinstance(item, dict):
-            continue
-        lab = _map_mnli_label(item.get("label", ""))
-        # Some versions surface "score" as post-softmax; others surface "logits"
-        if "logits" in item and isinstance(item["logits"], (list, tuple)):
-            # logits ordering is typically [CONTRADICTION, NEUTRAL, ENTAILMENT]
-            logits = item["logits"]
-            if len(logits) == 3:
-                c, n, e = _softmax(logits)
-                bucket["CONTRADICTION"].append(c)
-                bucket["NEUTRAL"].append(n)
-                bucket["ENTAILMENT"].append(e)
-                continue
-        try:
-            sc = float(item.get("score", 0.0))
-        except Exception:
-            sc = 0.0
-        if lab in bucket:
-            bucket[lab].append(sc)
-
-    # Aggregate by max (robust to duplicate label entries)
-    for k in probs:
-        probs[k] = max(bucket[k]) if bucket[k] else probs[k]
-
-    return {
-        "entail": probs["ENTAILMENT"],
-        "neutral": probs["NEUTRAL"],
-        "contradict": probs["CONTRADICTION"],
-    }
+        return {"entail": float(e), "neutral": float(n), "contradict": float(c)}
+    except Exception as e:
+        raise RuntimeError(f"NLI inference failed: {e!r}") from e
 
 
 # ---------------------------------------------------------------------
@@ -346,7 +350,16 @@ def detect_details(answer: str, correct_answer: str, th: Thresholds = Thresholds
     corr = _normalize_text(corr_raw)
 
     # Substring shortcut (case-insensitive, normalized)
-    if corr in ans or ans in corr:
+    # Hardened: only allow when one side is short (to avoid "contains token" false-safes).
+    corr_toks = _tokenize(corr_raw)
+    ans_toks = _tokenize(ans_raw)
+    ans_pad = f" {ans} "
+    corr_pad = f" {corr} "
+
+    short_corr = len(corr_toks) <= 4
+    short_ans = len(ans_toks) <= 4
+
+    if (short_corr and corr_pad in ans_pad) or (short_ans and ans_pad in corr_pad):
         num = _numeric_mismatch(ans_raw, corr_raw, rel_tol=th.numeric_rel_tol) if th.numeric_strict else {"mismatch": False}
         return {
             "hallucinated": bool(num.get("mismatch", False)),

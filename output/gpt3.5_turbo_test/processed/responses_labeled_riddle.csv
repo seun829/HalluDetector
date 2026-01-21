@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+logic,1,Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,25,1027,True,False,False,,none
+logic,2,Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air due to differences in density,"Gold, because it displaces less air",False,False,False,,none
+logic,3,A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,December 31,"Dec 30, Dec 31, or Jan 1",False,False,False,,none
+language,4,Fill the blank with one word so the statement is true the word has exactly blank letters.,Seven,four,True,False,False,,none
+language,5,Combine MINUTE and MOMENT which letters occur an odd number of times?,"M, N, O, E",IMOU,True,False,False,,none
+logic,6,What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,Jordan curve theorem,False,False,False,,none
+geography,7,Name the US state capital not connected by road to the rest of its state.,Honolulu,Juneau,True,False,False,,none
+logic,8,Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,C,False,False,False,,none
+language,9,Give the five letter British past tense of dream that ends with m t.,dreamt,dreamt,False,False,False,,none
+language,10,How many letters are used in the English alphabet for dictionary ordering?,26,26,False,False,False,,none
+logic,11,Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,"Steel box has greater true mass because feathers displace more air, causing a greater loss in weight","Feathers, because it experiences greater buoyant force",False,False,False,,none
+history,12,With no year zero what is the last year of the twentieth century?,2000,2000,False,False,False,,none
+math,13,In 24 hour time HHMMSS how many palindromes occur in one day?,6,96,True,False,False,,none
+logic,14,Name an everyday item that removes water from other things and gains that water.,Dehumidifier,a towel,False,False,False,,none
+geography,15,Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,Luxembourg,False,False,False,,none
+language,16,Find a word that becomes a word meaning less in length when you add er.,Short,short,False,False,False,,none
+geography,17,Name the two US states that start with A and have exactly seven letters.,Alabama Hawaii,Alabama and Arizona,False,False,False,,none
+logic,18,What increases by exactly one each time you pass a birthday?,Age,your age,False,False,False,,none
+physics,19,A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,The water level remains the same,below the brim,True,False,False,,none
+language,20,Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,queue,False,False,False,,none
+astronomy,21,Name Earth’s natural moon.,Moon,the Moon,False,False,False,,none
+language,22,Which month name is also a verb meaning permitted?,May,May,False,False,False,,none
+math,23,What fact explains why 2 is the only even prime?,2 is the only even prime because it is the only even number that is not divisible by any other even number,any even number greater than 2 is divisible by 2,True,False,False,,none
+logic,24,Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,31,0.462,True,False,False,,none
+math,25,Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,9609,11297,True,False,False,,none
+logic,26,Name something that can break on a shore but not on land in the same sense.,A wave,a wave,False,False,False,,none
+math,27,What method gives the number of trailing zeros in n factorial?,Legendre's formula,count the factors of 5,False,False,False,,none
+math,28,Which integer from 1 to 100 equals the number of letters in its English name?,4,4,False,False,False,,none
+geography,29,Among USPS state abbreviations which comes first alphabetically?,AK,AK,False,False,False,,none
+language,30,Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,SWIMS,False,False,False,,none
+astronomy,31,Which planet shares its name with the Roman messenger god?,Mercury,Mercury,False,False,False,,none
+math,32,How many 5 card poker hands contain exactly two face cards and no aces?,"264,600",471240,True,False,False,,none
+math,33,In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,j,False,False,False,,none
+biology,34,A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,45,24,True,False,False,,none
+logic,35,What gets larger when you take away part of it?,Hole,a hole,False,False,False,,none
+chemistry,36,What is the atomic number of zinc?,30,30,False,False,False,,none
+history,37,US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,November 2,False,False,False,,none
+language,38,Which 9 letter English word contains the vowels a e i o u exactly once each in order?,facetious,facetious,False,False,False,,none
+physics,39,How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,1177.2,180.22,True,False,False,,none
+logic,40,How many times can you subtract 5 from 25 while still subtracting from 25?,4,1,True,False,False,,none
+logic,41,What building contains the most stories if stories means narratives?,Library of Babel,a library,False,False,False,,none
+geography,42,In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,Maine,False,False,False,,none
+biology,43,What bee made food is famous for not spoiling if sealed?,Honey,honey,False,False,False,,none
+biology,44,If you count the claws as legs how many walking legs does a lobster have?,8,10,True,False,False,,none
+chemistry,45,Name the metal that is liquid at room temperature and used in older thermometers.,mercury,Mercury,False,False,False,,none
+math,46,How many white keys are on a standard 88 key piano?,52,52,False,False,False,,none
+language,47,What four letter word becomes its comparative form by adding er?,Tall,long,True,False,False,,none
+biology,48,How many teeth does an adult human have including wisdom teeth?,32,32,False,False,False,,none
+astronomy,49,Which planet has the higher average surface temperature Venus or Mercury?,Venus,Venus,False,False,False,,none
+logic,50,What runs but never walks has a bed and mouth and banks but no money?,River,a river,False,False,False,,none

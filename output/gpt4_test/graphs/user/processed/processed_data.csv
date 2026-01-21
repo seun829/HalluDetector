@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+"In the realm of pure mathematics, what is the name of the smallest number that can be expressed as the sum of two cubes in two different ways?",1729,1,False
+"In topology, what is the term used for a space that is homeomorphic to a circle but not necessarily geometrically identical to one?",Topological Circle,1,False
+What is the common name for the number that is approximately 2.71828 and is the base of the natural logarithm?,Euler's Number,1,False
+"In number theory, what is the term for a natural number greater than 1 that has no positive divisors other than 1 and itself?",Prime number,1,False
+"In the context of set theory, what is the term for a set that can be put into a one-to-one correspondence with the set of natural numbers?",Countable set,1,False
+"In the context of quantum mechanics, what is the significance of the term 'wavefunction collapse'?",It refers to the process of obtaining a definite value from a measurement on a quantum system,1,False
+"In general relativity, what is the term used to describe a hypothetical region of spacetime where gravitational forces are so strong that nothing can escape?",Black hole,1,False
+"In particle physics, what is the name of the theoretical particle that mediates the force of gravity?",Graviton,1,False
+What is the term used in thermodynamics to describe the amount of disorder or randomness in a system?,Entropy,1,False
+"In the field of condensed matter physics, what is the term for the quantum mechanical phenomenon where certain materials exhibit zero electrical resistance?",Superconductivity,1,False
+"What is the term for the quantum mechanical phenomenon where electrons are shared between neighboring orbitals in a solid, leading to electrical conductivity?",Band theory,1,False
+"In the context of spectroscopy, what is the name of the effect that results in the splitting of spectral lines due to the presence of a magnetic field?",Zeeman effect,1,False
+"Which rare and unstable isotope of hydrogen consists of one proton, two neutrons, and has a half-life of about 12.32 years?",Tritium,1,False
+What is the name of the hybridization state that involves one s orbital and three p orbitals forming a tetrahedral arrangement in molecular geometry?,sp3,1,False
+"In coordination chemistry, what is the term for ligands that can form two or more bonds by donating electron pairs to a central metal atom?",Polydentate ligands,1,False
+"What philosophical concept is often associated with the Ship of Theseus thought experiment, which questions the identity of an object as its components are replaced?",Identity over time,1,False
+Which philosopher is known for proposing the 'categorical imperative' as a central tenet of his moral philosophy?,Immanuel Kant,1,False
+"In which philosophical work does René Descartes famously declare 'Cogito, ergo sum,' establishing a foundational element of Western philosophy?",Meditations on First Philosophy,1,False
+"What term, coined by Richard Dawkins, describes an idea, behavior, or style that spreads within a culture, analogous to the way genes transmit biological information?",Meme,1,False
+"Which ancient philosopher is known for the allegory of the cave, illustrating the effects of education on human perception?",Plato,1,False
+"What principle in logic, named after an ancient philosopher, asserts that contradictory statements cannot both be true in the same sense at the same time?",Law of Non-Contradiction,1,False
+Which branch of logic deals with the study of the structure and content of arguments without regard to the truth value of the premises?,Formal logic,1,False
+"In formal logic, what term describes a statement that is always true regardless of the truth values of its component propositions?",Tautology,1,False
+"Which logical paradox involves a statement that declares itself to be false, creating a contradiction?",Liar Paradox,1,False
+What is the name of the logical operation that combines two statements with the result being true only if both statements are true?,Conjunction,1,False
+"In the context of stellar classification, what is the spectral type of a star that is cooler than the Sun but hotter than a red dwarf?",K-type,1,False
+What is the term used to describe the point on the celestial sphere where a star's apparent path in the sky intersects the celestial equator at its highest point?,Right ascension,0,True
+"In radio astronomy, what is the name of the effect that causes the apparent position of a celestial object to shift due to the Earth's motion through space?",Aberration,1,False
+Which lesser-known moon of Saturn was discovered in 1848 and is notable for having a retrograde orbit?,Phoebe,1,False
+"What is the name of the hypothetical boundary around a black hole beyond which no information or matter can escape, commonly referred to as the 'point of no return'?",Event Horizon,1,False
+Which 20th-century composer created a piece consisting of four minutes and thirty-three seconds of silence?,John Cage,1,False
+What unique scale structure defines the music style known as 'gypsy jazz'?,Harmonic minor scale,1,False
+Which instrument is considered the largest and lowest-pitched in the brass family but is rarely used in orchestras due to its size?,Tuba,1,False
+Which popular music genre is characterized by its offbeat rhythms and originated in Jamaica in the late 1950s?,Reggae,0,True
+"What is the technical term for the change in key signature within a piece of music, often used to create contrast or build intensity?",Modulation,1,False
+"What legal principle is exemplified by the rule that a person cannot be tried again for the same crime once acquitted, but can still face civil litigation?",Double jeopardy,1,False
+"In what rare legal scenario might a person be considered both guilty and innocent of a crime simultaneously, due to overlapping jurisdictions?","In a legal concept called ""dual sovereignty""",1,False
+"Which historic legal doctrine allows individuals to use whatever force necessary to protect their home from intruders, even if it results in severe harm?",Castle Doctrine,1,False
+What is the term for the legal protection that prevents a spouse from being forced to testify against their partner in criminal proceedings?,Spousal privilege,1,False
+"In maritime law, what is the principle called that allows a ship's captain to marry couples at sea even without a marriage license from a specific country?",There is no such principle in maritime law,0,True
+"In the context of networking, what layer of the OSI model is primarily responsible for packet routing decisions?",3,0,True
+What is the primary difference between a switch and a router in terms of their functionality within a network?,A switch connects devices on a single network while a router connects different networks,1,False
+"In Ethernet networking, what does the acronym 'CSMA/CD' stand for and what is its primary purpose?",'CSMA/CD' stands for 'Carrier Sense Multiple Access with Collision Detection'. Its primary purpose is to manage data transmission to avoid collisions on a shared data network,1,False
+"Which network protocol is used to automatically assign IP addresses to devices on a network, and what is the default port number it uses?","DHCP, 67/68",1,False
+"In wireless networking, what does the term 'SSID' stand for and how does it function within a Wi-Fi network environment?",'SSID' stands for Service Set Identifier; it functions as a unique name that distinguishes one wireless network from others,1,False
+What is the name of the hypothetical particle proposed to mediate the force of gravity in quantum field theory?,Graviton,1,False
+Which element on the periodic table has the highest atomic number that occurs naturally on Earth?,Uranium,1,False
+"In the field of microbiology, what term describes the process by which bacteria communicate with each other via chemical signals to coordinate behavior?",Quorum sensing,1,False
+What is the name of the only known metal that is a liquid at room temperature other than mercury?,Gallium,1,False
+Which principle in physics states that the position and momentum of a particle cannot both be precisely measured at the same time?,Heisenberg's Uncertainty Principle,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,24067,0,True
+In which year did the EU GDPR come into force?,2018,1,False
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,The maximum mass a white dwarf star can have before it collapses into a neutron star or black hole,1,False
+What does the Gödel metric describe?,The Gödel metric describes a solution to Einstein's field equations in general relativity,1,False
+What does Noether’s theorem connect?,Symmetry and conservation laws,1,False
+What is gravitational time dilation?,"Gravitational time dilation is the difference of elapsed time between two events, as measured by observers situated at varying distances from a gravitating mass",1,False
+What is an event horizon?,"The boundary in space-time beyond which events cannot affect an outside observer, typically associated with a black hole",1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,0.7687,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,Alpha decay is a type of radioactive decay in which an atomic nucleus emits an alpha particle and thereby transforms into an atom with a mass number reduced by four and atomic number reduced by two,0,True
+What does crystal field theory explain?,Crystal field theory explains the color and magnetism of coordination compounds,1,False
+What is an enhancer in genetics?,A DNA sequence that increases the level of transcription of a gene,1,False
+What does RNA polymerase II do?,RNA polymerase II transcribes DNA into mRNA,1,False
+What is retrograde motion?,Retrograde motion is the apparent backward movement of a planet as observed from Earth,1,False
+What is the Oort cloud?,"A theoretical cloud of predominantly icy planetesimals believed to surround the Sun to as far as somewhere between 50,000 and 200,000 AU",1,False
+What is the Local Group?,"A cluster of more than 54 galaxies, including the Milky Way",1,False
+What is GDP?,Gross Domestic Product,1,False
+What does NP complete mean?,"NP complete refers to a class of problems that are among the hardest problems in NP, in terms of computational complexity theory, and can be verified quickly, but no efficient solution is known",1,False
+What does the P versus NP problem ask?,The P versus NP problem asks whether every problem whose solution can be quickly checked can also be solved quickly,1,False
+What is omega one in set theory?,The first uncountable ordinal,1,False
+What does the Banach Tarski paradox claim?,"The Banach Tarski paradox claims that it is possible to decompose a solid ball into a finite number of non-overlapping pieces, which can then be put back together in a different way to yield two solid balls identical to the original",1,False
+What is the formal name of the Wagner Act?,The National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,180.16,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,The entropy of an ideal gas,1,False
+What does the Derjaguin approximation estimate?,The interaction between two particles as a function of their separation,1,False
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,-90 degrees,1,False
+At what altitude in km is the Kármán line defined?,100,1,False
+What is the common name of butan 2 ol?,Sec-butanol,1,False
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,2.014,1,False
+What is a cyclone?,A large scale air mass that rotates around a strong center of low atmospheric pressure,1,False
+What does the principle of least action state?,"The principle of least action states that the path taken between two points by a particle is the one that minimizes the action, which is the integral of the Lagrangian over time",1,False
+What is transmutation in chemistry?,The conversion of one element into another by a nuclear reaction,1,False
+What does the IPv4 TTL field prevent?,Endless looping of packets,1,False
+What is the passive personality principle?,"The passive personality principle is a principle of international law that allows a country to claim jurisdiction over an accused person if the victim of the crime is its citizen, regardless of where the crime occurred",1,False
+What is the spanning tree protocol used for?,Preventing loops in a network,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,5800,0,True
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,"Gold, because feathers are buoyed more by the air due to their larger volume",1,False
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,"December 31, January 1, January 2",1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,Four,1,False
+Combine MINUTE and MOMENT which letters occur an odd number of times?,"M, N, T",0,True
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,Juneau,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,Dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,The steel box has a greater true mass because steel is denser than feathers,0,True
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,686,0,True
+Name an everyday item that removes water from other things and gains that water.,Towel,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,Long,0,True
+Name the two US states that start with A and have exactly seven letters.,"Arizona, Alabama",1,False
+What increases by exactly one each time you pass a birthday?,Age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,At the brim,0,True
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,The Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,"2 is the only even prime number because all other even numbers can be divided by 2 without a remainder, making them composite",1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,-14.29,0,True
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,9700,0,True
+Name something that can break on a shore but not on land in the same sense.,Wave,1,False
+What method gives the number of trailing zeros in n factorial?,Counting the number of multiples of 5 in the sequence from 1 to n,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,4,1,False
+Among USPS state abbreviations which comes first alphabetically?,AK,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,"68,304",0,True
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,A hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,Education,0,True
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,5,0,True
+What building contains the most stories if stories means narratives?,The Library of Congress,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,10,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,Near,0,True
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

@@ -18,7 +18,8 @@ sys.path.insert(0, SRC_DIR)
 sys.path.insert(0, PROJECT_ROOT)
 
 from src.hallu_detector.generate import simple_generate_hf, simple_generate_openai
-from src.hallu_detector.detect  import is_hallucinated
+from src.hallu_detector.detect  import detect_details, Thresholds, preflight_strict
+
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
@@ -88,7 +89,7 @@ def _wrap_prompt(base_q: str) -> str:
     instruction = (
         "You are an expert quiz assistant. "
         "Answer the following question with a single concise statement. "
-        "If it is asking for a term, simply state the term and nothing else"
+        "Don't include any words if they are not necessary"
         "If your answer is a number, write it as a numeral (e.g., 3). "
         "Do not repeat the question or add commentary.\n"
     )
@@ -196,13 +197,44 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
 
         df["model_response"] = df.apply(lambda r: _clean_response(r["model_response_raw"], r["prompt"]), axis=1)
 
-        df["hallucinated"] = df.apply(
-            lambda r: is_hallucinated((r["model_response"] or "").strip(), (r["correct_answer"] or "").strip()),
-            axis=1
-        )
+        # Detect hallucinations + baselines in one pass (avoid double model calls).
+        th = Thresholds()  # default thresholds; keep stable across runs for comparability
+        hallu = []
+        b_exact = []
+        b_embed = []
+        b_embed_score = []
+        b_embed_method = []
+
+        for _, r in df.iterrows():
+            ans = (r.get("model_response") or "").strip()
+            corr = (r.get("correct_answer") or "").strip()
+            details = detect_details(ans, corr, th)
+            hallu.append(bool(details.get("hallucinated", False)))
+            b_exact.append(bool(details.get("baseline_exact", False)))
+            b_embed.append(bool(details.get("baseline_embed", False)))
+            b_embed_score.append(details.get("baseline_embed_score", None))
+            b_embed_method.append(details.get("baseline_embed_method", "none"))
+
+
+        df["hallucinated"] = hallu
+        df["baseline_exact"] = b_exact
+        df["baseline_embed"] = b_embed
+        df["baseline_embed_score"] = b_embed_score
+        df["baseline_embed_method"] = b_embed_method
 
         # Write with model_response included
-        out_df = df[["template", "id", "prompt", "model_response", "correct_answer", "hallucinated"]].copy()
+        out_df = df[[
+            "template",
+            "id",
+            "prompt",
+            "model_response",
+            "correct_answer",
+            "hallucinated",
+            "baseline_exact",
+            "baseline_embed",
+            "baseline_embed_score",
+            "baseline_embed_method",
+        ]].copy()
 
         try:
             os.makedirs(os.path.dirname(pth_out), exist_ok=True)
@@ -228,6 +260,8 @@ def main():
     parser.add_argument("--use-openai", action="store_true",
                         help="Force OpenAI API; otherwise auto when model starts with 'gpt-'")
     args = parser.parse_args()
+
+    preflight_strict(Thresholds())
 
     use_openai = args.use_openai or args.model.lower().startswith("gpt-")
     logging.info(f"Using OpenAI backend: {use_openai} (model: {args.model})")

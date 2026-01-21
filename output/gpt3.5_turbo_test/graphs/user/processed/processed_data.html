@@ -1,0 +1,912 @@
+<table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th>prompt</th>
+      <th>model_response</th>
+      <th>is_correct</th>
+      <th>hallucinated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>What is the term for a number that cannot be expressed as a ratio of two integers but is the root of a non-zero polynomial equation with rational coefficients?</td>
+      <td>Irrational</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of topology, what is the term for a space that is locally Euclidean and has a consistent orientation?</td>
+      <td>Orientable</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the theorem that states that every bounded sequence in ℝⁿ has a convergent subsequence?</td>
+      <td>Bolzano-Weierstrass Theorem</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In category theory, what is the term for a functor that preserves both limits and colimits?</td>
+      <td>- right exact</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the term for the smallest sigma-algebra containing all open sets in a given topological space?</td>
+      <td>2</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In quantum mechanics, what term describes the phenomenon where particles are indistinguishable and exchange symmetry must be considered in their wave functions?</td>
+      <td>Bosons</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Which principle in general relativity states that local observations in a freely falling reference frame are indistinguishable from those in an inertial frame of reference?</td>
+      <td>Equivalence Principle</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In string theory, what mathematical concept describes the extra spatial dimensions that are compactified and hidden from everyday observations?</td>
+      <td>6</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What is the name of the hypothetical particle that mediates the force of gravity in quantum field theory?</td>
+      <td>Graviton</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of the Higgs mechanism, what is the term for the field that pervades space and gives mass to elementary particles through spontaneous symmetry breaking?</td>
+      <td>Higgs field</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of quantum chemistry, what principle explains the inability of two identical fermions, such as electrons, to occupy the same quantum state within a quantum system simultaneously?</td>
+      <td>Pauli exclusion principle</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the phenomenon where a molecule absorbs light and then re-emits it at a longer wavelength, often observed in substances like fluorescent dyes?</td>
+      <td>Fluorescence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which rare chemical element, named after a famous physicist, is known for its use in smoke detectors due to its radioactive properties?</td>
+      <td>4</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What is the term for the hypothetical set of conditions where all three phases of matter coexist in thermodynamic equilibrium?</td>
+      <td>Triple point</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In organic chemistry, what is the name of the reaction mechanism characterized by the nucleophilic attack on an electrophile and subsequent breaking of a carbon-halogen bond, often involving inversion of configuration?</td>
+      <td>S**2 reaction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What philosophical term describes the belief that only one's own mind is sure to exist?</td>
+      <td>Solipsism</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of existentialism, who coined the term 'bad faith' to describe the denial of one's inherent freedom?</td>
+      <td>Jean-Paul Sartre</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which philosopher introduced the concept of 'the categorical imperative' as a foundational principle of moral philosophy?</td>
+      <td>Immanuel Kant</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the thought experiment that questions if an unobserved tree falling in a forest makes a sound?</td>
+      <td>Schroedinger's Cat</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Which ancient Greek philosopher is known for the allegory of the cave, illustrating the difference between the world of appearances and the world of reality?</td>
+      <td>Plato</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>If a barber in a town only shaves those who do not shave themselves, who shaves the barber?</td>
+      <td>Nobody</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In a logical paradox involving a set of all sets that do not contain themselves, does this set contain itself?</td>
+      <td>No</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the fallacy that involves assuming a statement is true based on the lack of evidence against it?</td>
+      <td>Argument from Ignorance</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>If 'this statement is false' is true, what is the truth value of the statement?</td>
+      <td>False</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What is the name of the principle that states 'from falsehood, anything follows'?</td>
+      <td>Principle of Explosion</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the term for the hypothetical boundary surrounding a black hole beyond which no light or other radiation can escape?</td>
+      <td>Event horizon</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of astrobiology, what is the name given to planets that are situated in just the right distance from their star to support liquid water?</td>
+      <td>habitable zone</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which 18th-century astronomer is credited with discovering the planet Uranus, despite initially believing it to be a comet?</td>
+      <td>William Herschel</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the region in space where the gravity of the Sun and a planet balance out, allowing for stable orbits of small objects, often hosting trojans?</td>
+      <td>Lagrange Point 5</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the phenomenon called when a planet appears to move backward in its orbit as observed from Earth due to our own orbital motion?</td>
+      <td>Retrograde motion</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the name of the musical interval that is mathematically represented by the ratio 5:4?</td>
+      <td>Major third</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which rare musical instrument, invented by Benjamin Franklin, uses rotating glass bowls to produce sound?</td>
+      <td>Armonica</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In the context of classical music, what is the term for a composition that features a solo instrument with orchestral accompaniment and typically includes three movements?</td>
+      <td>Concerto</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the technical term for the unique quality or tone color that distinguishes one instrument from another, even when they are playing the same note?</td>
+      <td>Timbre</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which 20th-century composer is known for developing the twelve-tone technique, a method of composing that uses all twelve notes of the chromatic scale equally?</td>
+      <td>Schoenberg</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What legal principle allows courts to interpret statutory provisions in ways that are not explicitly written, based on the intent of the lawmakers?</td>
+      <td>Judicial precedent</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In the context of contract law, what is the term used to describe a situation where one party benefits at the expense of another without compensation, often requiring restitution?</td>
+      <td>unjust enrichment</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which ancient legal code, created around 1754 BC, is known for its strict justice system and 'eye for an eye' principle?</td>
+      <td>Code of Hammurabi</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In intellectual property law, what is the term for the temporary protection offered to the creators of original works, allowing them to exclude others from using their creations without permission?</td>
+      <td>Copyright</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the doctrine called in common law jurisdictions that permits a higher court to review and change the outcome of a case adjudicated by a lower court?</td>
+      <td>Appellate review</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the context of computer networking, what specific technique is described by the term 'silent discard'?</td>
+      <td>3</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What lesser-known protocol, often associated with TCP/IP, is specifically used for network diagnostics and testing, particularly for measuring round trip times?</td>
+      <td>ICMP</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In networking, what is the primary purpose of the 'shim layer' within a protocol stack?</td>
+      <td>To adapt the characteristics of one layer to another, improving communication</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the term for the unique identifier used by routers to differentiate between multiple data flows within MPLS?</td>
+      <td>Label</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In wireless networking, what is the term for the process of dynamically selecting the best frequency channel to minimize interference?</td>
+      <td>Dynamic Frequency Selection (DFS)</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the only known element that is named after a real-life woman, and not a mythological figure or geographical location?</td>
+      <td>meitnerium</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the realm of particle physics, what elusive particle is theorized to be its own antiparticle, challenging the fundamentals of matter and antimatter?</td>
+      <td>Neutrino</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What paradoxical thought experiment involves a cat that is simultaneously alive and dead, highlighting the peculiarities of quantum mechanics?</td>
+      <td>Schrödinger's cat</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which ancient Greek philosopher proposed the idea of 'atomos', suggesting that everything is composed of small, indivisible particles?</td>
+      <td>Democritus</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the study of optics, what is the term for the phenomenon where light is bent around obstacles, leading to patterns of light and dark bands?</td>
+      <td>Diffraction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the IUPAC name of element 113?</td>
+      <td>nihonium</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the SCOPUS Source ID for the journal Science?</td>
+      <td>0036-8075</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In which year did the EU GDPR come into force?</td>
+      <td>2018</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the pKa of acetic acid at 25 C?</td>
+      <td>4.76</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the Chandrasekhar limit represent?</td>
+      <td>1. 1.4 M_sun</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the Gödel metric describe?</td>
+      <td>4</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does Noether’s theorem connect?</td>
+      <td>Symmetries and conservation laws</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is gravitational time dilation?</td>
+      <td>Time dilation due to gravity</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is an event horizon?</td>
+      <td>Boundary beyond which events occur cannot affect an outside observer</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the annual parallax of Proxima Centauri in arcseconds?</td>
+      <td>0.768</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the IPv6 loopback address?</td>
+      <td>::1</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does LIDAR stand for?</td>
+      <td>Light Detection and Ranging</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is alpha decay?</td>
+      <td>Radioactive decay in which an atomic nucleus emits an alpha particle</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What does crystal field theory explain?</td>
+      <td>Magnetic properties and colors of transition metal complexes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is an enhancer in genetics?</td>
+      <td>DNA sequence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does RNA polymerase II do?</td>
+      <td>Transcription</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is retrograde motion?</td>
+      <td>Apparent backward motion of a planet in its orbit</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the Oort cloud?</td>
+      <td>Comet reservoir</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the Local Group?</td>
+      <td>A collection of galaxies</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is GDP?</td>
+      <td>The total market value of all final goods and services produced in a country in a given time period</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does NP complete mean?</td>
+      <td>It means NP-complete</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What does the P versus NP problem ask?</td>
+      <td>Whether every problem that can be verified quickly can also be solved quickly</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is omega one in set theory?</td>
+      <td>1</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the Banach Tarski paradox claim?</td>
+      <td>Infinity</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the formal name of the Wagner Act?</td>
+      <td>National Labor Relations Act</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the ISO 4217 code for the Venezuelan bolívar soberano?</td>
+      <td>928</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Which treaty ended the Russo Japanese War?</td>
+      <td>Treaty of Portsmouth</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What principle did Marbury v Madison establish?</td>
+      <td>Judicial review</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the molar mass of glucose in g/mol?</td>
+      <td>180.16</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the molecular formula of vitamin C?</td>
+      <td>C6H8O6</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the speed of sound in dry air at 20 C in m/s?</td>
+      <td>343</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What order of magnitude is LIGO strain in scientific notation?</td>
+      <td>10^-21</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What does the Sackur Tetrode equation compute?</td>
+      <td>entropy of an ideal gas</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the Derjaguin approximation estimate?</td>
+      <td>van der Waals forces</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Who introduced the concept of the memristor?</td>
+      <td>Leon Chua</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the original French title of In Search of Lost Time?</td>
+      <td>À la recherche du temps perdu</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the UN M49 code for Western Europe?</td>
+      <td>150</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What is the latitude of the Geographic South Pole?</td>
+      <td>90</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>At what altitude in km is the Kármán line defined?</td>
+      <td>100</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the common name of butan 2 ol?</td>
+      <td>Butanol</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What is the Euler characteristic of a torus?</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the genus of a torus?</td>
+      <td>Torus</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Who discovered the cosmic microwave background radiation?</td>
+      <td>Arno Penzias and Robert Wilson</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the standard atomic mass of deuterium?</td>
+      <td>2.014</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is a cyclone?</td>
+      <td>A cyclone is a rotating mass of air forming a low pressure system</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the principle of least action state?</td>
+      <td>Minimizes the difference between potential and kinetic energy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is transmutation in chemistry?</td>
+      <td>Changing one element into a different element</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What does the IPv4 TTL field prevent?</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the passive personality principle?</td>
+      <td>Trait-factor personality theory</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the spanning tree protocol used for?</td>
+      <td>Creating loop-free topology in a network</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?</td>
+      <td>25</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?</td>
+      <td>Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air due to differences in density</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?</td>
+      <td>December 31</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Fill the blank with one word so the statement is true the word has exactly blank letters.</td>
+      <td>Seven</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Combine MINUTE and MOMENT which letters occur an odd number of times?</td>
+      <td>M, N, O, E</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What theorem says a simple closed curve splits the plane into exactly two regions?</td>
+      <td>Jordan Curve Theorem</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Name the US state capital not connected by road to the rest of its state.</td>
+      <td>Honolulu</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Which single letter spoken aloud is a homophone for a body of water and the verb to look?</td>
+      <td>C</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give the five letter British past tense of dream that ends with m t.</td>
+      <td>dreamt</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How many letters are used in the English alphabet for dictionary ordering?</td>
+      <td>26</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?</td>
+      <td>Steel box has greater true mass because feathers displace more air, causing a greater loss in weight</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>With no year zero what is the last year of the twentieth century?</td>
+      <td>2000</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In 24 hour time HHMMSS how many palindromes occur in one day?</td>
+      <td>6</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Name an everyday item that removes water from other things and gains that water.</td>
+      <td>Dehumidifier</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Name the only sovereign state whose official form is a Grand Duchy.</td>
+      <td>Luxembourg</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Find a word that becomes a word meaning less in length when you add er.</td>
+      <td>Short</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Name the two US states that start with A and have exactly seven letters.</td>
+      <td>Alabama Hawaii</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What increases by exactly one each time you pass a birthday?</td>
+      <td>Age</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?</td>
+      <td>The water level remains the same</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Which five letter word can lose four letters leaving one letter with the same pronunciation?</td>
+      <td>Queue</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Name Earth’s natural moon.</td>
+      <td>Moon</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which month name is also a verb meaning permitted?</td>
+      <td>May</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What fact explains why 2 is the only even prime?</td>
+      <td>2 is the only even prime because it is the only even number that is not divisible by any other even number</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?</td>
+      <td>31</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?</td>
+      <td>9609</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Name something that can break on a shore but not on land in the same sense.</td>
+      <td>A wave</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What method gives the number of trailing zeros in n factorial?</td>
+      <td>Legendre's formula</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which integer from 1 to 100 equals the number of letters in its English name?</td>
+      <td>4</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Among USPS state abbreviations which comes first alphabetically?</td>
+      <td>AK</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?</td>
+      <td>SWIMS</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which planet shares its name with the Roman messenger god?</td>
+      <td>Mercury</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How many 5 card poker hands contain exactly two face cards and no aces?</td>
+      <td>264,600</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?</td>
+      <td>j</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?</td>
+      <td>45</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What gets larger when you take away part of it?</td>
+      <td>Hole</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What is the atomic number of zinc?</td>
+      <td>30</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?</td>
+      <td>November 2</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which 9 letter English word contains the vowels a e i o u exactly once each in order?</td>
+      <td>facetious</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?</td>
+      <td>1177.2</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How many times can you subtract 5 from 25 while still subtracting from 25?</td>
+      <td>4</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What building contains the most stories if stories means narratives?</td>
+      <td>Library of Babel</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?</td>
+      <td>Maine</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What bee made food is famous for not spoiling if sealed?</td>
+      <td>Honey</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>If you count the claws as legs how many walking legs does a lobster have?</td>
+      <td>8</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Name the metal that is liquid at room temperature and used in older thermometers.</td>
+      <td>mercury</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How many white keys are on a standard 88 key piano?</td>
+      <td>52</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What four letter word becomes its comparative form by adding er?</td>
+      <td>Tall</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How many teeth does an adult human have including wisdom teeth?</td>
+      <td>32</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Which planet has the higher average surface temperature Venus or Mercury?</td>
+      <td>Venus</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What runs but never walks has a bed and mouth and banks but no money?</td>
+      <td>River</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>

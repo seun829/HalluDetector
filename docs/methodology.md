@@ -3,182 +3,229 @@
 ## Overview
 
 This system detects **hallucinations in model-generated answers** by comparing a model response against a known correct reference answer.  
-A hallucination is defined here as an answer that is **factually inconsistent, contradictory, numerically incorrect, or semantically unsupported** by the reference.
+A hallucination is defined here as an answer that **contains at least one fact that is false, fabricated, or unsupported by known reality**, *relative to the provided reference*.
 
-The detector is **reference-based**: it does not assess truth in isolation, but rather **consistency with a provided ground-truth answer**.
+The detector is **reference-based**: it does not attempt open-world truth verification. Instead, it evaluates whether the model response is **inconsistent with** (or directly contradicts) the reference answer.
+
+Crucially, under this definition:
+- **Incompleteness is not hallucination** (e.g., leaving out a qualifier is not automatically false).
+- **Paraphrases are not hallucination** (e.g., using equivalent wording is acceptable).
+- Hallucination requires **positive evidence of inconsistency** (e.g., wrong number, contradiction, explicit negation, mutually exclusive alternatives).
 
 The approach combines:
-- text normalization,
-- semantic similarity,
-- bidirectional natural language inference (NLI),
-- numeric consistency checks,
-- negation heuristics,
-- and a transparent, rule-based decision layer.
+- robust text normalization,
+- safe shortcut matching for short entities/codes,
+- numeric and coordinate consistency checks (including scientific notation),
+- semantic similarity (embeddings + lexical) with guardrails,
+- bidirectional natural language inference (NLI) for contradiction evidence,
+- explicit negation and “nonexistence/unavailability” heuristics,
+- and a transparent, rule-based decision layer producing rich diagnostics.
 
-The system is designed to be **robust and interpretable**, returning both a binary decision and detailed diagnostic scores.
+The system is designed to be **robust, conservative, and interpretable**, returning both a binary decision and detailed signal traces suitable for research publication.
 
 ---
 
 ## High-Level Pipeline
 
 Given:
-- `answer`: the model-generated response
-- `correct_answer`: the ground-truth reference
+- `answer`: the model-generated response  
+- `correct_answer`: the ground-truth reference  
 
 The detector proceeds as follows:
 
-1. Text normalization
-2. Shortcut checks (substring containment)
-3. Semantic similarity estimation
-4. Bidirectional entailment and contradiction analysis
-5. Numeric consistency verification
-6. Negation mismatch detection
-7. Rule-based decision aggregation
+1. Text normalization  
+2. Safe shortcut matching (substring / subsequence)  
+3. Numeric and coordinate consistency analysis  
+4. Semantic similarity estimation (embeddings + lexical)  
+5. Bidirectional NLI entailment/contradiction analysis  
+6. Negation + unavailability heuristics  
+7. Rule-based aggregation with **contradiction vetoes**  
 
 ---
 
 ## 1. Text Normalization
 
-Both `answer` and `correct_answer` are normalized to reduce superficial differences:
+Both `answer` and `correct_answer` are normalized to reduce superficial differences while preserving scientific and code-relevant structure:
 
 - Unicode normalization (NFKC)
 - Lowercasing
+- Accent stripping
+- Standardization of mathematical typography:
+  - Unicode minus variants → `-`
+  - Multiplication sign `×` → `x`
+  - Superscript digits/signs (e.g., `10⁻²¹`) normalized for scientific parsing
 - Whitespace collapse
-- Light punctuation removal (retaining `%`, currency symbols, and `-`)
+- Light punctuation removal  
+  (retaining `- . / ^ + : =` for scientific notation, identifiers, and codes)
 
-This ensures that differences in formatting, casing, or typography do not affect downstream comparisons.
-
----
-
-## 2. Substring Shortcut
-
-If one normalized text is a substring of the other, the detector assumes **strong semantic alignment** and skips expensive model-based checks.
-
-However, even in this case, **numeric consistency is still enforced**:
-- If numbers disagree, the answer is flagged as hallucinated.
-- Otherwise, the answer is considered non-hallucinated.
-
-This optimization improves performance while preserving correctness.
+This ensures that formatting and typography do not distort downstream comparisons.
 
 ---
 
-## 3. Semantic Similarity
+## 2. Safe Shortcut Matching
 
-### Embedding-Based Similarity (Primary)
+### 2.1 Normalized Substring Match
 
-Semantic similarity is computed using cosine similarity between sentence embeddings produced by:
+If the normalized `correct_answer` appears as a substring of the normalized `answer`, the detector treats this as **strong evidence of alignment**, especially for:
+
+- short entity names,
+- codes and identifiers (e.g., `::1`, `VES`),
+- chemical formulas.
+
+**Numeric and coordinate consistency checks are still enforced** even if substring matching succeeds.
+
+### 2.2 Token Subsequence Match
+
+If all tokens of `correct_answer` appear in order within `answer` (not necessarily contiguously), this is recorded as a **supporting signal**.  
+It is not treated as a hallucination filter by itself.
+
+---
+
+## 3. Numeric and Coordinate Consistency Guard
+
+Numbers are treated as **high-risk hallucination triggers**, but only when the task expects numeric content.
+
+### 3.1 Scope: When Numeric Checks Apply
+
+Numeric matching is applied when the gold answer is numeric or coordinate-like, including:
+
+- integers and decimals,
+- scientific notation (`1e-21`, `10^-21`, `1.2×10^-3`, `10⁻²¹`),
+- coordinates (`90 S`, `90 south`, `-90 degrees`).
+
+Code-like strings (e.g., IPv6 `::1`) are explicitly excluded.
+
+### 3.2 Matching Rules
+
+- Coordinates normalize direction:
+  - `90 S` ≡ `-90`
+  - `90 N` ≡ `+90`
+- Integer-like values with ≥ 3 digits (e.g., years, IDs) must match **exactly**.
+- Other values must match within configurable tolerance:
+  - default: ±0.5% relative OR ±0.05 absolute.
+
+### 3.3 “Conflict If Present” Principle
+
+A key policy for hallucination alignment:
+
+- If the response **contains numbers** and none match the gold target → **hallucination** (positive evidence of wrong fact).
+- If the response contains **no numbers**, the detector does **not** mark hallucination (could be incomplete or verbal).
+
+### 3.4 Numeric Alternatives Conflict
+
+The detector flags answers of the form:
+
+> “X or Y”
+
+when the gold is numeric/coordinate and **at least one alternative differs** from the gold.  
+This captures a common hallucination pattern: hedging with mutually exclusive values.
+
+---
+
+## 4. Semantic Similarity
+
+### 4.1 Embedding-Based Similarity (Primary)
+
+Semantic similarity is computed using cosine similarity between sentence embeddings from:
 
 - **Model**: `sentence-transformers/all-MiniLM-L6-v2`
 
-This captures paraphrasing and semantic equivalence beyond surface wording.
+This captures paraphrases and equivalent meaning beyond surface text.
 
-### Lexical Jaccard Similarity (Auxiliary / Fallback)
+### 4.2 Guardrails Against Short-Text False Positives
 
-Token-level Jaccard similarity is also computed as a lexical signal.  
-If embeddings are unavailable, Jaccard similarity is used as a fallback.
+Embedding similarity is **gated** to prevent accepting unrelated text due to short answers:
+
+- If the gold answer is extremely short, embeddings are not treated as strong evidence.
+- A minimum number of **shared content tokens** (non-stopword, non-numeric) is required.
+
+### 4.3 Lexical Jaccard Similarity (Baseline / Fallback)
+
+Token-level Jaccard similarity is computed for interpretability and as a fallback baseline if embeddings are unavailable.
 
 ---
 
-## 4. Bidirectional Natural Language Inference (NLI)
+## 5. Bidirectional Natural Language Inference (NLI)
 
-Logical consistency is assessed using **bidirectional NLI** with:
+Logical consistency is assessed using bidirectional NLI with:
 
 - **Model**: `roberta-large-mnli`
 
-Two inferences are computed:
+Two directions are evaluated:
 
-1. Does `answer` entail `correct_answer`?
-2. Does `correct_answer` entail `answer`?
+1. `answer` ⇒ `correct_answer`  
+2. `correct_answer` ⇒ `answer`
 
-Each inference produces probabilities for:
-- Entailment
-- Neutral
-- Contradiction
+Each yields probabilities for:
+- entailment,
+- neutral,
+- contradiction.
 
-From these, the system derives:
-- `entail_min`: the minimum entailment probability across both directions
-- `contr_max`: the maximum contradiction probability across both directions
+The detector summarizes these as:
+- `entail_min`: minimum entailment across both directions
+- `contr_max`: maximum contradiction across both directions
 
-### Rationale
+### Role in Hallucination Detection
 
-Bidirectional inference detects:
-- Overly specific answers (answer adds unsupported details)
-- Missing constraints
-- Explicit contradictions
+NLI is used primarily to detect **positive inconsistency evidence**:
 
-This is critical for distinguishing:
-> “incomplete but correct”  
-from  
-> “confidently wrong”
+- A strong contradiction (high `contr_max` with low `entail_min`) triggers a **hallucination veto**.
+
+Importantly:
+- Low entailment alone is **not** treated as hallucination (it may reflect incompleteness).
 
 ---
 
-## 5. Numeric Consistency Guard
+## 6. Negation and Unavailability Heuristics
 
-Numbers are treated as **high-risk hallucination triggers**.
+### 6.1 Explicit Negation Targeting the Gold
 
-### Extraction
+The detector flags clear contradiction patterns like:
 
-All numeric values are extracted along with metadata:
-- Percent markers (`%`)
-- Currency symbols (`$€£¥`)
-- Position context
+- “not \<gold>”
+- “\<gold> is not …”
 
-### Matching Rules
+This is treated as **direct inconsistency evidence**.
 
-- If one side contains numbers and the other does not → mismatch
-- If the number of numeric tokens differs → mismatch
-- Percent numbers must align with percent numbers
-- Currency numbers must align with currency numbers
-- **Years (1000–2100)** must match exactly
-- Other numbers must match within a configurable relative tolerance (default: 2%)
+### 6.2 Nonexistence / Unavailability Claims
 
-If numeric strictness is enabled and a mismatch is detected, the answer is immediately flagged as hallucinated.
+The detector flags assertions such as:
 
----
+- “not publicly available”
+- “does not exist”
+- “no such …”
 
-## 6. Negation Mismatch Heuristic
-
-The system checks for negation tokens (e.g., *not, no, never, without*).
-
-If one text contains negation and the other does not, this is marked as a **strong contradiction signal**.
-
-Negation alone does not force a hallucination decision, but it biases the final outcome when entailment is weak.
+If such a claim appears and the gold is concrete (and not matched otherwise), it is treated as **hallucination**, since the model asserted a false world-fact relative to the reference.
 
 ---
 
 ## 7. Rule-Based Decision Logic
 
-All signals are combined using a transparent rule set.
+The system uses a transparent rule set aligned to the definition:  
+**hallucination requires positive evidence of inconsistency.**
 
-### Immediate Hallucination (Hard Red Flags)
+### 7.1 Immediate Hallucination (Hard Red Flags)
 
-An answer is marked hallucinated if:
-- Maximum contradiction probability exceeds a threshold
-- Numeric mismatch is detected (when numeric strictness is enabled)
+An answer is marked hallucinated if any occurs:
 
-### Clear Non-Hallucination (Green Case)
+- numeric/coordinate mismatch **when numbers are present**
+- numeric alternatives conflict (“X or Y” with wrong alternative)
+- explicit negation of the gold
+- strong NLI contradiction veto
+- unavailability/nonexistence claim that conflicts with a concrete gold
+- atomic entity/code mismatch (short gold code/name vs different short response)
 
-An answer is marked non-hallucinated if:
-- Semantic similarity is high
-- Bidirectional entailment is strong
-- Contradiction probability is low
-- No numeric mismatch exists
+### 7.2 Otherwise: Non-Hallucinated
 
-### Clear Hallucination (Low Support)
+If none of the contradiction red flags fire, the answer is marked **non-hallucinated**, even if:
+- it is incomplete,
+- it omits qualifiers,
+- it is less specific than the gold,
+- it uses a paraphrase.
 
-An answer is marked hallucinated if:
-- Semantic similarity is low **and**
-- Entailment is low  
-(or lexical overlap is extremely low with low entailment)
-
-### Ambiguous Region
-
-When scores lie near thresholds:
-- The system records an `"abstain_band"` rationale
-- A conservative bias is applied: low entailment defaults to hallucinated
-
-This ensures safer behavior in uncertain cases.
+This enforces the intended distinction between:
+- **incompleteness** (not hallucination), and
+- **fabricated/false claims** (hallucination).
 
 ---
 
@@ -187,53 +234,54 @@ This ensures safer behavior in uncertain cases.
 ### `detect_details(...)`
 
 Returns a structured dictionary containing:
-- Final hallucination decision
-- Semantic similarity scores
-- NLI entailment and contradiction probabilities
-- Numeric analysis details
-- Negation flags
-- Thresholds used
-- Human-readable rationale string
+- final hallucination decision (`hallucinated`)
+- acceptance flag (`accepted`)
+- rationale string (`reason`)
+- exact/subsequence/substring indicators
+- numeric analysis details (including coordinate/scientific notation parsing)
+- embedding similarity and gating diagnostics
+- bidirectional NLI probabilities and veto indicators
+- negation and unavailability flags
 
 ### `is_hallucinated(...)`
 
-A lightweight wrapper that returns only the boolean decision.
+A lightweight wrapper returning only the boolean hallucination decision.
 
 ---
 
-## Model Availability and Fallback Behavior
+## Model Availability and Dependency Policy
 
 If required models are unavailable:
-- Embedding similarity falls back to lexical Jaccard similarity
-- NLI defaults to neutral-only outputs
+- the system raises an error in **strict mode**
+- no silent fallback occurs for enabled features
 
-**Important**: Thresholds are tuned for full model availability.  
-Running in fallback mode without adjusting thresholds may significantly increase false positives.
+This prevents hidden failure modes and improves reproducibility.
 
 ---
 
 ## Intended Use and Limitations
 
 ### Intended Use
-- Evaluation of model answers against gold references
-- Research on hallucination detection
-- Diagnostic analysis of factual consistency
+- evaluation of model answers against gold references
+- hallucination detection research (reference-based)
+- diagnostics of factual consistency and contradiction patterns
 
 ### Limitations
-- Reference-based only (cannot detect hallucinations without a correct answer)
-- Sensitive to numeric precision depending on tolerance settings
-- Not designed for open-ended truth verification
+- reference-based only (cannot assess truth without gold)
+- cannot perfectly detect “extra unsupported facts” without external evidence;
+  it instead focuses on **detectable inconsistency** (numbers, contradictions, negation, nonexistence claims)
+- NLI may be imperfect on very short texts; guardrails and multiple signals mitigate this
 
 ---
 
 ## Summary
 
-This hallucination detector combines semantic similarity, logical inference, and strict numeric validation to determine whether a model-generated answer is **supported by a reference answer**.
+This hallucination detector identifies hallucinations as **positive evidence of inconsistency with a reference answer**, not mere incompleteness.
 
-Its design prioritizes:
-- Interpretability
-- Robustness
-- Research reproducibility
+It combines:
+- robust normalization (including scientific notation and coordinates),
+- numeric contradiction detection,
+- bidirectional NLI contradiction vetoes,
+- and conservative rule-based aggregation
 
-Correct installation of the embedding and NLI models is essential for reliable performance.
-
+to provide an interpretable, research-grade hallucination signal.

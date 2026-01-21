@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+mathematics,1,What is the term for a number that cannot be expressed as a ratio of two integers but is the root of a non-zero polynomial equation with rational coefficients?,Irrational,algebraic irrational number,False,False,False,,none
+mathematics,2,"In the context of topology, what is the term for a space that is locally Euclidean and has a consistent orientation?",Orientable,orientable manifold,False,False,False,,none
+mathematics,3,What is the name of the theorem that states that every bounded sequence in ℝⁿ has a convergent subsequence?,Bolzano-Weierstrass Theorem,bolzano-weierstrass theorem,False,False,False,,none
+mathematics,4,"In category theory, what is the term for a functor that preserves both limits and colimits?",- right exact,continuous and cocontinuous functor,False,False,False,,none
+mathematics,5,What is the term for the smallest sigma-algebra containing all open sets in a given topological space?,2,borel sigma-algebra,True,False,False,,none
+physics,6,"In quantum mechanics, what term describes the phenomenon where particles are indistinguishable and exchange symmetry must be considered in their wave functions?",Bosons,quantum statistics,True,False,False,,none
+physics,7,Which principle in general relativity states that local observations in a freely falling reference frame are indistinguishable from those in an inertial frame of reference?,Equivalence Principle,equivalence principle,False,False,False,,none
+physics,8,"In string theory, what mathematical concept describes the extra spatial dimensions that are compactified and hidden from everyday observations?",6,calabi-yau manifold,True,False,False,,none
+physics,9,What is the name of the hypothetical particle that mediates the force of gravity in quantum field theory?,Graviton,graviton,False,False,False,,none
+physics,10,"In the context of the Higgs mechanism, what is the term for the field that pervades space and gives mass to elementary particles through spontaneous symmetry breaking?",Higgs field,higgs field,False,False,False,,none
+chemistry,11,"In the context of quantum chemistry, what principle explains the inability of two identical fermions, such as electrons, to occupy the same quantum state within a quantum system simultaneously?",Pauli exclusion principle,pauli exclusion principle,False,False,False,,none
+chemistry,12,"What is the name of the phenomenon where a molecule absorbs light and then re-emits it at a longer wavelength, often observed in substances like fluorescent dyes?",Fluorescence,fluorescence,False,False,False,,none
+chemistry,13,"Which rare chemical element, named after a famous physicist, is known for its use in smoke detectors due to its radioactive properties?",4,americium,True,False,False,,none
+chemistry,14,What is the term for the hypothetical set of conditions where all three phases of matter coexist in thermodynamic equilibrium?,Triple point,triple point,False,False,False,,none
+chemistry,15,"In organic chemistry, what is the name of the reaction mechanism characterized by the nucleophilic attack on an electrophile and subsequent breaking of a carbon-halogen bond, often involving inversion of configuration?",S**2 reaction,sn2 reaction,False,False,False,,none
+philosophy,16,What philosophical term describes the belief that only one's own mind is sure to exist?,Solipsism,solipsism,False,False,False,,none
+philosophy,17,"In the context of existentialism, who coined the term 'bad faith' to describe the denial of one's inherent freedom?",Jean-Paul Sartre,jean-paul sartre,False,False,False,,none
+philosophy,18,Which philosopher introduced the concept of 'the categorical imperative' as a foundational principle of moral philosophy?,Immanuel Kant,immanuel kant,False,False,False,,none
+philosophy,19,What is the name of the thought experiment that questions if an unobserved tree falling in a forest makes a sound?,Schroedinger's Cat,if a tree falls in a forest,True,False,False,,none
+philosophy,20,"Which ancient Greek philosopher is known for the allegory of the cave, illustrating the difference between the world of appearances and the world of reality?",Plato,plato,False,False,False,,none
+logic,21,"If a barber in a town only shaves those who do not shave themselves, who shaves the barber?",Nobody,paradox,True,False,False,,none
+logic,22,"In a logical paradox involving a set of all sets that do not contain themselves, does this set contain itself?",No,no,False,False,False,,none
+logic,23,What is the name of the fallacy that involves assuming a statement is true based on the lack of evidence against it?,Argument from Ignorance,argument from ignorance,False,False,False,,none
+logic,24,"If 'this statement is false' is true, what is the truth value of the statement?",False,paradox,True,False,False,,none
+logic,25,"What is the name of the principle that states 'from falsehood, anything follows'?",Principle of Explosion,principle of explosion,False,False,False,,none
+astronomy,26,What is the term for the hypothetical boundary surrounding a black hole beyond which no light or other radiation can escape?,Event horizon,event horizon,False,False,False,,none
+astronomy,27,"In the context of astrobiology, what is the name given to planets that are situated in just the right distance from their star to support liquid water?",habitable zone,habitable zone planets,False,False,False,,none
+astronomy,28,"Which 18th-century astronomer is credited with discovering the planet Uranus, despite initially believing it to be a comet?",William Herschel,william herschel,False,False,False,,none
+astronomy,29,"What is the name of the region in space where the gravity of the Sun and a planet balance out, allowing for stable orbits of small objects, often hosting trojans?",Lagrange Point 5,lagrange points,False,False,False,,none
+astronomy,30,What is the phenomenon called when a planet appears to move backward in its orbit as observed from Earth due to our own orbital motion?,Retrograde motion,retrograde motion,False,False,False,,none
+music,31,What is the name of the musical interval that is mathematically represented by the ratio 5:4?,Major third,major third,False,False,False,,none
+music,32,"Which rare musical instrument, invented by Benjamin Franklin, uses rotating glass bowls to produce sound?",Armonica,glass harmonica,True,False,False,,none
+music,33,"In the context of classical music, what is the term for a composition that features a solo instrument with orchestral accompaniment and typically includes three movements?",Concerto,concerto,False,False,False,,none
+music,34,"What is the technical term for the unique quality or tone color that distinguishes one instrument from another, even when they are playing the same note?",Timbre,timbre,False,False,False,,none
+music,35,"Which 20th-century composer is known for developing the twelve-tone technique, a method of composing that uses all twelve notes of the chromatic scale equally?",Schoenberg,arnold schoenberg,False,False,False,,none
+law,36,"What legal principle allows courts to interpret statutory provisions in ways that are not explicitly written, based on the intent of the lawmakers?",Judicial precedent,purposive approach,True,False,False,,none
+law,37,"In the context of contract law, what is the term used to describe a situation where one party benefits at the expense of another without compensation, often requiring restitution?",unjust enrichment,unjust enrichment,False,False,False,,none
+law,38,"Which ancient legal code, created around 1754 BC, is known for its strict justice system and 'eye for an eye' principle?",Code of Hammurabi,code of hammurabi,False,False,False,,none
+law,39,"In intellectual property law, what is the term for the temporary protection offered to the creators of original works, allowing them to exclude others from using their creations without permission?",Copyright,copyright,False,False,False,,none
+law,40,What is the doctrine called in common law jurisdictions that permits a higher court to review and change the outcome of a case adjudicated by a lower court?,Appellate review,appellate review,False,False,False,,none
+networking,41,"In the context of computer networking, what specific technique is described by the term 'silent discard'?",3,packet drop,True,False,False,,none
+networking,42,"What lesser-known protocol, often associated with TCP/IP, is specifically used for network diagnostics and testing, particularly for measuring round trip times?",ICMP,icmp,False,False,False,,none
+networking,43,"In networking, what is the primary purpose of the 'shim layer' within a protocol stack?","To adapt the characteristics of one layer to another, improving communication",interfacing layers,False,False,False,,none
+networking,44,What is the term for the unique identifier used by routers to differentiate between multiple data flows within MPLS?,Label,label,False,False,False,,none
+networking,45,"In wireless networking, what is the term for the process of dynamically selecting the best frequency channel to minimize interference?",Dynamic Frequency Selection (DFS),channel selection,False,False,False,,none
+science,46,"What is the only known element that is named after a real-life woman, and not a mythological figure or geographical location?",meitnerium,meitnerium,False,False,False,,none
+science,47,"In the realm of particle physics, what elusive particle is theorized to be its own antiparticle, challenging the fundamentals of matter and antimatter?",Neutrino,majorana fermion,True,False,False,,none
+science,48,"What paradoxical thought experiment involves a cat that is simultaneously alive and dead, highlighting the peculiarities of quantum mechanics?",Schrödinger's cat,schrödinger's cat,False,False,False,,none
+science,49,"Which ancient Greek philosopher proposed the idea of 'atomos', suggesting that everything is composed of small, indivisible particles?",Democritus,democritus,False,False,False,,none
+science,50,"In the study of optics, what is the term for the phenomenon where light is bent around obstacles, leading to patterns of light and dark bands?",Diffraction,diffraction,False,False,False,,none

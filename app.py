@@ -167,16 +167,21 @@ def detect():
 
     # Lazy import to avoid hard crash if module is missing during early development
     try:
-        from hallu_detector.detect import is_hallucinated  # type: ignore
+        from hallu_detector.detect import detect_details  # type: ignore
     except Exception as e:
         return jsonify({"error": f"Rule detector unavailable: {e}"}), 500
 
     try:
-        hall = bool(is_hallucinated(ans, corr))
+        details = detect_details(ans, corr)
+        hall = bool(details.get("hallucinated", False))
     except Exception as e:
         return jsonify({"error": f"Detection failed: {e}"}), 500
 
-    return jsonify({"hallucinated": hall})
+    return jsonify({
+        "hallucinated": hall,
+        "baselines": details.get("baselines"),
+        "reason": details.get("reason"),
+    })
 
 
 # ------------------------------------------------------------------------------
@@ -252,6 +257,8 @@ def run_pipeline():
         os.makedirs(d, exist_ok=True)
 
     logs: Dict[str, Dict[str, object]] = {}
+    app.logger.info("run_pipeline: request model_name=%r", model_name)
+
 
     # ------------------- Step 1: make_prompts -------------------
     prompts_config = os.path.join(CONFIG_DIR, "prompts_config.yaml")

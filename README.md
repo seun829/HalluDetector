@@ -25,14 +25,17 @@ This project explores how often and why AI language models hallucinate—i.e., g
 ```
 ai-hallucination-detection-main/
 ├── README.md
+├── audit                         # contains human audit set
+│   └── audit_set.csv            
 ├── app.py                        # Flask app: serves UI + /detect, /predict, /run_pipeline
 ├── requirements.txt              # Core Python deps
 ├── docs/
-│   └── methodology.md            # (empty placeholder)
+│   └── methodology.md            # hallucination detection methodology
 ├── scripts/
 │   ├── generate_responses.py     # Generate model outputs + label with rule-based detector
 │   ├── graph_patterns.py         # Build graphs + simple results page
-│   └── make_prompts.py           # Combine CSVs or auto-generate via OpenAI + Wikipedia
+│   └── make_prompts.py           # Combine CSVs or auto-generate via OpenAI + cross validation
+│   └── make_audit_set.py         # Creates audit set based on parameters
 ├── simulation_data/
 │   └── raw/
 │       ├── prompts_factual.csv            # example prompts (truncated)
@@ -42,7 +45,8 @@ ai-hallucination-detection-main/
 │       ├── __init__.py
 │       ├── detect.py              # similarity (all-MiniLM-L6-v2) + NLI (roberta-large-mnli)
 │       ├── evaluate.py            # compute hallucination metrics from labeled CSVs
-│       └── generate.py            # HF/OpenAI helpers (OpenAI uses old ChatCompletion API)    
+│       └── generate.py            # HF/OpenAI helpers
+│       └── download.py           # downloads/checks for models required for hallucination detection
 ├── static/
 │   ├── index.html                 # frontend UI (3 panels)
 │   ├── script.js                  # front-end logic

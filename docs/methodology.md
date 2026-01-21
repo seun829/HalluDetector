@@ -23,6 +23,8 @@ The approach combines:
 
 The system is designed to be **robust, conservative, and interpretable**, returning both a binary decision and detailed signal traces suitable for research publication.
 
+NOTE: THIS DETECTION METHODOLOGY IS MEANT FOR MODELS THAT ARE GENERALLY ABLE TO FOLLOW PROMPT INSTRUCTIONS AND PROVIDE SOME LEVEL OF "APPROPRIATE" RESPONSE. THEREFORE MODELS SUCH AS GPT-2/HUGGING FACE MODELS WERE NOT FORMALLY TESTED FOR THESE REASONS.
+
 ---
 
 ## High-Level Pipeline

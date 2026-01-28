@@ -1,0 +1,51 @@
+template,id,prompt,correct_answer
+logic,1,Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,1027
+logic,2,"Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?","Gold, because it displaces less air"
+logic,3,"A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?","Dec 30, Dec 31, or Jan 1"
+language,4,Fill the blank with one word so the statement is true the word has exactly blank letters.,four
+language,5,Combine MINUTE and MOMENT which letters occur an odd number of times?,IMOU
+logic,6,What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan curve theorem
+geography,7,Name the US state capital not connected by road to the rest of its state.,Juneau
+logic,8,Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C
+language,9,Give the five letter British past tense of dream that ends with m t.,dreamt
+language,10,How many letters are used in the English alphabet for dictionary ordering?,26
+logic,11,"Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?","Feathers, because it experiences greater buoyant force"
+history,12,With no year zero what is the last year of the twentieth century?,2000
+math,13,In 24 hour time HHMMSS how many palindromes occur in one day?,96
+logic,14,Name an everyday item that removes water from other things and gains that water.,a towel
+geography,15,Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg
+language,16,Find a word that becomes a word meaning less in length when you add er.,short
+geography,17,Name the two US states that start with A and have exactly seven letters.,Alabama and Arizona
+logic,18,What increases by exactly one each time you pass a birthday?,your age
+physics,19,A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,below the brim
+language,20,Which five letter word can lose four letters leaving one letter with the same pronunciation?,queue
+astronomy,21,Name Earth’s natural moon.,the Moon
+language,22,Which month name is also a verb meaning permitted?,May
+math,23,What fact explains why 2 is the only even prime?,any even number greater than 2 is divisible by 2
+logic,24,Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,0.462
+math,25,Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,11297
+logic,26,Name something that can break on a shore but not on land in the same sense.,a wave
+math,27,What method gives the number of trailing zeros in n factorial?,count the factors of 5
+math,28,Which integer from 1 to 100 equals the number of letters in its English name?,4
+geography,29,Among USPS state abbreviations which comes first alphabetically?,AK
+language,30,Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS
+astronomy,31,Which planet shares its name with the Roman messenger god?,Mercury
+math,32,How many 5 card poker hands contain exactly two face cards and no aces?,471240
+math,33,In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j
+biology,34,A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24
+logic,35,What gets larger when you take away part of it?,a hole
+chemistry,36,What is the atomic number of zinc?,30
+history,37,US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2
+language,38,Which 9 letter English word contains the vowels a e i o u exactly once each in order?,facetious
+physics,39,How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22
+logic,40,How many times can you subtract 5 from 25 while still subtracting from 25?,1
+logic,41,What building contains the most stories if stories means narratives?,a library
+geography,42,In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine
+biology,43,What bee made food is famous for not spoiling if sealed?,honey
+biology,44,If you count the claws as legs how many walking legs does a lobster have?,10
+chemistry,45,Name the metal that is liquid at room temperature and used in older thermometers.,Mercury
+math,46,How many white keys are on a standard 88 key piano?,52
+language,47,What four letter word becomes its comparative form by adding er?,long
+biology,48,How many teeth does an adult human have including wisdom teeth?,32
+astronomy,49,Which planet has the higher average surface temperature Venus or Mercury?,Venus
+logic,50,What runs but never walks has a bed and mouth and banks but no money?,a river

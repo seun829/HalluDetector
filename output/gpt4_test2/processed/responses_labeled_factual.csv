@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+chemistry,1,What is the IUPAC name of element 113?,Nihonium,nihonium,False,True,True,1.0,embedding
+science,2,What is the SCOPUS Source ID for the journal Science?,19900191976,22678,True,False,False,0.4637955327908321,embedding
+law,3,In which year did the EU GDPR come into force?,2018,2018,False,True,True,1.0,embedding
+chemistry,4,What is the pKa of acetic acid at 25 C?,4.76,4.76,False,True,True,0.9999999999999998,embedding
+physics,5,What does the Chandrasekhar limit represent?,The maximum mass a white dwarf star can have before it collapses into a neutron star or black hole,maximum mass of a stable white dwarf supported by electron degeneracy pressure,False,False,False,0.7114653391965843,embedding
+physics,6,What does the Gödel metric describe?,A solution to Einstein's field equations in general relativity,rotating cosmological solution with closed timelike curves,False,False,False,0.45249780285783964,embedding
+mathematics,7,What does Noether’s theorem connect?,Symmetry and conservation laws,symmetry implies conservation law,False,False,True,0.9175047660601086,embedding
+physics,8,What is gravitational time dilation?,"Gravitational time dilation is the difference of elapsed time between two events, as measured by observers situated at varying distances from a gravitating mass",time runs slower in stronger gravitational fields,False,False,False,0.636877137696948,embedding
+physics,9,What is an event horizon?,"The boundary in spacetime beyond which events cannot affect an outside observer, typically associated with a black hole",boundary beyond which light cannot escape,False,False,False,0.4461264268025552,embedding
+astronomy,10,What is the annual parallax of Proxima Centauri in arcseconds?,0.7697,0.7687,False,False,True,0.9558269113236503,embedding
+networking,11,What is the IPv6 loopback address?,::1,::1,False,True,True,1.0000000000000002,embedding
+technology,12,What does LIDAR stand for?,Light Detection and Ranging,Light Detection And Ranging,False,True,True,0.9999999999999999,embedding
+chemistry,13,What is alpha decay?,Alpha decay is a type of radioactive decay where an atomic nucleus emits an alpha particle and transforms into a new element,nuclear decay that emits a helium nucleus,True,False,False,0.6909010401665503,embedding
+chemistry,14,What does crystal field theory explain?,Crystal field theory explains the color and magnetism in transition metal complexes,d orbital splitting in transition metal complexes,False,False,False,0.5345049000165834,embedding
+biology,15,What is an enhancer in genetics?,An enhancer is a sequence of DNA that increases the likelihood of transcription of a particular gene,DNA sequence that increases transcription,False,False,False,0.6590874399421873,embedding
+biology,16,What does RNA polymerase II do?,RNA polymerase II synthesizes mRNA from DNA,transcribes mRNA from protein coding genes,False,False,False,0.5461184752435246,embedding
+astronomy,17,What is retrograde motion?,Retrograde motion is the apparent backward movement of a planet in the sky as observed from Earth,apparent backward motion of a planet against the stars,False,False,True,0.7966280638048424,embedding
+astronomy,18,What is the Oort cloud?,"A theoretical cloud of predominantly icy planetesimals believed to surround the Sun to as far as somewhere between 50,000 and 200,000 AU",distant reservoir of long period comets,False,False,False,0.41539526280948824,embedding
+astronomy,19,What is the Local Group?,"A cluster of about 54 galaxies, including the Milky Way",galaxy group containing the Milky Way and Andromeda,False,False,False,0.6872170549851488,embedding
+economics,20,What is GDP?,Gross Domestic Product,total value of final goods and services produced within a country in a year,False,False,False,0.5416669159685464,embedding
+computer_science,21,What does NP complete mean?,"In computational science, NP complete refers to decision problems for which a solution can be verified in polynomial time and any NP problem can be converted into one through a polynomial time algorithm",in NP and NP hard,False,False,False,0.540875758884487,embedding
+computer_science,22,What does the P versus NP problem ask?,The P versus NP problem asks whether every problem whose solution can be quickly verified by a computer can also be quickly solved by a computer,whether every efficiently verifiable problem is efficiently solvable,False,False,False,0.5174838770268025,embedding
+mathematics,23,What is omega one in set theory?,The first uncountable ordinal number,the first uncountable ordinal,False,False,True,0.9612051646029809,embedding
+mathematics,24,What does the Banach Tarski paradox claim?,"The Banach Tarski paradox claims that it is possible to divide a ball in 3D space into a finite number of non-overlapping pieces, which can then be put back together in a different way to yield two identical copies of the original ball",a sphere can be decomposed and reassembled into two identical spheres,False,False,False,0.5046000136659924,embedding
+law,25,What is the formal name of the Wagner Act?,National Labor Relations Act,National Labor Relations Act,False,True,True,0.9999999999999999,embedding
+finance,26,What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,VES,False,True,True,0.9999999999998368,embedding
+history,27,Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,Treaty of Portsmouth,False,True,True,0.9999999999999999,embedding
+history,28,What principle did Marbury v Madison establish?,Judicial review,judicial review,False,True,True,0.9999999999998124,embedding
+chemistry,29,What is the molar mass of glucose in g/mol?,180.16,180.16,False,True,True,0.9999999999999998,embedding
+chemistry,30,What is the molecular formula of vitamin C?,C6H8O6,C6H8O6,False,True,True,1.0,embedding
+physics,31,What is the speed of sound in dry air at 20 C in m/s?,343 m/s,343,False,False,False,0.7079138876324522,embedding
+physics,32,What order of magnitude is LIGO strain in scientific notation?,10^-21,1e-21,True,False,False,0.585580848548356,embedding
+physics,33,What does the Sackur Tetrode equation compute?,The entropy of an ideal gas,absolute entropy of a monatomic ideal gas,False,False,True,0.8240171570943712,embedding
+physics,34,What does the Derjaguin approximation estimate?,The interaction between two spherical particles,force between curved surfaces inferred from planar interaction data,True,False,False,0.36718048765001526,embedding
+technology,35,Who introduced the concept of the memristor?,Leon Chua,Leon Chua,False,True,True,1.0,embedding
+literature,36,What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,A la recherche du temps perdu,False,True,True,1.0,embedding
+geography,37,What is the UN M49 code for Western Europe?,155,155,False,True,True,1.0000000000000002,embedding
+geography,38,What is the latitude of the Geographic South Pole?,-90 degrees,90 S,False,False,False,0.4962807931561952,embedding
+physics,39,At what altitude in km is the Kármán line defined?,100,100,False,True,True,1.0,embedding
+chemistry,40,What is the common name of butan 2 ol?,Sec-butanol,sec-butanol,False,True,True,0.999999999999891,embedding
+mathematics,41,What is the Euler characteristic of a torus?,0,0,False,True,True,0.9999999999999999,embedding
+mathematics,42,What is the genus of a torus?,1,1,False,True,True,1.0,embedding
+astronomy,43,Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,Arno Penzias and Robert Wilson,False,True,True,0.9999999999998763,embedding
+chemistry,44,What is the standard atomic mass of deuterium?,2.014,2.014102,False,False,True,0.8477451005631614,embedding
+meteorology,45,What is a cyclone?,A large scale air mass that rotates around a strong center of low atmospheric pressure,low pressure system with inward spiraling winds,False,False,False,0.571249137830683,embedding
+physics,46,What does the principle of least action state?,The principle of least action states that the path taken between two points by a particle will be the one for which the action is minimum,the true path makes the action stationary,False,False,False,0.5661489061640295,embedding
+chemistry,47,What is transmutation in chemistry?,Transmutation in chemistry is the conversion of one chemical element into another,changing one element into another by nuclear processes,False,False,False,0.593530184990894,embedding
+networking,48,What does the IPv4 TTL field prevent?,Endless looping of data packets,packets from circulating indefinitely,False,False,False,0.6495177802937189,embedding
+law,49,What is the passive personality principle?,"The passive personality principle is a legal principle allowing a country to exercise jurisdiction over crimes committed against its citizens, even if the crimes occurred outside its borders",jurisdiction based on the victim's nationality,False,False,False,0.4793745347883988,embedding
+networking,50,What is the spanning tree protocol used for?,Preventing loops in a network,preventing switching loops in Ethernet networks,False,False,True,0.7858446851800682,embedding

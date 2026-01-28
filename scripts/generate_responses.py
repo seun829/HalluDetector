@@ -209,7 +209,11 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
             ans = (r.get("model_response") or "").strip()
             corr = (r.get("correct_answer") or "").strip()
             details = detect_details(ans, corr, th)
-            hallu.append(bool(details.get("hallucinated", False)))
+            if ans == "":
+                hallu.append(False)
+                logging.info("Model Abstained from Answering, counted as non-hallucination")
+            else:
+                hallu.append(bool(details.get("hallucinated", False)))
             b_exact.append(bool(details.get("baseline_exact", False)))
             b_embed.append(bool(details.get("baseline_embed", False)))
             b_embed_score.append(details.get("baseline_embed_score", None))

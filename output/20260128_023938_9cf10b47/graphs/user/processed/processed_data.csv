@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+In what unusual way does the Banach-Tarski Paradox challenge traditional notions of volume in Euclidean space?,"A solid 3D ball can be finitely partitioned and reassembled into two balls identical to the original, effectively doubling volume",1,False
+"What is the name of the sequence defined by the recurrence relation a(n) = a(n-1) + a(n-3), starting with a(0) = a(1) = a(2) = 1?",,1,False
+"Which famous unsolved problem in mathematics involves proving that any number greater than 1 is the sum of at most three prime numbers, according to the Goldbach conjecture?",,1,False
+"What is the term for a set that can be put into a one-to-one correspondence with a proper subset of itself, exemplified by the Cantor set?",Dedekind-infinite,1,False
+"In the realm of complex numbers, what is the name of the extension of the natural exponential function that exhibits a period of 2πi?",Complex exponential function,1,False
+What is the name of the hypothetical particle proposed to mediate the force of quantum chromodynamics that has not been directly observed?,Gluon,1,False
+"In the context of quantum field theory, what term describes a field that is the simplest example of a quantum field with a non-zero vacuum expectation value?",,1,False
+What is the name of the paradox that arises in general relativity when a rotating black hole has an area where the laws of physics as we know them break down?,,1,False
+"In statistical mechanics, what is the term for the function that gives the probability of a system being in a certain state as a function of energy and temperature?",Boltzmann distribution,1,False
+"What is the name of the effect that describes the change in frequency or wavelength of light due to the motion of the observer relative to the light source, specifically when the light source is moving away?",,1,False
+What is the name of the process by which a liquid turns into a gas at a temperature below its boiling point?,Evaporation,1,False
+"Which element, known for its high density and atomic number 82, is often used as a radiation shield and can be toxic when ingested or inhaled?",Lead,1,False
+"What term describes the phenomenon where certain substances become more soluble in water at lower temperatures, contrary to most solubility trends?",Retrograde solubility,1,False
+"In the context of organic chemistry, what is the term for a molecule that contains both a carboxyl group and an amino group, typically found in proteins?",Amino acid,1,False
+What is the name of the rule or principle that states no two electrons in a given atom can have the same set of four quantum numbers?,Pauli exclusion principle,1,False
+What paradox arises from the idea that an omnipotent being could create a stone so heavy that even they cannot lift it?,Omnipotence paradox,1,False
+In which philosophical thought experiment does a person experience all of life's sensations through a machine while unknowingly remaining in a vat?,Brain in a vat,1,False
+"Which philosopher is known for the concept of 'eternal recurrence', where life is repeated infinitely?",Friedrich Nietzsche,1,False
+What term describes the philosophical belief that only one's own mind is certain to exist?,Solipsism,1,False
+Which ancient philosopher's dialogues often feature Socrates engaging in dialectic to explore ethical concepts?,Plato,1,False
+"In a system where a statement refers to itself by claiming its own falsehood, what paradox does this create?",Liar paradox,1,False
+What term describes a logical fallacy where the conclusion is assumed in the premises?,Begging the question,1,False
+"In symbolic logic, which connective has the same truth table as the biconditional operator when the statements are logically equivalent?",,1,False
+"What is the name of the logical principle which states that if a proposition is true, then it must be true in all possible worlds?",,1,False
+Which philosopher is famous for formulating the incompleteness theorems that reveal inherent limitations in formal systems?,Kurt Gödel,1,False
+What is the term for the point in the sky directly opposite the zenith?,Nadir,1,False
+"In the context of astronomy, what name is given to the hypothetical boundary beyond which events cannot affect an observer, often associated with black holes?",Event horizon,1,False
+"What is the term for the apparent backward motion of planets as observed from Earth, which is actually an illusion caused by the relative positions and motions of Earth and the other planets?",Retrograde motion,1,False
+"Which astronomical term describes a dense cloud of molecular gas and dust that can collapse to form stars, often located in the Milky Way's spiral arms?",Giant molecular cloud,1,False
+What is the name of the point at which a planet is closest to the sun in its orbit?,Perihelion,1,False
+"What unique term is used to describe a musical composition that is intentionally unfinished or left incomplete by the composer, often seen in classical music?",,1,False
+"In the realm of music theory, which mode of the major scale is characterized by having a lowered second and fifth degree?",Locrian,1,False
+"What is the name of the cryptic, ancient Greek music notation system that uses letters from the Greek alphabet to denote pitches?",,1,False
+"Which often-overlooked instrument in a symphony orchestra is typically responsible for producing the lowest-pitched notes, even lower than the double bass?",Contrabassoon,1,False
+"In jazz music, what term describes a chord substitution that involves replacing a dominant chord with a dominant seventh chord a tritone away?",Tritone substitution,1,False
+"In maritime law, what is the term for a vessel's legal status when it has been left without a crew and without intention of returning?",Derelict,1,False
+What is the legal doctrine that allows a court to disregard a corporate entity's limited liability in order to hold its shareholders personally liable for the corporation's debts?,Piercing the corporate veil,1,False
+"In the context of intellectual property law, what is the term for the unauthorized use of a patented invention that occurs during its term?",Patent infringement,1,False
+What is the name of the international treaty that provides a unified legal framework for the recognition of seafarers' certificates of competency?,,1,False
+"In property law, what is the term for an interest in land that lasts for the duration of the holder's life, but does not pass to heirs upon death?",Life estate,1,False
+"In the context of computer networks, what specific role does the Spanning Tree Protocol play in preventing network loops?","It computes a loop‑free spanning tree, blocking redundant ports to eliminate loops",1,False
+Which rarely-discussed layer of the OSI model is responsible for the translation of network addresses into physical addresses?,,1,False
+How does the concept of 'route poisoning' work to prevent routing loops in Distance Vector Routing Protocols?,"It advertises a failed route with an infinite metric to all neighbors so they immediately invalidate it, preventing loops",1,False
+What is the primary difference between a 'collision domain' and a 'broadcast domain' in switched networks?,"A collision domain is the scope of frame collisions (typically one per switch port), while a broadcast domain is the scope of Layer‑2 broadcasts (the entire VLAN, bounded by routers)",1,False
+"In wireless networking, what seldom-discussed phenomenon causes a 'hidden node problem' to occur?",,1,False
+What principle explains why the speed of light remains constant regardless of the observer's frame of reference?,Einstein’s second postulate (light-speed invariance),1,False
+"In quantum mechanics, what term describes the phenomenon where two particles remain connected so that the state of one instantly influences the state of the other, regardless of distance?",Quantum entanglement,1,False
+Which scientific law states that the total entropy of an isolated system can never decrease over time?,Second law of thermodynamics,1,False
+"In chemistry, what is the term for a molecule that has the same molecular formula as another molecule but with a different chemical structure?",Isomer,1,False
+"What is the name of the effect where a rotating body experiences a force perpendicular to the direction of its rotation axis and its velocity, often observed in weather systems?",Coriolis effect,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,,1,False
+In which year did the EU GDPR come into force?,2016,0,True
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,Maximum mass of a white dwarf supported by electron degeneracy pressure,1,False
+What does the Gödel metric describe?,A rotating universe,1,False
+What does Noether’s theorem connect?,Continuous symmetries and conservation laws,1,False
+What is gravitational time dilation?,The slowing of clocks in stronger gravitational fields (lower gravitational potential) relative to those in weaker fields,1,False
+What is an event horizon?,"The spacetime boundary of a black hole beyond which nothing, not even light, can escape",1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,"Emission of a helium-4 (alpha) nucleus by an unstable nucleus, reducing atomic number by 2 and mass number by 4",1,False
+What does crystal field theory explain?,The splitting of metal d orbitals—and the resulting colors and magnetic properties—of coordination compounds,1,False
+What is an enhancer in genetics?,"A regulatory DNA sequence that increases gene transcription, often acting at a distance and regardless of orientation",1,False
+What does RNA polymerase II do?,Transcribes protein-coding DNA into pre-mRNA,1,False
+What is retrograde motion?,Apparent backward motion of a planet against the stars due to Earth’s relative motion,1,False
+What is the Oort cloud?,"A distant spherical reservoir of icy bodies surrounding the Solar System, source of long-period comets",1,False
+What is the Local Group?,The gravitationally bound group of galaxies that includes the Milky Way and Andromeda,1,False
+What is GDP?,The total monetary value of all final goods and services produced within a country’s borders during a specific period,1,False
+What does NP complete mean?,A decision problem in NP and NP-hard,1,False
+What does the P versus NP problem ask?,Whether P equals NP,1,False
+What is omega one in set theory?,The first uncountable ordinal (the set of all countable ordinals),1,False
+What does the Banach Tarski paradox claim?,"A solid ball can be partitioned into finitely many pieces and, using only rigid motions, reassembled into two balls congruent to the original",1,False
+What is the formal name of the Wagner Act?,National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,180.16 g/mol,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,Absolute entropy of a monatomic ideal gas,1,False
+What does the Derjaguin approximation estimate?,Forces between curved surfaces at small separations,1,False
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,90° S,0,True
+At what altitude in km is the Kármán line defined?,100,1,False
+What is the common name of butan 2 ol?,sec-butanol,1,False
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,,1,False
+What is a cyclone?,"A low-pressure weather system with inward-spiraling, rotating winds",1,False
+What does the principle of least action state?,The actual motion makes the action integral stationary under small variations,1,False
+What is transmutation in chemistry?,Conversion of one element into another by changing its number of protons in the nucleus,1,False
+What does the IPv4 TTL field prevent?,Packets looping indefinitely,1,False
+What is the passive personality principle?,Jurisdiction based on the victim’s nationality,1,False
+What is the spanning tree protocol used for?,Preventing Layer 2 Ethernet loops by creating a loop-free topology,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,,1,False
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,"Gold; its smaller volume displaces less air, so buoyant upthrust is less and the apparent weight is greater",1,False
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,,1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,,1,False
+Combine MINUTE and MOMENT which letters occur an odd number of times?,,1,False
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan curve theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,Juneau,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,,1,False
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,,1,False
+Name an everyday item that removes water from other things and gains that water.,Towel,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,,1,False
+Name the two US states that start with A and have exactly seven letters.,Alabama and Arizona,1,False
+What increases by exactly one each time you pass a birthday?,Age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,,1,False
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,Every even integer greater than 2 is divisible by 2,1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,0.462,1,False
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,11297,1,False
+Name something that can break on a shore but not on land in the same sense.,,1,False
+What method gives the number of trailing zeros in n factorial?,,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,,1,False
+Among USPS state abbreviations which comes first alphabetically?,,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,,1,False
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,A hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,facetious,1,False
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,1,1,False
+What building contains the most stories if stories means narratives?,A library,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,10,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,,1,False
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

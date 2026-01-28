@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+"In the realm of topology, what is the name of the surface that can be formed by taking a strip of paper, giving it a half-twist, and then joining the ends together?",Möbius strip,1,False
+"In number theory, what is the smallest positive integer that is simultaneously the sum of two cubes in two different ways?",1729,1,False
+What is the term for a matrix that is equal to its own inverse?,Involutory matrix,1,False
+"In the field of real analysis, what is the name of the sequence defined as the sum of the infinite series 1/2 + 1/4 + 1/8 + ... ?",Geometric series,1,False
+"In combinatorics, what is the name of the triangle of numbers that gives the coefficients in the expansion of a binomial raised to any power?",Pascal's Triangle,1,False
+"In quantum mechanics, what is the term for the mathematical function that describes the quantum state of a system?",Wave function,0,True
+What is the name of the paradox that questions how a cat can be simultaneously alive and dead in quantum theory?,Schrödinger's cat,1,False
+"In the context of special relativity, what is the term for the factor that describes how time dilates and lengths contract as an object approaches the speed of light?",Lorentz factor,1,False
+What is the name of the hypothetical particle that mediates the force of gravity in quantum field theory?,Graviton,1,False
+"In thermodynamics, what is the term for a process that occurs without any entropy change?",Isentropic process,1,False
+"Which laboratory technique, named after a color, is used to separate components of a mixture based on their distribution between a stationary phase and a mobile phase?",Chromatography,1,False
+What term describes the phenomenon where a solute's solubility in a solvent increases dramatically with a small increase in temperature?,Critical solution temperature,1,False
+"In organic chemistry, what is the term for the intermediate species that contains a carbon atom with a sextet of electrons, making it highly reactive?",Carbocation,1,False
+"What rule predicts the regiochemistry of electrophilic addition reactions to alkenes, stating that the more substituted carbon atom will receive the electrophile?",Markovnikov's rule,1,False
+"What is the name of the effect observed when a chemical reaction's rate increases due to the presence of a catalyst, yet the catalyst remains chemically unchanged at the end of the reaction?",Catalysis,1,False
+Which 19th-century philosopher is known for his paradoxical statement that 'the owl of Minerva spreads its wings only with the falling of the dusk' to signify the maturation of philosophical thought?,Hegel,1,False
+"In Kantian philosophy, what is the term for the innate capacity of human cognition to structure experience, which lies at the heart of his 'Critique of Pure Reason'?",Transcendental apperception,1,False
+"What is the term in existentialist philosophy, particularly associated with Jean-Paul Sartre, that describes the individual's experience of the void or nothingness inherent in human freedom?",Nausea,1,False
+"In Aristotle's 'Nicomachean Ethics', what is the term used to describe the concept of the 'mean' between two extremes, which defines moral virtue?",Golden Mean,1,False
+"Which pre-Socratic philosopher is credited with the idea of 'apeiron', an unbounded or infinite principle, as the origin of all things?",Anaximander,1,False
+"In the realm of classical logic, what is the name of the principle that asserts a statement cannot be both true and false at the same time?",Law of Non-Contradiction,1,False
+"Which paradox, named after an ancient Greek philosopher, illustrates the problem of dividing a finite object ad infinitum?",Zeno's paradox,1,False
+"In propositional logic, what is the term for a formula that is always true regardless of the truth values of its component propositions?",Tautology,1,False
+"What is the term for a logical fallacy where the conclusion is assumed in one of the premises, often phrased as 'begging the question'?",Petitio principii,1,False
+"In modal logic, what operator is used to denote the necessity of a proposition being true?","""□"" (box)",1,False
+"What is the name of the hypothetical region beyond Neptune believed to be the source of some comets, where celestial bodies orbit in resonance with Neptune's gravity?",Kuiper Belt,1,False
+"Which star system, located about 8.6 light-years away, is actually a triple star system consisting of a binary pair and a distant companion?",Sirius,1,False
+"What is the term for the region around a black hole beyond which no information or matter can escape, often referred to as the 'point of no return'?",Event horizon,1,False
+"What is the name of the point in the sky that is directly opposite the Sun during a total solar eclipse, appearing as a halo-like phenomenon?",Antisolar point,1,False
+"Which astronomical coordinate system is based on the Earth's rotational axis and the plane of its orbit around the Sun, used to specify the positions of celestial objects?",Ecliptic coordinate system,1,False
+What unusual time signature is most famously used in Dave Brubeck's jazz classic 'Take Five'?,5/4,1,False
+Which obscure Baroque composer is credited with developing the 'salon concert' format in the early 18th century?,Michel Corrette,1,False
+In which city did the influential but short-lived 1960s music genre 'Tropicalia' originate?,Salvador,1,False
+"What is the rare vocal classification for a male singer capable of singing in the female soprano range using falsetto, often seen in early opera?",Countertenor,1,False
+"Which obscure medieval instrument, similar to a violin, was used by troubadours and is known for its droning sound created by a rotating wheel rubbing against the strings?",Hurdy-gurdy,1,False
+"What legal doctrine, originating in 17th-century England, allows a party to avoid a contract if they have been misled or deceived into agreeing to its terms?",Fraudulent misrepresentation,1,False
+"Which U.S. Supreme Court case first applied the principle of 'one person, one vote' to state legislative districts, fundamentally altering American political representation?",Reynolds v. Sims,1,False
+"In international law, what term describes a state's obligation not to recognize as lawful a situation created by a serious breach of a peremptory norm?",Non-recognition,1,False
+"What legal principle, often used in property law, allows a person to gain ownership of land by openly occupying it for a prolonged period of time without the consent of the original owner?",Adverse possession,1,False
+"Which ancient Roman legal concept, meaning 'let the buyer beware', is still relevant in modern contract law, particularly in the context of sales and warranties?",Caveat emptor,1,False
+"In the context of networking, what specific problem does the Spanning Tree Protocol (STP) primarily aim to solve?",Network loops,1,False
+Which field in an Ethernet frame is crucial for determining the upper-layer protocol being used?,EtherType field,1,False
+"In BGP (Border Gateway Protocol), what mechanism helps prevent routing loops by maintaining a list of AS numbers in the path?",AS_PATH attribute,1,False
+What is the main purpose of utilizing a GRE (Generic Routing Encapsulation) tunnel in network configurations?,To encapsulate a wide variety of network layer protocols inside virtual point-to-point links,1,False
+Which network layer is responsible for handling the segmentation and reassembly of data packets in the OSI model?,Transport layer,1,False
+What is the term for the hypothetical particle that mediates the force of gravity in quantum field theory?,Graviton,1,False
+"In quantum mechanics, what is the name of the principle that limits the precision with which certain pairs of physical properties can be known simultaneously?",Heisenberg uncertainty principle,1,False
+Which rare and highly toxic element is named after a dwarf planet and has the atomic number 118?,Oganesson,1,False
+What is the term for the phenomenon where a liquid in a narrow tube rises or falls due to surface tension?,Capillary action,1,False
+"In the context of biology, what is the term used for the evolutionary process by which an organism becomes better suited to its environment through selective pressures?",Adaptation,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,24754,0,True
+In which year did the EU GDPR come into force?,2018,1,False
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,"The maximum mass of a stable white dwarf star, approximately 1.4 solar masses",1,False
+What does the Gödel metric describe?,The Gödel metric describes a rotating universe solution in general relativity,1,False
+What does Noether’s theorem connect?,Symmetries and conservation laws,1,False
+What is gravitational time dilation?,Time runs slower in a stronger gravitational field,1,False
+What is an event horizon?,A boundary beyond which nothing can escape from a black hole,1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,0.7687,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,Alpha decay is a radioactive process where an unstable nucleus emits an alpha particle,0,True
+What does crystal field theory explain?,Crystal field theory explains the electronic structure and color of transition metal complexes,1,False
+What is an enhancer in genetics?,A DNA sequence that increases the transcription of a gene,1,False
+What does RNA polymerase II do?,RNA polymerase II synthesizes mRNA,1,False
+What is retrograde motion?,Apparent backward movement of a planet in the sky,1,False
+What is the Oort cloud?,A hypothetical spherical shell of icy objects surrounding the solar system,1,False
+What is the Local Group?,A galaxy group containing the Milky Way and about 54 other galaxies,1,False
+What is GDP?,"Gross Domestic Product, the total value of goods and services produced in a country",1,False
+What does NP complete mean?,A problem is NP-complete if it is both in NP and as hard as any problem in NP,1,False
+What does the P versus NP problem ask?,Whether every problem whose solution can be quickly verified can also be quickly solved,1,False
+What is omega one in set theory?,Omega one (ω₁) is the first uncountable ordinal,1,False
+What does the Banach Tarski paradox claim?,A solid sphere can be divided and reassembled into two identical spheres,1,False
+What is the formal name of the Wagner Act?,National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,180.16 g/mol,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343 m/s,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,Entropy of an ideal gas,1,False
+What does the Derjaguin approximation estimate?,Interaction energy between curved and flat surfaces,1,False
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,-90,1,False
+At what altitude in km is the Kármán line defined?,100 km,1,False
+What is the common name of butan 2 ol?,Sec-butanol,1,False
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,2.014 amu,1,False
+What is a cyclone?,A cyclone is a system of winds rotating inward to an area of low atmospheric pressure,1,False
+What does the principle of least action state?,The principle of least action states that the path taken by a system between two states is the one for which the action is least,1,False
+What is transmutation in chemistry?,Transmutation is the conversion of one chemical element into another,1,False
+What does the IPv4 TTL field prevent?,Infinite looping of packets,1,False
+What is the passive personality principle?,The passive personality principle allows a state to claim jurisdiction over foreign nationals who commit offenses abroad that affect its citizens,1,False
+What is the spanning tree protocol used for?,Preventing network loops,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,273 months,0,True
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,"Gold, due to higher density and less buoyant force in air",1,False
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,"Dec 31, Jan 1, Jan 2",1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,6,0,True
+Combine MINUTE and MOMENT which letters occur an odd number of times?,"M, N, T, E",0,True
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,Juneau,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,Dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,The box with feathers has greater true mass due to buoyancy effects,1,False
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,666,0,True
+Name an everyday item that removes water from other things and gains that water.,Sponge,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,Short,1,False
+Name the two US states that start with A and have exactly seven letters.,"Alabama, Arizona",1,False
+What increases by exactly one each time you pass a birthday?,Your age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,The final level is the same,1,False
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,An even number greater than 2 is divisible by 2,1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,0 pounds heavier,0,True
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,"11,718",0,True
+Name something that can break on a shore but not on land in the same sense.,Wave,1,False
+What method gives the number of trailing zeros in n factorial?,Count the factors of 5 in n,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,4,1,False
+Among USPS state abbreviations which comes first alphabetically?,AK,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,"28,080",0,True
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,Hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,Facetious,1,False
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22 grams heavier,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,1,1,False
+What building contains the most stories if stories means narratives?,The Library of Congress,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,10,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,Sore,0,True
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

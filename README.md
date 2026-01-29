@@ -1,5 +1,5 @@
-### ai-hallucination-detection 
- AI Hallucination Detection
+### HalluDetector
+HalluDetector
 
 ## Overview:
 This project explores how often and why AI language models hallucinate—i.e., generate incorrect, misleading, or fabricated information—especially in response to complex or rare factual prompts. The repo provides a Flask web app, CLI utilities, a rule-based detector (semantic similarity + NLI), visualization scripts, and a prompt-only BERT baseline. Understanding and detecting hallucinations is critical to ensure AI systems remain trustworthy in high-risk fields.
@@ -216,7 +216,7 @@ Covers baseline behaviors of `is_hallucinated`.
   - `app.py`, `src/hallu_detector/detect.py`, `src/hallu_detector/evaluate.py`, `src/hallu_detector/generate.py`
   - `scripts/generate_responses.py`, `scripts/graph_patterns.py`, `scripts/make_prompts.py`
   - `static/index.html` / `static/script.js` minor polish
-
+- Section regarding "Predicting whether a hallucination will occur" is tied to the "train_model.py" script which has not yet been run before. In order to use that section you must first run the script and have your model saved
 ---
 
 ## Future Work:

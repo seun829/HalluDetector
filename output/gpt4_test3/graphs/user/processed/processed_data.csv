@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+"In the context of topology, what is the term for a space that is path-connected and locally path-connected but not necessarily simply connected?",Semi-locally simply connected space,1,False
+"In the realm of set theory, what is the name of the axiom that states every set can be well-ordered?",Well-ordering theorem,1,False
+"In projective geometry, what is the term for a line that intersects two coplanar lines at distinct points?",Secant line,0,True
+What is the name of the conjecture in number theory that relates to the density of prime numbers in arithmetic progressions and remains unproven for k greater than 1?,Generalized Riemann Hypothesis,1,False
+What is the term for a mathematical function that is differentiable at all points in its domain but its derivative is not continuous?,Nondifferentiable function,1,False
+"In the context of quantum mechanics, what is the term for the theoretical concept that allows particles to exist in multiple states or locations simultaneously until observed?",Superposition,1,False
+What is the name of the hypothetical particles that mediate the force of gravity in quantum field theory?,Gravitons,1,False
+"In thermodynamics, what is the term for the paradox that arises when entropy appears to decrease in a closed system by selectively removing fast-moving molecules?",Maxwell's Demon,1,False
+What is the name of the theoretical boundary in a rotating black hole where the laws of physics break down and determinism fails?,Cauchy horizon,1,False
+"In particle physics, what is the term for the process where a particle and its antiparticle annihilate each other, producing energy in the form of photons?",Annihilation,1,False
+What is the only element that can form compounds with almost all other elements in the periodic table?,Carbon,1,False
+Which chemistry principle explains why increasing the concentration of reactants speeds up the rate of reaction?,The Collision Theory,1,False
+What rare type of chemical bond is characterized by the sharing of a pair of electrons between three atoms rather than the typical two?,Three-center two-electron bond,1,False
+"In the context of acid-base chemistry, what term describes a molecule that can donate or accept a proton depending on the environment?",Amphiprotic,1,False
+What is the name of the quantum mechanical model that describes the behavior of electrons in atoms using wave functions?,Schrödinger model,1,False
+"In the context of philosophy, which 20th-century thinker is known for the concept of the 'language-game'?",Ludwig Wittgenstein,1,False
+"Within the realm of ethics, which philosophical theory is primarily concerned with the balance of pleasure over pain?",Utilitarianism,1,False
+Which ancient Greek philosopher is famously associated with the allegory of the cave?,Plato,1,False
+What term did Søren Kierkegaard coin to describe the existential feeling of 'dread' or 'anxiety'?,Angst,1,False
+"In philosophy, who is credited with the idea of 'the will to power' as a driving force in human nature?",Friedrich Nietzsche,1,False
+"In Gödel's incompleteness theorems, what is the term for the type of statement that asserts its own unprovability within a formal system?",Gödel sentence,1,False
+What is the name of the logical paradox that arises from a set that contains all sets that do not contain themselves?,Russell's paradox,1,False
+"In modal logic, what term is used to describe a world that is accessible from every possible world?",Universal,1,False
+"What is the name of the principle in classical logic that states every statement is either true or false, with no middle ground?",Law of Excluded Middle,1,False
+"Which type of logic involves the study of truth values beyond the classical true and false, often using a spectrum of values?",Fuzzy logic,1,False
+"What is the term for the point in the sky directly opposite the zenith, where a celestial body is at its lowest in the sky relative to an observer?",Nadir,1,False
+"Which mathematical surface is used to describe the gravitational field of a rotating massive object like Earth, according to general relativity?",Kerr metric,1,False
+"What is the name of the hypothetical, invisible boundary around a black hole beyond which nothing can escape?",Event Horizon,1,False
+"In astronomy, what term describes the apparent backward motion of a planet as observed from Earth?",Retrograde motion,1,False
+What is the name of the phenomenon where the light from a star is shifted towards the red end of the spectrum due to the expansion of the universe?,Redshift,1,False
+"In the context of Western music theory, what is the term for the smallest interval used in the theory of twelve-tone equal temperament?",Semitone,1,False
+"Which obscure musical instrument, often mistaken for a medieval relic, is known for its unique wheel mechanism that produces sound similar to a violin?",Hurdy-gurdy,1,False
+What is the name of the lesser-known scale in jazz music that consists of alternating whole and half steps starting with a whole step?,Whole Tone Scale,1,False
+"In the world of classical music, which 20th-century composer's Symphony No. 4 is subtitled 'The Inextinguishable'?",Carl Nielsen,1,False
+What is the name of the traditional Japanese music genre that combines elements of court music with Buddhist chanting and is performed using a biwa?,Gagaku,1,False
+"What legal principle, originating from Roman law, is encapsulated in the phrase 'nemo judex in causa sua'?",Bias disqualification,1,False
+"In the context of intellectual property, what is the term for the right that allows an author to control the first public appearance of their work?",First Publication Right,1,False
+Which landmark U.S. Supreme Court case established the principle of judicial review in 1803?,Marbury v. Madison,1,False
+"What is the legal doctrine called that allows a person to inherit property from a deceased relative without a will, based on their close familial relationship?",Intestate succession,1,False
+"Within international law, what principle allows a country to exercise jurisdiction over crimes committed abroad if they threaten its national interests?",Protective principle,1,False
+"In the context of networking, what does the term 'flapping' specifically refer to?",Flapping refers to a network condition where a router alternately advertises a destination network via one route then another,1,False
+What is the primary function of the Spanning Tree Protocol in Ethernet networks?,To prevent loops in the network,1,False
+"In a network, what is the primary responsibility of a 'supernode' in peer-to-peer architectures?",A supernode's primary responsibility is to index and route connections between other nodes,1,False
+What is the main purpose of the BGP 'AS_PATH' attribute in inter-domain routing?,The main purpose of the BGP 'AS_PATH' attribute in inter-domain routing is to prevent routing loops,1,False
+"In networking, what is a 'collision domain' and how does it differ from a 'broadcast domain'?","A 'collision domain' is a network segment where data packets can collide with one another when being sent on a shared medium or through repeaters, whereas a 'broadcast domain' is a network segment where a broadcast is forwarded",1,False
+"In the field of quantum mechanics, what term describes the phenomenon where particles become entangled in such a way that the quantum state of each particle cannot be described independently of the state of the other, even when the particles are separated by a large distance?",Quantum entanglement,1,False
+What is the name of the paradox in special relativity where a space traveler returns home younger than their twin who stayed on Earth?,Twin Paradox,1,False
+"Which elusive particle, hypothesized by the Standard Model of particle physics, was discovered at CERN in 2012 and is responsible for giving mass to other particles?",Higgs boson,1,False
+"In thermodynamics, what is the term for the measure of disorder or randomness in a system, often associated with the second law?",Entropy,1,False
+What is the scientific term for the hypothetical boundary around a black hole beyond which no light or other radiation can escape?,Event Horizon,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,24049,0,True
+In which year did the EU GDPR come into force?,2018,1,False
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,The maximum mass a white dwarf star can have before it collapses into a neutron star or black hole,1,False
+What does the Gödel metric describe?,"The Gödel metric describes solutions to Einstein's field equations in general relativity, incorporating both rotation and cosmic time",1,False
+What does Noether’s theorem connect?,Symmetry and conservation laws,1,False
+What is gravitational time dilation?,Gravitational time dilation is the difference of elapsed time between two events as measured by observers situated at varying distances from a gravitating mass,1,False
+What is an event horizon?,"The boundary in a black hole beyond which nothing can escape, including light",1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,0.7687,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,Alpha decay is a type of radioactive decay where an atomic nucleus emits an alpha particle and transforms into a new element,0,True
+What does crystal field theory explain?,Crystal field theory explains the color and magnetism of metal complexes,1,False
+What is an enhancer in genetics?,An enhancer is a sequence of DNA that can increase the likelihood of the transcription of a gene,1,False
+What does RNA polymerase II do?,RNA polymerase II synthesizes mRNA from DNA,1,False
+What is retrograde motion?,Retrograde motion is the apparent backward movement of a planet across the sky,1,False
+What is the Oort cloud?,A theoretical cloud of predominantly icy planetesimals believed to surround the Sun to as far as almost a light year,1,False
+What is the Local Group?,"A cluster of about 54 galaxies, including the Milky Way",1,False
+What is GDP?,Gross Domestic Product,1,False
+What does NP complete mean?,"A class of problems for which no efficient solution has been found, but if one was found, it could be used to solve all other problems in the class",1,False
+What does the P versus NP problem ask?,The P versus NP problem asks if every problem whose solution can be quickly checked by a computer can also be quickly solved by a computer,1,False
+What is omega one in set theory?,The first uncountable ordinal number,1,False
+What does the Banach Tarski paradox claim?,"The Banach Tarski paradox claims that it is possible to divide a ball into a finite number of non-overlapping pieces, which can be put back together in a different way to yield two balls identical to the original",1,False
+What is the formal name of the Wagner Act?,National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,180.16,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,The entropy of an ideal gas,1,False
+What does the Derjaguin approximation estimate?,The interaction between two macroscopic bodies,1,False
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,-90 degrees,1,False
+At what altitude in km is the Kármán line defined?,100,1,False
+What is the common name of butan 2 ol?,Sec-butanol,1,False
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,2.014102,1,False
+What is a cyclone?,A large scale air mass that rotates around a strong center of low atmospheric pressure,1,False
+What does the principle of least action state?,The principle of least action states that the path taken between two points by a particle or system of particles will be the path for which the action is minimized,1,False
+What is transmutation in chemistry?,Transmutation in chemistry is the conversion of one chemical element into another,1,False
+What does the IPv4 TTL field prevent?,Endless looping of packets,1,False
+What is the passive personality principle?,"The passive personality principle allows a country to exercise jurisdiction over crimes committed against its citizens, regardless of where the crime took place",0,True
+What is the spanning tree protocol used for?,Preventing loops in a network,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,5800,0,True
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,"Feathers, because air buoyancy affects them less due to their larger volume",0,True
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,Dec 31 and Jan 1,1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,Five,0,True
+Combine MINUTE and MOMENT which letters occur an odd number of times?,"N, U, T, S",0,True
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,Juneau,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,Dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,The box with feathers has a greater true mass because feathers are less dense than steel,1,False
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,684,0,True
+Name an everyday item that removes water from other things and gains that water.,A towel,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,Long,0,True
+Name the two US states that start with A and have exactly seven letters.,"Arizona, Alabama",1,False
+What increases by exactly one each time you pass a birthday?,Age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,At the brim,0,True
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,The Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,2 is the only even prime because all other even numbers can be divided by 2 without a remainder,1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,22.0462,0,True
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,9700,0,True
+Name something that can break on a shore but not on land in the same sense.,Wave,1,False
+What method gives the number of trailing zeros in n factorial?,Prime factorization method,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,4,1,False
+Among USPS state abbreviations which comes first alphabetically?,AK,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,"6,188,580",0,True
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,A hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,Education,0,True
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,5,0,True
+What building contains the most stories if stories means narratives?,The Library of Congress,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,10,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,Near,0,True
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

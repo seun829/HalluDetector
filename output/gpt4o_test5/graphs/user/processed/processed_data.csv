@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+"What is the term for a polynomial equation that has exactly one solution for all possible values of its variables, irrespective of the values?",Identity,1,False
+"In what type of geometry does the parallel postulate of Euclidean geometry not hold true, leading to the existence of multiple parallel lines through a given point?",Hyperbolic geometry,1,False
+"What is the name of the sequence where each term is the sum of the previous two terms, but starts with 3 and 5 instead of 0 and 1?",Lucas sequence,1,False
+Which paradox in set theory involves a set that contains all sets that do not contain themselves?,Russell's paradox,1,False
+What is the term for a number that is the smallest number expressible as the sum of two cubes in two different ways?,1729,0,True
+"In the context of quantum mechanics, what is the 'Zeno effect' and how does it relate to the concept of wave function collapse?","The Zeno effect is the phenomenon where frequent observation of a quantum system prevents its wave function from collapsing, effectively freezing its evolution",1,False
+What is the significance of the 'Schwarzschild radius' in the context of black holes and how does it relate to the escape velocity?,The Schwarzschild radius is the distance from the center of a black hole at which the escape velocity equals the speed of light,1,False
+"In general relativity, what is the 'geodesic deviation equation' and how does it relate to the curvature of spacetime?","The geodesic deviation equation describes how nearby geodesics in spacetime diverge or converge, indicating the presence of curvature",1,False
+What is the 'Poynting vector' and how does it describe the directional energy flux of an electromagnetic field?,The Poynting vector represents the directional energy flux (power per unit area) of an electromagnetic field,1,False
+"In fluid dynamics, what does the 'Navier-Stokes equation' fundamentally describe and why is it considered a major unsolved problem in mathematics?",It describes the motion of fluid substances and is unsolved due to the existence and smoothness problem of solutions in 3D,1,False
+"In what year was the term 'isotope' first introduced by Frederick Soddy, and in which scientific journal was it published?","1913, Nature",1,False
+What is the only element on the periodic table that was named after a real-life woman?,Meitnerium,0,True
+"In the context of electron configurations, what is the term for the rule that states no two electrons can have the same set of four quantum numbers?",Pauli exclusion principle,1,False
+What is the name of the process used to separate isotopes of uranium in the gaseous diffusion method?,Gaseous diffusion,1,False
+Which chemical element is known for having the highest magnetic susceptibility and is often used in MRI machines?,Gadolinium,1,False
+"In the context of the Ship of Theseus paradox, what term is used to describe the original ship if all its components are gradually replaced?",The Ship of Theseus,1,False
+"Which pre-Socratic philosopher is credited with the idea that 'all is number,' influencing both Pythagorean thought and Western philosophy?",Pythagoras,1,False
+What is the name of the thought experiment by Frank Jackson that questions whether complete physical knowledge can account for all of human experience?,Mary's Room,1,False
+"In Nietzsche's philosophy, what is the term for the ideal individual who creates their own values and lives beyond traditional moral constraints?",Übermensch,1,False
+"Which philosopher's work is primarily associated with the concept of 'the banality of evil,' reflecting on the nature of evil in modern times?",Hannah Arendt,1,False
+"In modal logic, what is the name of the axiom that states 'if a proposition is necessary, then it is necessarily necessary'?",4-axiom (or 4-axiom of modal logic),1,False
+"What paradox challenges the principle of explosion in logic by asserting that from a contradiction, anything can follow?",The principle of explosion (ex contradictione quodlibet),1,False
+Which logical fallacy is illustrated by the scenario of a person misinterpreting a general rule to be applied to a specific case due to an overgeneralization?,Hasty generalization,1,False
+"In predicate logic, what is the term for a function that assigns truth values to predicates based on the interpretation of their variables?",Interpretation function,1,False
+"What is the name of the logical principle that suggests for any proposition, either it or its negation must be true, thus excluding any middle ground?",Law of excluded middle,1,False
+"What is the name of the effect that describes the apparent slowing down of time for an object moving at relativistic speeds, as observed in the context of astronomy?",Time dilation,1,False
+"Which hypothetical type of star is thought to be composed entirely of neutrons and is incredibly dense, yet has a mass threshold that keeps it from collapsing into a black hole?",Neutron star,1,False
+"What is the term for the boundary around a black hole beyond which nothing, not even light, can escape?",Event horizon,1,False
+What is the name of the point in a planet's orbit where it is closest to the star it orbits?,Perihelion,1,False
+Which astronomical term refers to the point in the sky directly above an observer at any given location on the Earth's surface?,Zenith,1,False
+"In the world of music theory, what term is used to describe a scale that includes all twelve pitches of the chromatic scale, each a semitone apart?",Chromatic scale,1,False
+"Which 20th-century composer is known for using prepared pianos, a method that involves placing objects on or between the strings of a piano to alter its sound?",John Cage,1,False
+"What is the term for the musical form that involves a single melodic line without accompaniment, often used in Gregorian chants?",Monophony,1,False
+Which jazz saxophonist is credited with popularizing the use of 'sheets of sound' in his improvisations during the 1950s and 1960s?,John Coltrane,1,False
+"In the realm of ethnomusicology, what is the name of the Indian rhythmic concept that divides time into cycles, often used in classical Indian music performances?",Tala,1,False
+What is the legal doctrine that allows a person to claim ownership of land they've occupied without permission for a certain period of time?,Adverse possession,1,False
+"In the context of intellectual property law, what is the term for a word or phrase that has become generic and no longer qualifies for trademark protection?",Genericide,1,False
+Which Latin term is used in law to describe a judge's obligation to remain impartial and unbiased during a trial?,Nemo iudex in causa sua,1,False
+What is the special privilege that allows certain professionals to refuse to testify about confidential communications made to them by their clients?,Attorney-client privilege,1,False
+"In maritime law, what is the name of the principle that holds a ship's master responsible for the actions of the crew?",Respondent superior,0,True
+"In computer networking, what is the primary purpose of a spanning tree protocol?",Prevent loops in network topology,1,False
+What is the maximum number of IP addresses that can be allocated in a subnet with a CIDR notation of /29?,8,0,True
+"In a TCP/IP network, what is the significance of the 'three-way handshake'?",It establishes a reliable connection,1,False
+Which layer of the OSI model is responsible for reliable message delivery?,Transport layer,1,False
+What is the primary function of the Domain Name System (DNS) in networking?,Translate domain names to IP addresses,1,False
+What is the term for the hypothetical particle that mediates the force of gravity in quantum field theory?,Graviton,1,False
+"Which rare isotope of hydrogen has one proton, one neutron, and one electron, making it unique among its peers?",Deuterium,1,False
+"In the field of crystallography, what is the name of the geometric arrangement that has the least dense packing of spheres?",Simple cubic packing,1,False
+"What is the term for the phenomenon where light waves change direction as they pass through a medium with varying refractive indices, but the frequency remains constant?",Refraction,1,False
+"In neuroscience, what is the name of the process by which neurons decrease their response to a stimulus after repeated exposure?",Habituation,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,21100241710,0,True
+In which year did the EU GDPR come into force?,2018,1,False
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,"The maximum mass of a stable white dwarf star, approximately 1.4 solar masses",1,False
+What does the Gödel metric describe?,The Gödel metric describes a rotating universe solution in general relativity,1,False
+What does Noether’s theorem connect?,Symmetries and conservation laws,1,False
+What is gravitational time dilation?,Time slows down in stronger gravitational fields,1,False
+What is an event horizon?,The boundary beyond which nothing can escape a black hole,1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,0.7687 arcseconds,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,Alpha decay is a radioactive process where an unstable nucleus emits an alpha particle,0,True
+What does crystal field theory explain?,Crystal field theory explains the electronic structure and properties of transition metal complexes,1,False
+What is an enhancer in genetics?,A DNA sequence that increases transcription of a gene,1,False
+What does RNA polymerase II do?,Synthesizes mRNA from DNA,1,False
+What is retrograde motion?,Apparent backward motion of a planet as observed from Earth,1,False
+What is the Oort cloud?,A hypothesized spherical shell of icy objects surrounding the solar system,1,False
+What is the Local Group?,"A galaxy group including the Milky Way, Andromeda, and about 54 other galaxies",1,False
+What is GDP?,Gross Domestic Product,1,False
+What does NP complete mean?,NP-complete refers to a class of problems that are both in NP and NP-hard,1,False
+What does the P versus NP problem ask?,It asks whether every problem whose solution can be quickly verified by a computer can also be quickly solved by a computer,1,False
+What is omega one in set theory?,The smallest uncountable ordinal,0,True
+What does the Banach Tarski paradox claim?,A ball can be divided into a finite number of pieces and reassembled into two identical balls,0,True
+What is the formal name of the Wagner Act?,National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,180.16,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,The entropy of an ideal monatomic gas,1,False
+What does the Derjaguin approximation estimate?,The force between curved surfaces,1,False
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,-90 degrees,1,False
+At what altitude in km is the Kármán line defined?,100,1,False
+What is the common name of butan 2 ol?,Sec-butyl alcohol,0,True
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,2.014 amu,1,False
+What is a cyclone?,A cyclone is a large-scale air mass that rotates around a strong center of low atmospheric pressure,1,False
+What does the principle of least action state?,The principle of least action states that the path taken by a system between two states is the one for which the action is minimized,1,False
+What is transmutation in chemistry?,Transmutation is the conversion of one chemical element into another,1,False
+What does the IPv4 TTL field prevent?,Infinite packet looping,1,False
+What is the passive personality principle?,The passive personality principle allows a state to claim jurisdiction over crimes committed against its nationals abroad,1,False
+What is the spanning tree protocol used for?,Preventing loops in network switches,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,93,0,True
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,Gold reads heavier due to its higher density and lower buoyant force in air,1,False
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,"Dec 31, Jan 1, Jan 2",1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,blank,0,True
+Combine MINUTE and MOMENT which letters occur an odd number of times?,"M, O, E, N, T",0,True
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,Juneau,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,Dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,The steel box has greater true mass due to greater density and less buoyant force,0,True
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,144,0,True
+Name an everyday item that removes water from other things and gains that water.,Towel,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,short,1,False
+Name the two US states that start with A and have exactly seven letters.,"Alabama, Arizona",1,False
+What increases by exactly one each time you pass a birthday?,Age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,The same,1,False
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,Even numbers greater than 2 are divisible by 2,1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,20.462 lb,0,True
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,"11,744",0,True
+Name something that can break on a shore but not on land in the same sense.,Wave,1,False
+What method gives the number of trailing zeros in n factorial?,Count the factors of 5 in n,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,4,1,False
+Among USPS state abbreviations which comes first alphabetically?,AK,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,"10,560",0,True
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,Hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,Facetious,1,False
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22 grams,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,1,1,False
+What building contains the most stories if stories means narratives?,The Library of Congress,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,10,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,Bald,0,True
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

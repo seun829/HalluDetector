@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+logic,1,Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,43,1027,True,False,False,0.35299844950639714,embedding
+logic,2,Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,Feathers have greater volume and displaces more air,"Gold, because it displaces less air",True,False,False,0.3968630424351738,embedding
+logic,3,A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,January 1st or December 31st,"Dec 30, Dec 31, or Jan 1",False,False,True,0.742730614821405,embedding
+language,4,Fill the blank with one word so the statement is true the word has exactly blank letters.,Seven,four,True,False,False,0.6414580388944242,embedding
+language,5,Combine MINUTE and MOMENT which letters occur an odd number of times?,"N, U, T, A",IMOU,True,False,False,0.3121931598616576,embedding
+logic,6,What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan Curve Theorem,Jordan curve theorem,False,True,True,1.0,embedding
+geography,7,Name the US state capital not connected by road to the rest of its state.,Juneau,Juneau,False,True,True,0.9999999999998441,embedding
+logic,8,Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,C,False,True,True,1.0000000000000002,embedding
+language,9,Give the five letter British past tense of dream that ends with m t.,dreamt,dreamt,False,True,True,0.9999999999997944,embedding
+language,10,How many letters are used in the English alphabet for dictionary ordering?,26,26,False,True,True,1.0000000000000002,embedding
+logic,11,Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,Steel has greater true mass because feathers displace more air,"Feathers, because it experiences greater buoyant force",False,False,False,0.7020835220779001,embedding
+history,12,With no year zero what is the last year of the twentieth century?,2000,2000,False,True,True,0.9999999999999999,embedding
+math,13,In 24 hour time HHMMSS how many palindromes occur in one day?,86,96,True,False,True,0.7688374053216732,embedding
+logic,14,Name an everyday item that removes water from other things and gains that water.,Paper towel,a towel,False,False,True,0.8095898396854143,embedding
+geography,15,Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,Luxembourg,False,True,True,1.0000000000000002,embedding
+language,16,Find a word that becomes a word meaning less in length when you add er.,Short,short,False,True,True,1.0,embedding
+geography,17,Name the two US states that start with A and have exactly seven letters.,Alabama & Arizona,Alabama and Arizona,False,False,True,0.8645860765568072,embedding
+logic,18,What increases by exactly one each time you pass a birthday?,Age,your age,False,False,True,0.7592374614728377,embedding
+physics,19,A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,The final level is the same as the initial level,below the brim,False,False,False,0.17813641819184656,embedding
+language,20,Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,queue,False,True,True,0.9999999999999998,embedding
+astronomy,21,Name Earth’s natural moon.,Luna,the Moon,False,False,False,0.5964900536332035,embedding
+language,22,Which month name is also a verb meaning permitted?,May,May,False,True,True,1.0,embedding
+math,23,What fact explains why 2 is the only even prime?,2 is the only even prime,any even number greater than 2 is divisible by 2,False,False,False,0.625409576670732,embedding
+logic,24,Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,70 lbs,0.462,True,False,False,0.14376447704738185,embedding
+math,25,Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,48,11297,True,False,False,0.23044253630130646,embedding
+logic,26,Name something that can break on a shore but not on land in the same sense.,Wave,a wave,False,False,True,0.9438784169694904,embedding
+math,27,What method gives the number of trailing zeros in n factorial?,n // 5,count the factors of 5,False,False,False,0.3656699657594574,embedding
+math,28,Which integer from 1 to 100 equals the number of letters in its English name?,Four,4,True,False,True,0.8942001415485932,embedding
+geography,29,Among USPS state abbreviations which comes first alphabetically?,AL,AK,True,False,False,0.3621851032601612,embedding
+language,30,Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,SWIMS,SWIMS,False,True,True,0.9999999999998737,embedding
+astronomy,31,Which planet shares its name with the Roman messenger god?,Mercury,Mercury,False,True,True,1.0000000000000002,embedding
+math,32,How many 5 card poker hands contain exactly two face cards and no aces?,"264,240",471240,True,False,False,0.4528573817732097,embedding
+math,33,In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,j,False,True,True,0.9999999999999999,embedding
+biology,34,A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,36,24,True,False,True,0.747909986278656,embedding
+logic,35,What gets larger when you take away part of it?,0,a hole,False,False,False,0.3071858950870941,embedding
+chemistry,36,What is the atomic number of zinc?,30,30,False,True,True,1.0,embedding
+history,37,US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,November 2,False,True,True,0.9999999999998019,embedding
+language,38,Which 9 letter English word contains the vowels a e i o u exactly once each in order?,Education,facetious,True,False,False,0.29292775085797984,embedding
+physics,39,How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,180.22,180.22,False,True,True,0.9999999999999999,embedding
+logic,40,How many times can you subtract 5 from 25 while still subtracting from 25?,5,1,True,False,False,0.6379258120072147,embedding
+logic,41,What building contains the most stories if stories means narratives?,Sears Tower - 110,a library,False,False,False,0.1937335050475193,embedding
+geography,42,In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,Maine,False,True,True,1.0000000000000002,embedding
+biology,43,What bee made food is famous for not spoiling if sealed?,Honey,honey,False,True,True,1.0,embedding
+biology,44,If you count the claws as legs how many walking legs does a lobster have?,6,10,True,False,False,0.7016589361216152,embedding
+chemistry,45,Name the metal that is liquid at room temperature and used in older thermometers.,mercury,Mercury,False,True,True,1.0000000000000002,embedding
+math,46,How many white keys are on a standard 88 key piano?,52,52,False,True,True,1.0000000000000002,embedding
+language,47,What four letter word becomes its comparative form by adding er?,LATE,long,True,False,False,0.3801450141064887,embedding
+biology,48,How many teeth does an adult human have including wisdom teeth?,32,32,False,True,True,1.0,embedding
+astronomy,49,Which planet has the higher average surface temperature Venus or Mercury?,Venus,Venus,False,True,True,1.0,embedding
+logic,50,What runs but never walks has a bed and mouth and banks but no money?,River,a river,False,False,True,0.9332606698626931,embedding

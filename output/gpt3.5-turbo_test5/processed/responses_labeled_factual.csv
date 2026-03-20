@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+chemistry,1,What is the IUPAC name of element 113?,Nh,nihonium,True,False,False,0.3420804816566228,embedding
+science,2,What is the SCOPUS Source ID for the journal Science?,57201689610,22678,True,False,False,0.6261457104184691,embedding
+law,3,In which year did the EU GDPR come into force?,2018,2018,False,True,True,1.0,embedding
+chemistry,4,What is the pKa of acetic acid at 25 C?,4.76,4.76,False,True,True,0.9999999999999998,embedding
+physics,5,What does the Chandrasekhar limit represent?,1. 1.4 solar masses,maximum mass of a stable white dwarf supported by electron degeneracy pressure,False,False,False,0.45145276505407306,embedding
+physics,6,What does the Gödel metric describe?,Spacetime around a rotating mass,rotating cosmological solution with closed timelike curves,False,False,False,0.599037663757824,embedding
+mathematics,7,What does Noether’s theorem connect?,Symmetries and conservation laws,symmetry implies conservation law,False,False,True,0.8281812338541672,embedding
+physics,8,What is gravitational time dilation?,Warped passage of time in strong gravitational fields,time runs slower in stronger gravitational fields,False,False,True,0.7235450185077177,embedding
+physics,9,What is an event horizon?,Boundary beyond which events cannot affect an observer,boundary beyond which light cannot escape,False,False,False,0.47291895881677465,embedding
+astronomy,10,What is the annual parallax of Proxima Centauri in arcseconds?,0.768,0.7687,False,False,True,0.9455318550038235,embedding
+networking,11,What is the IPv6 loopback address?,::1,::1,False,True,True,1.0000000000000002,embedding
+technology,12,What does LIDAR stand for?,Light Detection and Ranging,Light Detection And Ranging,False,True,True,0.9999999999999999,embedding
+chemistry,13,What is alpha decay?,Radioactive decay through the emission of an alpha particle (helium nucleus),nuclear decay that emits a helium nucleus,False,False,True,0.8438963603013111,embedding
+chemistry,14,What does crystal field theory explain?,Interaction between ligands and metal ions in coordination complexes,d orbital splitting in transition metal complexes,True,False,False,0.5082347333031914,embedding
+biology,15,What is an enhancer in genetics?,DNA sequence,DNA sequence that increases transcription,False,False,False,0.7132257263223274,embedding
+biology,16,What does RNA polymerase II do?,Transcribes DNA to synthesize mRNA,transcribes mRNA from protein coding genes,False,False,True,0.8254459122645369,embedding
+astronomy,17,What is retrograde motion?,Apparent backwards motion of planets in the sky as seen from Earth,apparent backward motion of a planet against the stars,False,False,True,0.832039455326029,embedding
+astronomy,18,What is the Oort cloud?,Sphere of icy debris at the edge of the solar system,distant reservoir of long period comets,False,False,False,0.3910010895124558,embedding
+astronomy,19,What is the Local Group?,A group of galaxies,galaxy group containing the Milky Way and Andromeda,False,False,True,0.7888153394235091,embedding
+economics,20,What is GDP?,GDP is the total value of all goods and services produced in a country in a specific time period,total value of final goods and services produced within a country in a year,False,False,False,0.7153774936234983,embedding
+computer_science,21,What does NP complete mean?,NP complete is a complexity class in computer science,in NP and NP hard,False,False,False,0.6629272970419122,embedding
+computer_science,22,What does the P versus NP problem ask?,Complexity theory about whether every problem whose solution can be verified quickly is also solvable quickly,whether every efficiently verifiable problem is efficiently solvable,False,False,False,0.7166629274811849,embedding
+mathematics,23,What is omega one in set theory?,1,the first uncountable ordinal,False,False,False,0.11410646656266064,embedding
+mathematics,24,What does the Banach Tarski paradox claim?,"A sphere can be decomposed into a finite number of disjoint subsets and then reassembled to form two spheres, each with the same volume as the original",a sphere can be decomposed and reassembled into two identical spheres,False,False,True,0.8324773446812627,embedding
+law,25,What is the formal name of the Wagner Act?,National Labor Relations Act,National Labor Relations Act,False,True,True,0.9999999999999999,embedding
+finance,26,What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,VES,False,True,True,0.9999999999998368,embedding
+history,27,Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,Treaty of Portsmouth,False,True,True,0.9999999999999999,embedding
+history,28,What principle did Marbury v Madison establish?,Judicial review,judicial review,False,True,True,0.9999999999998124,embedding
+chemistry,29,What is the molar mass of glucose in g/mol?,180.16,180.16,False,True,True,0.9999999999999998,embedding
+chemistry,30,What is the molecular formula of vitamin C?,C6H8O6,C6H8O6,False,True,True,1.0,embedding
+physics,31,What is the speed of sound in dry air at 20 C in m/s?,343,343,False,True,True,1.0,embedding
+physics,32,What order of magnitude is LIGO strain in scientific notation?,10^-21,1e-21,True,False,False,0.585580848548356,embedding
+physics,33,What does the Sackur Tetrode equation compute?,Entropy of a monatomic classical ideal gas,absolute entropy of a monatomic ideal gas,False,False,True,0.9236417886533924,embedding
+physics,34,What does the Derjaguin approximation estimate?,Intermolecular forces,force between curved surfaces inferred from planar interaction data,False,False,False,0.4697681620523821,embedding
+technology,35,Who introduced the concept of the memristor?,Leon Chua,Leon Chua,False,True,True,1.0,embedding
+literature,36,What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,A la recherche du temps perdu,False,True,True,1.0,embedding
+geography,37,What is the UN M49 code for Western Europe?,155,155,False,True,True,1.0000000000000002,embedding
+geography,38,What is the latitude of the Geographic South Pole?,90 degrees south,90 S,True,False,False,0.5047455175053482,embedding
+physics,39,At what altitude in km is the Kármán line defined?,100,100,False,True,True,1.0,embedding
+chemistry,40,What is the common name of butan 2 ol?,Butanol,sec-butanol,True,False,True,0.7270678874147924,embedding
+mathematics,41,What is the Euler characteristic of a torus?,0,0,False,True,True,0.9999999999999999,embedding
+mathematics,42,What is the genus of a torus?,Torus,1,True,False,False,0.2477789376739676,embedding
+astronomy,43,Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,Arno Penzias and Robert Wilson,False,True,True,0.9999999999998763,embedding
+chemistry,44,What is the standard atomic mass of deuterium?,2,2.014102,False,False,False,0.32961958002356895,embedding
+meteorology,45,What is a cyclone?,A rotating storm system,low pressure system with inward spiraling winds,False,False,False,0.6520150278437982,embedding
+physics,46,What does the principle of least action state?,Principle of least action states that the path taken by a system in motion is such that its action is minimized,the true path makes the action stationary,False,False,False,0.5916914979889465,embedding
+chemistry,47,What is transmutation in chemistry?,Change of one chemical element into another,changing one element into another by nuclear processes,False,False,True,0.7402458403641687,embedding
+networking,48,What does the IPv4 TTL field prevent?,Zero-length subnets,packets from circulating indefinitely,False,False,False,0.22640291142574312,embedding
+law,49,What is the passive personality principle?,Passive personality principle applies to situations involving crimes against a citizen who is not involved in the crime but is instead a victim,jurisdiction based on the victim's nationality,False,False,False,0.40781816427850187,embedding
+networking,50,What is the spanning tree protocol used for?,Creating a loop-free topology in a network,preventing switching loops in Ethernet networks,False,False,False,0.5804002389995564,embedding

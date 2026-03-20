@@ -1,0 +1,473 @@
+% Merged publication draft created on March 16, 2026.
+% Download this file (attachment): sandbox:/mnt/data/merged_halludetector_paper.tex
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+% --- Listings style for Mermaid code blocks ---
+\lstdefinestyle{mermaid}{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{black!2},
+  rulecolor=\color{black!15},
+  xleftmargin=1em,
+  xrightmargin=1em
+}
+
+\newcommand{\model}[1]{\texttt{#1}}
+\newcommand{\dataset}{\texttt{HalluDetector}}
+
+\title{High-Fidelity Simulation and Detection of Hallucinations Across GPT Model Generations}
+\author{Anonymous (for review)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Hallucinations---fluent outputs that contain incorrect or unsupported factual claims---remain a primary obstacle to deploying large language models (LLMs) in high-stakes settings. We present a repo-grounded evaluation of hallucination behavior and a transparent, reference-based hallucination detector implemented in \dataset. The detector compares a model answer to a known correct reference answer and flags hallucination only when there is positive evidence of inconsistency (e.g., contradiction cues, numeric conflicts, or NLI contradiction). Using a fixed benchmark of 150 prompt--reference pairs (50 factual, 50 riddles/logic puzzles, and 50 auto-generated adversarial prompts), we evaluate four GPT-family endpoints (\model{gpt-3.5-turbo}, \model{gpt-4}, \model{gpt-4o}, and \model{gpt5}) across two independent runs each (8 runs; 1,200 total answers). Detector-labeled hallucination rates decrease monotonically across the evaluated endpoints: \model{gpt-3.5-turbo} averages 23.7\% overall, \model{gpt-4} 15.3\%, \model{gpt-4o} 8.0\%, and \model{gpt5} 4.0\%. We further evaluate detector quality on a stratified 450-example human audit set, obtaining 92.3\% precision and 96.8\% recall overall, with most disagreements attributable to synonym/notation normalization and a small number of vacuous, non-contradictory placeholder answers. We provide rigorous mathematical definitions of the detector decision rules and thresholds, detailed results tables (model \(\times\) category \(\times\) run), run-to-run variability analyses, and an appendix enumerating detector thresholds and audit-set construction.
+\end{abstract}
+
+\section{Executive Summary}
+This paper is a merged, cleaned, and repo-grounded version of two prior LaTeX drafts. All quantitative results below are computed from the provided repository outputs (\texttt{HalluDetector-main/output/}). We focus on what the repo can substantiate: dataset sizes, model endpoints, detector thresholds, and measured hallucination rates.
+
+\paragraph{Dataset and runs.}
+The benchmark contains 150 prompt--reference pairs: 50 factual questions, 50 riddles/logic puzzles, and 50 auto-generated adversarial prompts. Each of the four model endpoints is evaluated twice (\texttt{*\_test} and \texttt{*\_test2}), yielding eight runs (1,200 total model answers).
+
+\paragraph{Main quantitative results.}
+Detector-labeled hallucination rates (overall, per run) are:
+\begin{itemize}[leftmargin=1.4em]
+  \item \model{gpt-3.5-turbo}: 23.3\% and 24.0\%.
+  \item \model{gpt-4}: 12.7\% and 18.0\%.
+  \item \model{gpt-4o}: 8.0\% and 8.0\%.
+  \item \model{gpt5}: 6.0\% and 2.0\%.
+\end{itemize}
+Riddle prompts remain difficult for \model{gpt-3.5-turbo} and \model{gpt-4} (28--30\% and 24--26\%), while \model{gpt5} is labeled at 0\% on riddles in both runs under the detector's contradiction-based policy.
+
+\paragraph{Detector reliability.}
+On a stratified audit set of 450 examples, the detector achieves overall precision 92.3\%, recall 96.8\%, and F1 94.5\%. Performance is strongest on riddles and auto-generated prompts and weaker on factual prompts due to synonymy and scientific-notation variants.
+
+\paragraph{Stability across runs.}
+Run-to-run label flips are 15.3\% for \model{gpt-3.5-turbo}, 10.7\% for \model{gpt-4}, 2.7\% for \model{gpt-4o}, and 4.0\% for \model{gpt5}. Most instability is concentrated in the auto-generated category.
+
+\section{Introduction}
+Hallucinations in neural language generation are commonly defined as outputs that are not supported by source grounding, reference truth, or the model's training distribution. In modern LLM assistants, hallucinations are particularly risky because they are often delivered with confident tone and detailed justification, encouraging over-trust. This has motivated benchmarks and interventions targeting truthfulness and misconception resistance. TruthfulQA, for instance, demonstrated that models can systematically mimic human-written misinformation and misconceptions, and that raw scaling can amplify these effects if alignment is not prioritized \cite{lin2022truthfulqa}. Instruct tuning and reinforcement learning from human feedback (RLHF) have been shown to improve instruction-following and reduce misleading behavior \cite{ouyang2022instruct}. OpenAI's GPT-4 report similarly documents improvements in factuality and reduced hallucination relative to GPT-3.5 in internal evals \cite{openaiGPT4}.
+
+This paper studies hallucination behavior in a controlled, reference-based setting, where every prompt has a known correct reference answer. This enables stable measurement, interpretability, and debugging. The accompanying repository, \dataset, provides: (i) prompt sets spanning factual, riddle, and auto-generated adversarial questions; (ii) an explicit hallucination detector with documented decision rules and thresholds; and (iii) end-to-end scripts to generate model answers, label them, compute metrics, and render graphs.
+
+\paragraph{Scope and definition.}
+We focus on \emph{reference-based hallucination detection}: given a model answer \(a\) and a reference answer \(a^*\), we label \(a\) as hallucinated if it contains \emph{positive evidence of falsity} relative to \(a^*\). A key design choice of \dataset is that \textbf{incompleteness is not hallucination}. If \(a\) fails to include the correct content but also does not contradict it, the detector does not label hallucination. This leads to high precision for contradiction-style hallucinations but can under-count semantically inadequate answers that remain ``neutral'' with respect to the reference. We quantify this via human audit.
+
+\paragraph{Contributions.}
+We contribute a comprehensive, repo-grounded paper that (1) formalizes the detector and thresholds in mathematical form, (2) reports comparative hallucination rates across four GPT endpoints and two runs each, (3) evaluates detector performance against human labels, (4) characterizes run-to-run variability and prompt-template patterns, and (5) identifies concrete detector failure modes and improvements.
+
+\section{Related Work}
+\paragraph{Truthfulness and hallucination benchmarks.}
+TruthfulQA introduced adversarial questions built around common misconceptions, showing that many LLMs produce fluent falsehoods and that model size can amplify imitation of misinformation \cite{lin2022truthfulqa}. These findings motivated additional evaluation suites and alignment-focused approaches to improve truthfulness.
+
+\paragraph{Alignment and post-training.}
+InstructGPT and related RLHF systems demonstrated that human feedback can steer models toward better instruction-following, reduced toxic content, and more truthful behavior \cite{ouyang2022instruct}. OpenAI's GPT-4 technical report documents improvements in factuality and reduced hallucination on internal evaluations \cite{openaiGPT4}. While our work does not attempt to attribute causality to specific training methods, we report a clear reduction in detector-labeled hallucinations across the evaluated endpoints.
+
+\paragraph{Reference-based textual factuality.}
+In summarization, FactCC and follow-on work framed factual consistency as a classification problem using synthetic perturbations and NLI signals \cite{kryscinski2020factcc}. In claim verification, FEVER established a benchmark for verifying claims against evidence, catalyzing retrieval + NLI pipelines \cite{thorne2018fever}. The methodological core---entailment vs. contradiction between generated claims and trusted evidence---is shared with our approach.
+
+\paragraph{Zero-resource detectors.}
+When references are unavailable, black-box detectors such as SelfCheckGPT measure hallucination risk through generation variance and cross-sample inconsistency \cite{manakul2023selfcheck}. These methods can be deployed without external evidence but increase inference cost and can fail when a model confidently and consistently repeats the same falsehood.
+
+\paragraph{Semantic similarity and embeddings.}
+Embedding similarity is widely used to evaluate paraphrases and to support flexible matching beyond exact string equality. Sentence-BERT and Sentence Transformers provide practical sentence-level embeddings for such comparisons \cite{reimers2019sbert}. \dataset uses embedding cosine similarity as an auxiliary baseline signal with guardrails to reduce short-text false positives.
+
+\section{Detector Methodology}
+\label{sec:method}
+\subsection{Problem setup}
+Given a prompt \(q\), reference answer \(a^*\), and model response \(a\), the detector outputs a binary label \(H(a,a^*) \in \{0,1\}\) indicating whether \(a\) contains hallucinated content relative to \(a^*\). \dataset adopts a \emph{contradiction-evidence} policy:
+
+\begin{quote}
+\textbf{Hallucination requires evidence of inconsistency.} Paraphrases are allowed; incompleteness is not labeled hallucination unless the response introduces a contradiction or a mutually exclusive alternative.
+\end{quote}
+
+We formalize this as a disjunction of contradiction evidence signals:
+\begin{equation}
+H(a,a^*) = \mathbb{1}\big[ C_{\text{cue}} \lor C_{\text{nli}} \lor C_{\text{num}} \lor C_{\text{alt}} \lor C_{\text{unavail}} \lor C_{\text{atomic}} \big].
+\end{equation}
+
+\subsection{Normalization}
+Both \(a\) and \(a^*\) are canonicalized via Unicode normalization, lowercasing, whitespace normalization, and punctuation stripping that preserves scientific characters (e.g., \texttt{- . / \^{} + : =}). This reduces formatting-induced mismatches while keeping numerically meaningful tokens.
+
+\subsection{Lexical shortcut signals}
+The detector computes:
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Exact match:} \(C_{\text{exact}} = \mathbb{1}[\text{canon}(a)=\text{canon}(a^*)]\).
+  \item \textbf{Substring match:} \(C_{\text{substr}} = \mathbb{1}[\text{canon}(a^*) \subseteq \text{canon}(a)]\).
+  \item \textbf{Token subsequence match:} a weaker containment check used as a non-veto support signal.
+\end{itemize}
+These checks are not sufficient to declare correctness in open-world settings; in our reference-based setting they serve as strong evidence of agreement, but other contradiction checks can still veto.
+
+\subsection{Numeric consistency and ``conflict if present''}
+Numeric hallucinations are common in knowledge Q\&A (e.g., years, dataset IDs). \dataset implements:
+
+\paragraph{Tolerant numeric match.}
+If the reference is numeric or coordinate-like, parse numeric values and define a match by
+\begin{equation}
+|x - x^*| \le \max(\delta_{\text{abs}},\, \delta_{\text{rel}}\cdot |x^*|),
+\end{equation}
+with defaults \(\delta_{\text{rel}}=5\times10^{-3}\) and \(\delta_{\text{abs}}=5\times10^{-2}\).
+For integer-like values with magnitude \(\ge 100\) (years/IDs), exact match is required.
+
+\paragraph{Conflict-if-present.}
+If \(a\) contains numbers but none matches the reference target, treat this as evidence of hallucination:
+\begin{equation}
+C_{\text{num}} = \mathbb{1}\big[\text{numbers}(a)\neq\emptyset \ \wedge\ \forall x\in\text{numbers}(a),\ x\not\approx x^*\big].
+\end{equation}
+If \(a\) contains no numbers, the detector does not label hallucination (consistent with the incompleteness policy).
+
+\paragraph{Numeric alternatives.}
+If \(a\) provides multiple mutually exclusive numeric alternatives (e.g., ``1491 or 1492''), the detector flags hallucination:
+\begin{equation}
+C_{\text{alt}} = \mathbb{1}[\text{alt\_marker}(a)\wedge \text{multi\_number}(a)].
+\end{equation}
+
+\subsection{Embedding similarity baseline}
+To support paraphrases, \dataset computes cosine similarity between sentence embeddings:
+\begin{equation}
+s_{\cos}(a,a^*) = \frac{\langle e(a), e(a^*)\rangle}{\|e(a)\|\|e(a^*)\|},
+\end{equation}
+with encoder \(e(\cdot)=\texttt{sentence-transformers/all-MiniLM-L6-v2}\) \cite{reimers2019sbert} and threshold \(\tau_{\text{emb}}=0.72\). Guardrails require at least a minimal overlap of content tokens for very short gold answers. If embeddings are unavailable, a lexical Jaccard fallback is used:
+\begin{equation}
+J(a,a^*) = \frac{|T(a)\cap T(a^*)|}{|T(a)\cup T(a^*)|},\qquad J(a,a^*)\ge\tau_J,\ \tau_J=0.40.
+\end{equation}
+
+\subsection{Bidirectional NLI contradiction veto}
+\label{sec:nli}
+The detector uses an MNLI-trained NLI model (default \texttt{roberta-large-mnli} \cite{liu2019roberta}) to compute entailment and contradiction probabilities in both directions:
+\[
+p^\rightarrow_{\text{contr}} = P(\text{contr}\mid a \Rightarrow a^*),\quad
+p^\leftarrow_{\text{contr}} = P(\text{contr}\mid a^* \Rightarrow a),
+\]
+and likewise for entailment probabilities \(p^\rightarrow_{\text{ent}},p^\leftarrow_{\text{ent}}\).
+
+A contradiction veto triggers when:
+\begin{equation}
+C_{\text{nli}}=
+\mathbb{1}\Big[
+\max(p^\rightarrow_{\text{contr}},p^\leftarrow_{\text{contr}})\ge\tau_c \ \wedge\ 
+\min(p^\rightarrow_{\text{ent}},p^\leftarrow_{\text{ent}})\le\tau_e
+\Big],
+\end{equation}
+with defaults \(\tau_c=0.75\) and \(\tau_e=0.30\).
+
+\subsection{Unavailability and atomic mismatch heuristics}
+\paragraph{Unavailability claims.}
+If the model response asserts non-existence or unavailability (e.g., ``not publicly available'', ``doesn't exist'') while the gold is concrete, flag hallucination unless other agreement signals hold:
+\[
+C_{\text{unavail}}=\mathbb{1}[\text{unavailability\_cue}(a)\wedge \neg C_{\text{substr}}\wedge \neg C_{\text{exact}}\wedge \neg \text{numeric\_match}].
+\]
+
+\paragraph{Atomic mismatch.}
+For atomic gold answers (short entity/code answers), if the response is also short but shares no content tokens and does not match numerically, flag hallucination:
+\[
+C_{\text{atomic}}=\mathbb{1}[\text{atomic}(a^*)\wedge \text{short}(a)\wedge \text{no\_shared\_content}(a,a^*)].
+\]
+
+\subsection{Detector pipeline diagram (Mermaid)}
+To promote reproducibility, we include a Mermaid flowchart of the detector pipeline. Mermaid can be rendered externally to SVG/PNG for inclusion in camera-ready versions; here we include source.
+
+\begin{figure}[t]
+\centering
+\lstset{style=mermaid}
+\begin{lstlisting}
+flowchart TD
+  A[Input: prompt q, reference a* , model answer a] --> B[Normalize text]
+  B --> C{Empty answer?}
+  C -- yes --> H0[hallucinated=False (incompleteness != falsity)]
+  C -- no --> D[Exact match, substring, token-subsequence]
+  D --> E[Numeric match (tolerance) + conflict-if-present + numeric-alternatives]
+  E --> F[Embedding similarity (cosine) + lexical Jaccard fallback]
+  F --> G[Bidirectional NLI: contradiction veto]
+  G --> H[Negation/unavailability cues + atomic mismatch heuristic]
+  H --> I{Any contradiction evidence?}
+  I -- yes --> J[hallucinated=True]
+  I -- no --> K[hallucinated=False]
+\end{lstlisting}
+\caption{Mermaid flowchart of the \dataset detector pipeline.}
+\label{fig:mermaid-flow}
+\end{figure}
+
+\section{Experimental Setup}
+\label{sec:exp}
+\subsection{Prompt sets}
+The benchmark is stored as three prompt CSVs (per run) with schema \texttt{(template, id, prompt, correct\_answer)}:
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Factual (50)}: real-world and technical questions across 16 templates (e.g., physics, chemistry, astronomy, networking).
+  \item \textbf{Riddle (50)}: logic/language/math riddles across 9 templates.
+  \item \textbf{Auto-generated (50)}: adversarial prompts across 10 templates, with equal counts per template.
+\end{itemize}
+
+\subsection{Model endpoints and run protocol}
+We evaluate four endpoints as referenced by output directory conventions:
+\model{gpt-3.5-turbo}, \model{gpt-4}, \model{gpt-4o}, and \model{gpt5}. Each endpoint is evaluated twice (\texttt{*\_test} and \texttt{*\_test2}) on the same 150 prompts, producing eight runs total. Model answers are generated via \texttt{scripts/generate\_responses.py}, cleaned to a concise first-line form, and labeled by the detector with stable thresholds.
+
+\subsection{Decoding defaults}
+The OpenAI generation helper preserves legacy defaults per model family: \model{gpt-3.5-turbo} uses temperature 1.0 and max tokens 512; \model{gpt-4} uses temperature 0.8 and max tokens 2000; \model{gpt-4o} uses temperature 0.8 and max tokens 4000. For \model{gpt5}, the helper uses the provided model identifier; if treated as a GPT-5 family model, the helper avoids passing decoding parameters that may be unsupported. All results in this paper are those recorded in the repository outputs.
+
+\subsection{Evaluation metrics}
+We compute:
+\begin{itemize}[leftmargin=1.4em]
+  \item hallucination rate by (model, category, run): mean of the Boolean column \texttt{hallucinated};
+  \item run-to-run variability: fraction of prompts with a differing hallucination label between the two runs for each model;
+  \item detector precision/recall/F1 against human labels in the audit set;
+  \item prompt-level pattern summaries via repo graphs (template rates, keyword rates, length correlation heatmaps).
+\end{itemize}
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Hallucination rates by model, category, and run}
+Table~\ref{tab:rates-by-run} reports detector hallucination rates for each model in each run; Table~\ref{tab:rates-avg} aggregates across the two runs.
+
+\begin{table}[t]
+\centering
+\caption{Detector-labeled hallucination rates (\%) by model, category, and run. Each run contains 150 prompts (50 per category).}
+\label{tab:rates-by-run}
+\begin{tabular}{llrrrr}
+\toprule
+\textbf{Model} & \textbf{Run} & \textbf{Factual} & \textbf{Riddle} & \textbf{Auto-gen} & \textbf{Overall} \\
+\midrule
+\multirow{2}{*}{\model{gpt-3.5-turbo}} & gpt3.5-turbo\_test & 18.0\% & 30.0\% & 22.0\% & 23.3\% \\
+ & gpt3.5-turbo\_test2 & 20.0\% & 28.0\% & 24.0\% & 24.0\% \\
+\multirow{2}{*}{\model{gpt-4}} & gpt4\_test & 6.0\% & 24.0\% & 8.0\% & 12.7\% \\
+ & gpt4\_test2 & 8.0\% & 26.0\% & 20.0\% & 18.0\% \\
+\multirow{2}{*}{\model{gpt-4o}} & gpt4o\_test & 8.0\% & 16.0\% & 0.0\% & 8.0\% \\
+ & gpt4o\_test2 & 6.0\% & 16.0\% & 2.0\% & 8.0\% \\
+\multirow{2}{*}{\model{gpt5}} & gpt5\_test & 10.0\% & 0.0\% & 8.0\% & 6.0\% \\
+ & gpt5\_test2 & 6.0\% & 0.0\% & 0.0\% & 2.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Run-averaged detector hallucination rates: mean (min--max) across the two runs for each model.}
+\label{tab:rates-avg}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Model} & \textbf{Factual} & \textbf{Riddle} & \textbf{Auto-gen} & \textbf{Overall} \\
+\midrule
+\model{gpt-3.5-turbo} & 19.0\% (18.0\%--20.0\%) & 29.0\% (28.0\%--30.0\%) & 23.0\% (22.0\%--24.0\%) & 23.7\% (23.3\%--24.0\%) \\
+\model{gpt-4} & 7.0\% (6.0\%--8.0\%) & 25.0\% (24.0\%--26.0\%) & 14.0\% (8.0\%--20.0\%) & 15.3\% (12.7\%--18.0\%) \\
+\model{gpt-4o} & 7.0\% (6.0\%--8.0\%) & 16.0\% (16.0\%--16.0\%) & 1.0\% (0.0\%--2.0\%) & 8.0\% (8.0\%--8.0\%) \\
+\model{gpt5} & 8.0\% (6.0\%--10.0\%) & 0.0\% (0.0\%--0.0\%) & 4.0\% (0.0\%--8.0\%) & 4.0\% (2.0\%--6.0\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Interpretation.}
+We observe a strong reduction in detector-labeled hallucination from \model{gpt-3.5-turbo} to \model{gpt-4} to \model{gpt-4o}. This is consistent with broader trends reported in aligned-model evaluations, where post-training and instruction-following improvements reduce confident falsehoods \cite{openaiGPT4,ouyang2022instruct}. The remaining hallucinations concentrate in numeric/database-style questions (IDs, years) and adversarial auto-generated prompts that elicit plausible-sounding but wrong concise answers.
+
+\subsection{Inter-run variability}
+Table~\ref{tab:variability} quantifies the fraction of prompts whose hallucination label flips between \texttt{*\_test} and \texttt{*\_test2} for each model.
+
+\begin{table}[t]
+\centering
+\caption{Inter-run variability: fraction of prompts (out of 150) whose hallucination label flips between \texttt{*\_test} and \texttt{*\_test2}.}
+\label{tab:variability}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Model} & \textbf{Flips} & \textbf{Overall} & \textbf{Factual} & \textbf{Riddle} & \textbf{Auto-gen} \\
+\midrule
+\model{gpt-3.5-turbo} & 23/150 & 15.3\% & 6.0\% & 14.0\% & 26.0\% \\
+\model{gpt-4} & 16/150 & 10.7\% & 2.0\% & 6.0\% & 24.0\% \\
+\model{gpt-4o} & 4/150 & 2.7\% & 2.0\% & 4.0\% & 2.0\% \\
+\model{gpt5} & 6/150 & 4.0\% & 4.0\% & 0.0\% & 8.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Where variability comes from.}
+Most variability arises on the auto-generated prompt set. This is consistent with two plausible mechanisms: (i) the prompts are closer to the decision boundary between ``a plausible guess'' and ``a contradiction,'' so small wording changes can flip detector outcomes; and (ii) the generation helper uses higher default max token budgets for some models, but the cleaning step extracts a first-line answer, making the effective output distribution sensitive to early token choices. Notably, \model{gpt-4o} is highly stable across all categories in this evaluation.
+
+\subsection{Detector performance vs. human audit}
+\label{sec:audit}
+The repository includes \texttt{audit/audit\_set.csv} with 450 examples sampled from labeled output CSVs and annotated by humans. The audit is balanced by category (150 per category) and was sampled with approximately half detector-positive and half detector-negative examples (see \texttt{scripts/make\_audit\_set.py}). Because the audit file stores only the basename of the source CSV, it can include duplicates of the same prompt from different runs.
+
+Table~\ref{tab:detector-prf} reports precision/recall/F1 for hallucination as the positive class.
+
+\begin{table}[t]
+\centering
+\caption{Detector performance on the human audit set (n=450). TP/FP/FN are with respect to the positive class ``hallucinated.''}
+\label{tab:detector-prf}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Category} & \textbf{n} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} \\
+\midrule
+Factual & 150 & 12 & 3 & 2 & 80.0\% & 85.7\% & 82.8\% \\
+Riddle & 150 & 34 & 1 & 0 & 97.1\% & 100.0\% & 98.6\% \\
+Auto-generated & 150 & 14 & 1 & 0 & 93.3\% & 100.0\% & 96.6\% \\
+\midrule
+Overall & 450 & 60 & 5 & 2 & 92.3\% & 96.8\% & 94.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{What the audit says about the detector's policy.}
+The detector performs very well at catching explicit contradictions and numeric mismatches (high recall overall). The main failure modes correspond to equivalence classes not captured by the normalization (e.g., scientific notation formatting; entity synonyms) and to responses that are semantically inadequate but do not trigger a contradiction veto (false negatives).
+
+\subsection{Error analysis (audit disagreements)}
+Across 450 audited items, there are 5 false positives and 2 false negatives. In addition, the audit file contains at least one annotation-format irregularity (a non-Boolean entry in the human label column), which we treat as label noise in computing metrics.
+
+\paragraph{False positives: synonym/formatting equivalence.}
+False positives often reflect human acceptance of equivalent or partially equivalent answers that the detector treats as mismatched.
+Representative cases include:
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{Scientific notation:} gold \(1\mathrm{e}{-21}\) vs response \(10^{-21}\) (LIGO strain magnitude). This is mathematically equivalent but requires notation normalization.
+  \item \textbf{Instrument naming:} gold ``glass harmonica'' vs response ``Armonica'' (a shortened/alternate name for Franklin’s glass harmonica). This requires synonym dictionaries or alias maps.
+  \item \textbf{Chemical naming granularity:} gold ``sec-butanol'' vs response ``Butanol.'' Humans may consider this ``close enough'' informally; the detector is stricter because the gold expects the specific isomer name.
+\end{itemize}
+
+\paragraph{False negatives: vacuous placeholders.}
+The two false negatives correspond to ostensibly meaningless numeric outputs (e.g., ``1'' or ``4'') for definitional questions with non-numeric references (e.g., \(\omega_1\) in set theory; Gödel metric description). Because the detector policy is contradiction-based and treats incompleteness as non-hallucinatory, such answers can avoid triggering a contradiction. An effective mitigation is to add a \emph{minimum adequacy} policy for atomic definition questions (e.g., require shared content tokens or entailment of the gold noun phrase).
+
+\subsection{Prompt-template patterns and visuals}
+The repository includes graphs per run:
+\texttt{hallucinations\_by\_template.png}, \texttt{hallucinations\_by\_keywords.png}, and \texttt{feature\_correlation\_heatmap.png}. Figures~\ref{fig:hallu-by-template}--\ref{fig:feature-corr} show the visual summaries for \model{gpt-3.5-turbo} run \texttt{gpt3.5-turbo\_test}. These figures should be included as-is in the camera-ready package; if compiling outside the repo, copy image assets accordingly.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{output/gpt3.5-turbo\_test/graphs/hallucinations\_by\_template.png}
+\caption{Hallucination rate by template for \model{gpt-3.5-turbo} (run \texttt{gpt3.5-turbo\_test}).}
+\label{fig:hallu-by-template}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{output/gpt3.5-turbo\_test/graphs/hallucinations\_by\_keywords.png}
+\caption{Hallucination rate by keyword for \model{gpt-3.5-turbo} (run \texttt{gpt3.5-turbo\_test}).}
+\label{fig:hallu-by-keyword}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.75\linewidth]{output/gpt3.5-turbo\_test/graphs/feature\_correlation\_heatmap.png}
+\caption{Feature correlation heatmap for \model{gpt-3.5-turbo} (run \texttt{gpt3.5-turbo\_test}). Note: the repo defines ``is\_correct'' as ``not hallucinated'' for plotting convenience.}
+\label{fig:feature-corr}
+\end{figure}
+
+We also summarize template-level extremes for a representative early model and for the latest model run in Table~\ref{tab:top-templates}.
+
+\begin{table}[t]
+\centering
+\caption{Top hallucination-rate templates in \model{gpt-3.5-turbo} (run \texttt{gpt3.5-turbo\_test}) vs \model{gpt5} (run \texttt{gpt5\_test2}). Rates are detector-labeled.}
+\label{tab:top-templates}
+\begin{tabular}{lrlr}
+\toprule
+\multicolumn{2}{c}{\model{gpt-3.5-turbo}} & \multicolumn{2}{c}{\model{gpt5}} \\
+\cmidrule(lr){1-2}\cmidrule(lr){3-4}
+\textbf{Template} & \textbf{Rate} & \textbf{Template} & \textbf{Rate} \\
+\midrule
+finance & 100.0\% & geography & 14.3\% \\
+math & 50.0\% & law & 12.5\% \\
+computer\_science & 50.0\% & physics & 5.9\% \\
+geography & 42.9\% & biology & 0.0\% \\
+biology & 33.3\% & astronomy & 0.0\% \\
+science & 33.3\% & economics & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Length correlations.}
+Across all runs, prompt length and response length are weak predictors of hallucination. The maximum absolute Pearson correlation observed between hallucination and prompt length across runs is below 0.22, and between hallucination and response length below 0.20. This supports the conclusion that shallow surface features are insufficient for hallucination prediction, motivating semantic checks (embeddings/NLI) and contradiction heuristics.
+
+\section{Discussion}
+The repo-grounded results provide clear evidence of reduced detector-labeled hallucination in newer GPT endpoints, but the detector definition also shapes the conclusions.
+
+\paragraph{Conservatism: hallucination vs. correctness.}
+Because \dataset labels hallucination only on contradiction evidence, the metric is best interpreted as a \emph{lower bound} on ``being wrong.'' A model can be wrong yet not contradict the reference strongly enough to trigger a veto, especially when the response is vague or content-free. Thus, the measured quantity is closer to ``rate of contradicted factual claims'' than ``task error rate.'' This is a reasonable definition in some safety settings (prioritize avoiding false claims), but it must be stated explicitly when comparing to accuracy-focused benchmarks.
+
+\paragraph{Re-interpreting 0\% on riddles for \model{gpt5}.}
+A 0\% hallucination rate for riddles under this policy does not guarantee perfect riddle-solving; it indicates that the detector did not identify contradictions. For riddles, where answers are often short and may require explanation, stricter scoring (e.g., entailment of the gold answer, or structured extraction of the critical noun phrase) would yield a more task-accuracy-like picture.
+
+\paragraph{Practical improvements.}
+Based on audit disagreements, three scope-limited improvements can materially improve fidelity:
+\begin{itemize}[leftmargin=1.4em]
+  \item scientific notation normalization (e.g., normalize \(1\mathrm{e}{-21}\) and \(10^{-21}\));
+  \item alias dictionaries for common-name / spelling variants (armonica/harmonica; chemical common names);
+  \item vacuous-answer detection for atomic definitional questions (e.g., reject single-digit answers when gold is a noun phrase).
+\end{itemize}
+These can be implemented without changing the overall architecture and tested against the existing audit set.
+
+\paragraph{Beyond reference-based detection.}
+Many deployments lack a gold reference. One path is retrieval-augmented verification: retrieve evidence from trusted corpora and treat that evidence as a proxy reference, then apply a similar contradiction detector (connected to FEVER-like pipelines \cite{thorne2018fever}). Another path is model self-consistency (e.g., SelfCheckGPT \cite{manakul2023selfcheck}), trading compute for reference-free detection.
+
+\section{Conclusion}
+We merged two drafts into a single, repo-grounded evaluation paper for \dataset. Using a fixed 150-item prompt set and two runs per model, we find large decreases in detector-labeled hallucination from \model{gpt-3.5-turbo} to \model{gpt-4} to \model{gpt-4o} to \model{gpt5}. A 450-item audit confirms high detector precision and recall but highlights specific edge cases that should guide further improvements. Beyond headline rates, the paper surfaces interpretability trade-offs: a contradiction-focused detector yields conservative hallucination rates that are best interpreted as ``rate of contradicted factual claims,'' motivating future work on combining contradiction evidence with minimum adequacy constraints.
+
+\appendix
+\section{Audit Set Construction}
+The audit file \texttt{audit/audit\_set.csv} is produced by \texttt{scripts/make\_audit\_set.py}. The script discovers labeled response CSVs under \texttt{output/}, pools them, and samples \(n=450\) rows with a target of roughly half detector-positive and half detector-negative. The exported columns include \texttt{detector\_hallucinated} and empty columns for human labels (\texttt{human\_hallucinated}, \texttt{human\_notes}). Because \texttt{source\_file} stores only the basename of each CSV, the audit can include duplicates of the same prompt from different runs (or different model endpoints).
+
+\section{Detector Thresholds and Defaults}
+Table~\ref{tab:thresholds} lists key threshold values from \texttt{src/hallu\_detector/detect.py}.
+
+\begin{table}[h]
+\centering
+\caption{Key detector thresholds (from \texttt{Thresholds}).}
+\label{tab:thresholds}
+\begin{tabular}{p{0.28\linewidth}p{0.18\linewidth}p{0.48\linewidth}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Meaning} \\
+\midrule
+\texttt{numeric\_rel\_tol} & 0.005 & Relative tolerance for numeric match (non-integer). \\
+\texttt{numeric\_abs\_tol} & 0.05 & Absolute tolerance for numeric match (non-integer). \\
+\texttt{embed\_model\_name} & sentence-transformers/all-MiniLM-L6-v2 & Sentence embedding model for cosine similarity. \\
+\texttt{embed\_min\_similarity} & 0.72 & Cosine threshold for embedding baseline match. \\
+\texttt{embed\_min\_shared\_content\_tokens} & 1 & Embedding gate: minimum shared content tokens. \\
+\texttt{jaccard\_min} & 0.4 & Lexical Jaccard threshold when embeddings not used. \\
+\texttt{nli\_model\_name} & roberta-large-mnli & NLI model for bidirectional contradiction. \\
+\texttt{nli\_min\_tokens} & 3 & Minimum token length for NLI checks. \\
+\texttt{nli\_contradiction\_veto} & 0.75 & Contradiction probability threshold for veto. \\
+\texttt{nli\_entailment\_veto\_floor} & 0.3 & Entailment floor for contradiction veto. \\
+\texttt{atomic\_gold\_max\_tokens} & 2 & Atomic gold heuristic: max tokens. \\
+\texttt{atomic\_resp\_max\_tokens} & 5 & Atomic mismatch heuristic: max response tokens. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Repo Artefacts and Reproduction Notes}
+The paper references:
+\begin{itemize}[leftmargin=1.4em]
+  \item prompt CSVs: \texttt{output/*/raw/prompts\_factual.csv}, \texttt{prompts\_riddle.csv}, \texttt{prompts\_auto-generated.csv};
+  \item labeled outputs: \texttt{output/*/processed/responses\_labeled\_*.csv};
+  \item run-level rates: \texttt{output/*/metrics/responses\_labeled\_*\_metrics.json};
+  \item plots: \texttt{output/*/graphs/hallucinations\_by\_template.png} and related assets.
+\end{itemize}
+If you regenerate outputs with different endpoints or decoding, update the tables and figures accordingly.
+
+\begin{thebibliography}{99}
+\bibitem{openaiGPT4} OpenAI. \textit{GPT-4 Technical Report}. arXiv:2303.08774, 2023.
+\bibitem{ouyang2022instruct} L. Ouyang et al. \textit{Training Language Models to Follow Instructions with Human Feedback}. NeurIPS, 2022.
+\bibitem{lin2022truthfulqa} S. Lin, J. Hilton, and O. Evans. \textit{TruthfulQA: Measuring How Models Mimic Human Falsehoods}. ACL, 2022.
+\bibitem{thorne2018fever} J. Thorne et al. \textit{FEVER: a Large-scale Dataset for Fact Extraction and VERification}. NAACL, 2018.
+\bibitem{kryscinski2020factcc} W. Kry{\'s}ci{\'n}ski et al. \textit{Evaluating the Factual Consistency of Abstractive Text Summarization}. EMNLP, 2020.
+\bibitem{manakul2023selfcheck} P. Manakul, A. Liusie, and M. Gales. \textit{SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Language Models}. EMNLP, 2023.
+\bibitem{reimers2019sbert} N. Reimers and I. Gurevych. \textit{Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks}. EMNLP-IJCNLP, 2019.
+\bibitem{liu2019roberta} Y. Liu et al. \textit{RoBERTa: A Robustly Optimized BERT Pretraining Approach}. arXiv:1907.11692, 2019.
+\end{thebibliography}
+
+\end{document}

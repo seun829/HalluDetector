@@ -1,0 +1,151 @@
+prompt,model_response,is_correct,hallucinated
+In what context within number theory does the term 'quadratic reciprocity' play a crucial role?,,1,False
+"Which famous unsolved problem in mathematics, proposed in 1859, pertains to the distribution of prime numbers and is closely tied to the zeros of a complex-valued function?",Riemann Hypothesis,1,False
+"What is the term for a point in a plane where a function does not have a derivative but can still be continuous, often discussed in real analysis?",,1,False
+"What is the term used in topology for a surface that has only one side and one boundary curve, famously exemplified by a certain non-orientable surface?",Möbius strip,1,False
+"In the realm of abstract algebra, what is the name of a non-zero ring in which every non-zero element has a multiplicative inverse but multiplication is not necessarily commutative?",Division ring,1,False
+"In the context of quantum mechanics, what is the term for the phenomenon where two particles become interlinked such that the state of one instantly influences the state of the other, regardless of distance?",Quantum entanglement,1,False
+"What is the name of the hypothetical elementary particle predicted by certain extensions of the Standard Model of particle physics, which is also a candidate for dark matter?",,1,False
+"In Einstein's theory of general relativity, what term describes the hypothetical boundary around a black hole beyond which nothing can escape, not even light?",Event horizon,1,False
+"What is the name of the process by which a nucleus splits into two or more smaller nuclei, along with the release of energy, and is often associated with nuclear reactors and atomic bombs?",Nuclear fission,1,False
+"In the realm of condensed matter physics, what is the term for the quantum mechanical phenomenon where certain materials exhibit zero electrical resistance below a characteristic temperature?",Superconductivity,1,False
+"In the context of molecular orbital theory, what unusual phenomenon occurs that allows the bond order of dihelium to be zero despite the presence of electrons in bonding orbitals?",,1,False
+What specific feature of a chiral molecule's configuration determines its observed optical rotation when placed in a polarimeter?,,1,False
+Which obscure rule explains why certain d-block transition metal complexes exhibit colors that do not align with their predicted electronic transitions?,,1,False
+"In what way does the Jahn-Teller effect influence the geometry of octahedral complexes, particularly those with an uneven distribution of electrons in the e_g orbitals?",,1,False
+"What rare type of chemical bond involves a three-center two-electron bond, often exemplified by compounds like diborane?",,1,False
+Which philosopher's paradoxical work 'What Is It Like to Be a Bat?' challenges materialist conceptions of consciousness?,Thomas Nagel,1,False
+"In the context of existentialism, what term did Jean-Paul Sartre use to describe the experience of realizing one's own freedom and responsibility?",Anguish,1,False
+"Which ancient Greek philosopher is known for the concept of 'apeiron', often translated as 'the boundless' or 'the infinite'?",Anaximander,1,False
+What philosophical problem is illustrated by the 'Ship of Theseus' thought experiment?,Identity over time—whether an object remains the same after all its parts are replaced,1,False
+"Who is the philosopher behind the term 'Lebenswelt', which refers to the 'lifeworld' in phenomenology?",Edmund Husserl,1,False
+"What paradox describes a situation where a statement refers to itself in a way that creates a logical inconsistency, famously exemplified by the sentence 'This statement is false'?",Liar paradox,1,False
+"In formal logic, what is the name of the principle that asserts if a proposition is true, then it is true in all possible worlds?",,1,False
+"What is the term for a logical fallacy that occurs when the conclusion of an argument is assumed in the premises, often phrased as 'begging the question'?",Circular reasoning,0,True
+"Which branch of mathematical logic deals with the study of arithmetical truth and the limitations of formal mathematical theories, famously explored by Kurt Gödel?",Metamathematics,0,True
+"What is the name of the logical system developed by Charles Sanders Peirce that extends classical logic to include three truth values: true, false, and indeterminate?",Triadic logic,1,False
+"What is the term for the point in the sky directly opposite the Sun from the observer, often used in the study of meteor showers?",Antisolar point,0,True
+"In the context of black holes, what is the term for the hypothetical surface beyond which events cannot affect an outside observer?",Event horizon,1,False
+What is the name of the effect that causes the observed wavelength of light from an object moving away from the observer to increase?,Redshift,1,False
+"In astronomical terms, what is the name of the point in a planet's orbit where it is closest to the Sun?",Perihelion,1,False
+What is the name of the astronomical phenomenon where three celestial bodies become aligned in a straight line?,Syzygy,1,False
+"In which year was the equal temperament tuning system mathematically formalized by Andreas Werckmeister, fundamentally changing Western music?",1691,1,False
+What is the name of the rare and challenging vocal technique used in traditional Tuvan music that involves producing two distinct pitches simultaneously?,Khoomei,0,True
+"Which composer's symphony, often nicknamed the 'Symphony of a Thousand', requires one of the largest orchestras and choirs ever assembled?",Gustav Mahler,1,False
+"What is the historical significance of the 'tritone' interval, which was once referred to as 'diabolus in musica' in medieval music theory?",,1,False
+"Which 20th-century avant-garde composer is known for his piece '4'33""', which challenges the traditional definition of music by featuring silence as its main component?",John Cage,1,False
+"In the context of intellectual property law, what is the term used for the right to exclude others from using, making, or selling an invention for a certain number of years?",Patent,1,False
+"What is the legal doctrine called that allows a court to dismiss a case if it is filed in an inappropriate forum, even if the court would have jurisdiction?",Forum non conveniens,1,False
+Which Latin term refers to the principle that an employer is responsible for the actions of its employees performed in the course of their employment?,Respondeat superior,1,False
+"In international law, what is the name of the principle that states no country can interfere in the internal affairs of another sovereign nation?",Non-intervention,1,False
+"What is the term for the legal rule that prevents a person from being tried twice for the same offense, which is part of the Fifth Amendment in the United States?",Double jeopardy,1,False
+"In the context of networking, what does the term 'MTU black hole' refer to?","A network path that silently drops packets larger than its true MTU because ICMP “Fragmentation Needed” is blocked, breaking Path MTU Discovery",1,False
+What is the primary difference in how TCP and UDP handle packet loss during data transmission?,TCP retransmits lost packets; UDP does not,1,False
+"In network topologies, what is the unique characteristic of a 'mesh' topology?",Each node is directly connected to every other node,1,False
+What is the role of the 'BGP' protocol in internet networking?,Exchanges routes between autonomous systems and selects policy-based best paths for interdomain Internet routing,1,False
+How does 'NAT' affect the visibility and reachability of devices on a private network?,"It hides private hosts behind a public IP, making them unreachable from the internet unless port‑forwarded or via established outbound sessions",1,False
+"What is the term for the quantum mechanical phenomenon where particles are linked in such a way that the state of one instantly influences the state of another, regardless of distance?",Quantum entanglement,1,False
+"In the field of astrobiology, what is the term for the hypothetical region around a star where conditions might be right to support liquid water and potentially life on planets?",Habitable zone,1,False
+"Which chemical element, named after a scientist, is known for being the first to be artificially produced and is not found naturally on Earth?",,1,False
+"In genetics, what is the process called where the genetic material of an organism is altered by the insertion, deletion, or rearrangement of DNA sequences?",,1,False
+What is the name of the hypothetical form of energy that is proposed to account for the accelerating expansion of the universe?,Dark energy,1,False
+What is the IUPAC name of element 113?,Nihonium,1,False
+What is the SCOPUS Source ID for the journal Science?,,1,False
+In which year did the EU GDPR come into force?,2016,0,True
+What is the pKa of acetic acid at 25 C?,4.76,1,False
+What does the Chandrasekhar limit represent?,The maximum mass (~1.4 solar masses) a white dwarf can sustain before gravitational collapse,1,False
+What does the Gödel metric describe?,A rotating universe with closed timelike curves,1,False
+What does Noether’s theorem connect?,Continuous symmetries and conserved quantities,1,False
+What is gravitational time dilation?,The relativistic effect where time passes more slowly in stronger gravitational fields (lower gravitational potential) than in weaker ones,1,False
+What is an event horizon?,"The boundary around a black hole beyond which nothing, not even light, can escape",1,False
+What is the annual parallax of Proxima Centauri in arcseconds?,,1,False
+What is the IPv6 loopback address?,::1,1,False
+What does LIDAR stand for?,Light Detection and Ranging,1,False
+What is alpha decay?,"Radioactive decay where a nucleus emits an alpha particle (He‑4), reducing atomic number by 2 and mass number by 4",0,True
+What does crystal field theory explain?,d‑orbital splitting in transition‑metal complexes,1,False
+What is an enhancer in genetics?,"A cis-regulatory DNA sequence that binds transcription factors to increase promoter-driven transcription, often over long distances and regardless of orientation",1,False
+What does RNA polymerase II do?,Synthesizes mRNA from DNA,1,False
+What is retrograde motion?,"Apparent backward motion of a planet against the stars as seen from Earth, caused by relative orbital motion",1,False
+What is the Oort cloud?,A distant spherical shell of icy bodies surrounding the Sun that supplies long-period comets,1,False
+What is the Local Group?,"The gravitationally bound group of galaxies that includes the Milky Way, Andromeda, Triangulum, and many dwarf galaxies",1,False
+What is GDP?,Gross domestic product—the total market value of all final goods and services produced within a country in a given period,1,False
+What does NP complete mean?,A decision problem in NP that is NP-hard (every NP problem reduces to it in polynomial time),1,False
+What does the P versus NP problem ask?,Whether every problem whose solution can be verified in polynomial time can also be solved in polynomial time,1,False
+What is omega one in set theory?,"The first uncountable ordinal, i.e., the set of all countable ordinals",1,False
+What does the Banach Tarski paradox claim?,"A solid ball can be partitioned into finitely many pieces and, using only rotations and translations, reassembled into two balls congruent to the original",1,False
+What is the formal name of the Wagner Act?,National Labor Relations Act,1,False
+What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,1,False
+Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,1,False
+What principle did Marbury v Madison establish?,Judicial review,1,False
+What is the molar mass of glucose in g/mol?,,1,False
+What is the molecular formula of vitamin C?,C6H8O6,1,False
+What is the speed of sound in dry air at 20 C in m/s?,343 m/s,1,False
+What order of magnitude is LIGO strain in scientific notation?,10^-21,0,True
+What does the Sackur Tetrode equation compute?,The absolute entropy of a monatomic ideal gas,1,False
+What does the Derjaguin approximation estimate?,The interaction force between curved surfaces using flat-plate interaction data,0,True
+Who introduced the concept of the memristor?,Leon Chua,1,False
+What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,1,False
+What is the UN M49 code for Western Europe?,155,1,False
+What is the latitude of the Geographic South Pole?,90° S,0,True
+At what altitude in km is the Kármán line defined?,100,1,False
+What is the common name of butan 2 ol?,sec-butyl alcohol,0,True
+What is the Euler characteristic of a torus?,0,1,False
+What is the genus of a torus?,1,1,False
+Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,1,False
+What is the standard atomic mass of deuterium?,,1,False
+What is a cyclone?,A rotating low-pressure weather system with inward-spiraling winds around a center,1,False
+What does the principle of least action state?,The system follows the path that makes the action stationary (typically minimal) among all possible paths,1,False
+What is transmutation in chemistry?,Conversion of one element into another by nuclear reactions or radioactive decay,1,False
+What does the IPv4 TTL field prevent?,Indefinite packet looping,1,False
+What is the passive personality principle?,"A jurisdictional basis allowing a state to prosecute crimes committed abroad against its nationals, based on the victim’s nationality",1,False
+What is the spanning tree protocol used for?,Preventing Layer 2 Ethernet loops by creating a loop-free topology,1,False
+Across a full 400 year Gregorian cycle how many months have five Saturdays and five Sundays?,,1,False
+Feathers and gold have equal true mass in vacuum which reads heavier on a spring scale in air and why?,"Gold, because its smaller volume displaces less air, so the buoyant upthrust is smaller",1,False
+A person born at 00:30 on Jan 1 in UTC plus 14 celebrates by local calendar date worldwide what dates are possible?,,1,False
+Fill the blank with one word so the statement is true the word has exactly blank letters.,,1,False
+Combine MINUTE and MOMENT which letters occur an odd number of times?,,1,False
+What theorem says a simple closed curve splits the plane into exactly two regions?,Jordan curve theorem,1,False
+Name the US state capital not connected by road to the rest of its state.,,1,False
+Which single letter spoken aloud is a homophone for a body of water and the verb to look?,C,1,False
+Give the five letter British past tense of dream that ends with m t.,dreamt,1,False
+How many letters are used in the English alphabet for dictionary ordering?,26,1,False
+Two sealed boxes read exactly 1 kg in air one has feathers one has steel which has greater true mass and why?,,1,False
+With no year zero what is the last year of the twentieth century?,2000,1,False
+In 24 hour time HHMMSS how many palindromes occur in one day?,,1,False
+Name an everyday item that removes water from other things and gains that water.,Towel,1,False
+Name the only sovereign state whose official form is a Grand Duchy.,Luxembourg,1,False
+Find a word that becomes a word meaning less in length when you add er.,,1,False
+Name the two US states that start with A and have exactly seven letters.,Alabama and Arizona,1,False
+What increases by exactly one each time you pass a birthday?,Your age,1,False
+A glass is packed to the brim with ice cubes at 0 C and the ice melts without spilling where is the final level?,At the brim,0,True
+Which five letter word can lose four letters leaving one letter with the same pronunciation?,Queue,1,False
+Name Earth’s natural moon.,Moon,1,False
+Which month name is also a verb meaning permitted?,May,1,False
+What fact explains why 2 is the only even prime?,"Every even integer greater than 2 is divisible by 2, hence composite",1,False
+Using 1 kg equals 2.20462 lb how many pounds heavier is 100 kg than 220 lb?,0.462 lb,1,False
+Across a full 400 year Gregorian cycle how many total days are there in all Februaries combined?,11297,1,False
+Name something that can break on a shore but not on land in the same sense.,Waves,1,False
+What method gives the number of trailing zeros in n factorial?,floor(n/5) + floor(n/25) + floor(n/125) +,1,False
+Which integer from 1 to 100 equals the number of letters in its English name?,,1,False
+Among USPS state abbreviations which comes first alphabetically?,,1,False
+Which 5 letter word stays the same when read forward backward and rotated 180 degrees in block capitals?,,1,False
+Which planet shares its name with the Roman messenger god?,Mercury,1,False
+How many 5 card poker hands contain exactly two face cards and no aces?,,1,False
+In electrical engineering which letter denotes the imaginary unit to avoid confusion with current?,j,1,False
+A centipede loses legs in pairs until it has three times as many legs as a spider how many legs does it have then?,24,1,False
+What gets larger when you take away part of it?,A hole,1,False
+What is the atomic number of zinc?,30,1,False
+US presidential election day is the Tuesday after the first Monday in November what is the earliest possible date?,November 2,1,False
+Which 9 letter English word contains the vowels a e i o u exactly once each in order?,,1,False
+How many grams heavier is 1 mol of lead than 1 mol of aluminum using 207.2 and 26.98?,,1,False
+How many times can you subtract 5 from 25 while still subtracting from 25?,1,1,False
+What building contains the most stories if stories means narratives?,A library,1,False
+In the contiguous United States which state borders exactly one other state by land and touches the Atlantic Ocean?,Maine,1,False
+What bee made food is famous for not spoiling if sealed?,Honey,1,False
+If you count the claws as legs how many walking legs does a lobster have?,,1,False
+Name the metal that is liquid at room temperature and used in older thermometers.,Mercury,1,False
+How many white keys are on a standard 88 key piano?,52,1,False
+What four letter word becomes its comparative form by adding er?,,1,False
+How many teeth does an adult human have including wisdom teeth?,32,1,False
+Which planet has the higher average surface temperature Venus or Mercury?,Venus,1,False
+What runs but never walks has a bed and mouth and banks but no money?,A river,1,False

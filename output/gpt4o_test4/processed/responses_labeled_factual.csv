@@ -1,0 +1,51 @@
+template,id,prompt,model_response,correct_answer,hallucinated,baseline_exact,baseline_embed,baseline_embed_score,baseline_embed_method
+chemistry,1,What is the IUPAC name of element 113?,Nihonium,nihonium,False,True,True,1.0,embedding
+science,2,What is the SCOPUS Source ID for the journal Science?,11367,22678,True,False,False,0.5301853726298836,embedding
+law,3,In which year did the EU GDPR come into force?,2018,2018,False,True,True,1.0,embedding
+chemistry,4,What is the pKa of acetic acid at 25 C?,4.76,4.76,False,True,True,0.9999999999999998,embedding
+physics,5,What does the Chandrasekhar limit represent?,"The maximum mass of a stable white dwarf star, approximately 1.4 solar masses",maximum mass of a stable white dwarf supported by electron degeneracy pressure,False,False,True,0.8132858064559653,embedding
+physics,6,What does the Gödel metric describe?,The Gödel metric describes a rotating universe solution in general relativity,rotating cosmological solution with closed timelike curves,False,False,False,0.5884757201910246,embedding
+mathematics,7,What does Noether’s theorem connect?,Symmetries and conservation laws,symmetry implies conservation law,False,False,True,0.8281812338541672,embedding
+physics,8,What is gravitational time dilation?,Time runs slower in stronger gravitational fields,time runs slower in stronger gravitational fields,False,True,True,1.0000000000000002,embedding
+physics,9,What is an event horizon?,A boundary beyond which nothing can escape from a black hole,boundary beyond which light cannot escape,False,False,False,0.61995614263531,embedding
+astronomy,10,What is the annual parallax of Proxima Centauri in arcseconds?,0.7687,0.7687,False,True,True,0.9999999999997702,embedding
+networking,11,What is the IPv6 loopback address?,::1,::1,False,True,True,1.0000000000000002,embedding
+technology,12,What does LIDAR stand for?,Light Detection and Ranging,Light Detection And Ranging,False,True,True,0.9999999999999999,embedding
+chemistry,13,What is alpha decay?,Alpha decay is a nuclear process where an unstable atom emits an alpha particle,nuclear decay that emits a helium nucleus,True,False,False,0.7111481751871725,embedding
+chemistry,14,What does crystal field theory explain?,Crystal field theory explains the splitting of d-orbitals in transition metal complexes,d orbital splitting in transition metal complexes,False,False,True,0.9238114948371017,embedding
+biology,15,What is an enhancer in genetics?,A DNA sequence that increases gene transcription,DNA sequence that increases transcription,False,False,True,0.9552480803819219,embedding
+biology,16,What does RNA polymerase II do?,RNA polymerase II synthesizes messenger RNA (mRNA) in eukaryotes,transcribes mRNA from protein coding genes,False,False,False,0.547378245161091,embedding
+astronomy,17,What is retrograde motion?,Retrograde motion is the apparent backward movement of planets as observed from Earth,apparent backward motion of a planet against the stars,False,False,True,0.7983502007421237,embedding
+astronomy,18,What is the Oort cloud?,The Oort Cloud is a theoretical cloud of icy bodies surrounding the solar system,distant reservoir of long period comets,False,False,False,0.3909238427150697,embedding
+astronomy,19,What is the Local Group?,"A galaxy group including the Milky Way, Andromeda, and about 54 other galaxies",galaxy group containing the Milky Way and Andromeda,False,False,True,0.8839566680473412,embedding
+economics,20,What is GDP?,Gross Domestic Product,total value of final goods and services produced within a country in a year,False,False,False,0.5416669159685464,embedding
+computer_science,21,What does NP complete mean?,NP-complete means a problem is both in NP and as hard as any problem in NP,in NP and NP hard,False,False,False,0.7022764951426743,embedding
+computer_science,22,What does the P versus NP problem ask?,It asks if every problem whose solution can be quickly verified by a computer can also be quickly solved by a computer,whether every efficiently verifiable problem is efficiently solvable,False,False,False,0.5020951942124723,embedding
+mathematics,23,What is omega one in set theory?,The first uncountable ordinal,the first uncountable ordinal,False,True,True,0.9999999999999999,embedding
+mathematics,24,What does the Banach Tarski paradox claim?,A solid sphere can be divided into a finite number of pieces and reassembled into two identical spheres,a sphere can be decomposed and reassembled into two identical spheres,False,False,True,0.8437707912441641,embedding
+law,25,What is the formal name of the Wagner Act?,National Labor Relations Act,National Labor Relations Act,False,True,True,0.9999999999999999,embedding
+finance,26,What is the ISO 4217 code for the Venezuelan bolívar soberano?,VES,VES,False,True,True,0.9999999999998368,embedding
+history,27,Which treaty ended the Russo Japanese War?,Treaty of Portsmouth,Treaty of Portsmouth,False,True,True,0.9999999999999999,embedding
+history,28,What principle did Marbury v Madison establish?,Judicial review,judicial review,False,True,True,0.9999999999998124,embedding
+chemistry,29,What is the molar mass of glucose in g/mol?,180.16 g/mol,180.16,False,False,True,0.737812985349612,embedding
+chemistry,30,What is the molecular formula of vitamin C?,C6H8O6,C6H8O6,False,True,True,1.0,embedding
+physics,31,What is the speed of sound in dry air at 20 C in m/s?,343,343,False,True,True,1.0,embedding
+physics,32,What order of magnitude is LIGO strain in scientific notation?,10^-21,1e-21,True,False,False,0.585580848548356,embedding
+physics,33,What does the Sackur Tetrode equation compute?,The entropy of an ideal gas,absolute entropy of a monatomic ideal gas,False,False,True,0.8240171570943712,embedding
+physics,34,What does the Derjaguin approximation estimate?,The interaction energy between curved surfaces,force between curved surfaces inferred from planar interaction data,False,False,False,0.6620339784911208,embedding
+technology,35,Who introduced the concept of the memristor?,Leon Chua,Leon Chua,False,True,True,1.0,embedding
+literature,36,What is the original French title of In Search of Lost Time?,À la recherche du temps perdu,A la recherche du temps perdu,False,True,True,1.0,embedding
+geography,37,What is the UN M49 code for Western Europe?,155,155,False,True,True,1.0000000000000002,embedding
+geography,38,What is the latitude of the Geographic South Pole?,90° S,90 S,True,True,True,0.9999999999997932,embedding
+physics,39,At what altitude in km is the Kármán line defined?,100,100,False,True,True,1.0,embedding
+chemistry,40,What is the common name of butan 2 ol?,Sec-butanol,sec-butanol,False,True,True,0.999999999999891,embedding
+mathematics,41,What is the Euler characteristic of a torus?,0,0,False,True,True,0.9999999999999999,embedding
+mathematics,42,What is the genus of a torus?,1,1,False,True,True,1.0,embedding
+astronomy,43,Who discovered the cosmic microwave background radiation?,Arno Penzias and Robert Wilson,Arno Penzias and Robert Wilson,False,True,True,0.9999999999998763,embedding
+chemistry,44,What is the standard atomic mass of deuterium?,2.014 amu,2.014102,False,False,False,0.6505393041447475,embedding
+meteorology,45,What is a cyclone?,A cyclone is a system of winds rotating around a low-pressure center,low pressure system with inward spiraling winds,False,False,False,0.6776924979048238,embedding
+physics,46,What does the principle of least action state?,The principle of least action states that the path taken by a system between two states is the one for which the action is minimized,the true path makes the action stationary,False,False,False,0.5324265675746084,embedding
+chemistry,47,What is transmutation in chemistry?,The conversion of one element into another,changing one element into another by nuclear processes,False,False,False,0.6366157253020768,embedding
+networking,48,What does the IPv4 TTL field prevent?,Infinite packet looping,packets from circulating indefinitely,False,False,False,0.6217329841065851,embedding
+law,49,What is the passive personality principle?,It is a legal principle allowing a state to claim jurisdiction over a crime committed against its citizens outside its borders,jurisdiction based on the victim's nationality,False,False,False,0.5328079470407191,embedding
+networking,50,What is the spanning tree protocol used for?,Preventing network loops in Ethernet networks,preventing switching loops in Ethernet networks,False,False,True,0.9180473922288152,embedding

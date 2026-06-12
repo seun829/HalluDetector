@@ -1,6 +1,3 @@
-# ==================================================================================================
-# detect.py
-# ==================================================================================================
 """
 Hallucination detection core.
 
@@ -16,7 +13,7 @@ Key goals
 3) Hallucination policy alignment.
    We follow the repo's definition:
 
-       hallucinated = True  iff the answer contains at least one fact that is false,
+       hallucinated = True if the answer contains at least one fact that is false,
        fabricated, or unsupported by known reality (relative to the provided reference).
 
    With only (model_response, correct_answer) available, we use a conservative proxy:

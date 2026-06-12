@@ -262,18 +262,18 @@ def run_pipeline():
 
     # ------------------- Step 1: make_prompts -------------------
     prompts_config = os.path.join(CONFIG_DIR, "prompts_config.yaml")
-    make_prompts_py = os.path.join(SCRIPTS_DIR, "make_prompts.py")
-    make_args: List[str] = ["--output-dir", run_raw]
-    if os.path.exists(prompts_config):
-        make_args = ["--config", prompts_config, "--output-dir", run_raw]
+    # make_prompts_py = os.path.join(SCRIPTS_DIR, "make_prompts.py")
+    # make_args: List[str] = ["--output-dir", run_raw]
+    # if os.path.exists(prompts_config):
+    #     make_args = ["--config", prompts_config, "--output-dir", run_raw]
 
-    logs["make_prompts"] = run_script(make_prompts_py, make_args, cwd=PROJECT_ROOT, timeout=600)
-    expected_auto = os.path.join(run_raw, "prompts_auto-generated.csv")
-    ok, msg = _validate_prompts_csv(expected_auto)
-    if logs["make_prompts"]["returncode"] != 0 or not ok:
-        logs["make_prompts"]["stderr"] = (logs["make_prompts"].get("stderr") or "") + f"\nValidation: {msg}\n"
-        logs["make_prompts"]["returncode"] = logs["make_prompts"].get("returncode", 1) or 1
-        return jsonify({"stage": "make_prompts", "run_id": run_id, "logs": logs}), 500
+    # logs["make_prompts"] = run_script(make_prompts_py, make_args, cwd=PROJECT_ROOT, timeout=600)
+    # expected_auto = os.path.join(run_raw, "prompts_auto-generated.csv")
+    # ok, msg = _validate_prompts_csv(expected_auto)
+    # if logs["make_prompts"]["returncode"] != 0 or not ok:
+    #     logs["make_prompts"]["stderr"] = (logs["make_prompts"].get("stderr") or "") + f"\nValidation: {msg}\n"
+    #     logs["make_prompts"]["returncode"] = logs["make_prompts"].get("returncode", 1) or 1
+    #     return jsonify({"stage": "make_prompts", "run_id": run_id, "logs": logs}), 500
 
     # ------------------- Step 2: prompts_copied (optional) -------------------
     logs["prompts_copied"] = {"cmd": "", "stdout": "", "stderr": "", "returncode": 0}

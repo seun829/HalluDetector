@@ -1,0 +1,101 @@
+prompt,model_response,is_correct,hallucinated
+Explain why Venus is hotter on average than Mercury even though Mercury is closer to the Sun.,"Venus’s thick CO2 atmosphere causes a runaway greenhouse effect that traps and redistributes heat, whereas airless Mercury quickly loses it to space",1,False
+Explain why antibiotics do not work against viral infections.,"Because antibiotics target bacterial cell walls, ribosomes, and metabolism that viruses lack, and viruses replicate inside host cells, leaving no bacterial targets",0,True
+Explain why the sky appears blue during the day but red or orange near sunset.,"Rayleigh scattering in air scatters short-wavelength blue light most (blue sky), but at sunset the longer atmospheric path scatters blue away, leaving the less-scattered red/orange light",1,False
+Explain why increasing sample size reduces random error but does not automatically remove bias.,"Increasing sample size averages out random noise, reducing variance, but systematic errors from biased design/selection/measurement persist, giving a more precise estimate of the wrong value",1,False
+Explain why peer review improves scientific reliability but does not guarantee correctness.,,1,False
+Explain why GDP is an incomplete measure of national well being.,"Because it measures only market output and ignores income distribution, unpaid work, leisure, environmental/resource costs, quality-of-life factors (health, education, safety), and sustainability, GDP can rise even as well-being falls",1,False
+Explain why correlation alone does not prove causation.,"Correlation may reflect confounders, reverse causation, or chance rather than causation",1,False
+Explain why exact match grading can incorrectly mark a correct answer wrong.,"Because it checks literal strings rather than meaning, correct answers with different wording, order, formatting, capitalization, punctuation, or minor typos are marked wrong",1,False
+Explain why a legal rule may differ between jurisdictions.,"Different constitutions, statutes, precedents, cultures, and policy goals lead jurisdictions to adopt and interpret rules differently",1,False
+Explain why climate is not disproved by one unusually cold day.,"Because climate is long-term patterns and trends, while a single cold day is short-term weather variability within those patterns",1,False
+A new tutoring program begins and student test scores rise. Why is this not enough to prove the tutoring caused the increase?,"Because correlation alone doesn’t establish causation—confounders like selection bias, maturation, history effects, or regression to the mean could explain the rise",1,False
+A city bans cars downtown and air pollution decreases. What else should be checked before claiming the ban caused the decrease?,"Whether similar declines occurred in comparable areas without the ban, controlling for weather/seasonality, other policies, economic/industrial changes, and measurement methods",1,False
+A hospital introduces a new checklist and patient complications fall. Why might the checklist not be the only cause?,"Because concurrent interventions, secular trends, Hawthorne effect, case‑mix/reporting changes, or regression to the mean could also reduce complications",1,False
+A company launches a new advertisement and sales increase. What evidence would make the causal claim stronger?,A randomized A/B test showing a statistically significant sales lift in ad-exposed groups versus identical controls,1,False
+A person drinks more coffee and later reports better grades. Why does this not prove coffee caused the improvement?,Correlation does not imply causation; confounding variables or reverse causality could explain the improvement,1,False
+A region plants more trees and summer temperatures fall. What alternative explanations should be considered?,,1,False
+A model update is followed by fewer wrong answers on a test set. Why might the update not be the only cause?,,1,False
+A search engine changes its ranking algorithm and user satisfaction rises. What would help establish causation?,A randomized controlled A/B test comparing the new and old algorithms,1,False
+A new law is followed by lower crime rates. Why should researchers be careful before claiming the law caused the drop?,"Because correlation doesn’t imply causation—confounds, secular trends, or regression to the mean could explain the decline",1,False
+A fitness app user loses weight after installing the app. Why is that weak evidence that the app caused the weight loss?,,1,False
+Compare weather and climate.,Weather is short-term atmospheric conditions; climate is the long-term average of those conditions in a region,1,False
+Compare bacteria and viruses in relation to antibiotic treatment.,"Antibiotics work against bacteria, not viruses",1,False
+Compare renewable and nonrenewable energy sources.,Renewables replenish naturally and emit less; nonrenewables are finite and emit more,1,False
+Compare judicial review and legislation.,Legislation makes general rules; judicial review interprets them and can strike them down as unconstitutional,1,False
+Compare inflation and unemployment as economic indicators.,Inflation measures price growth; unemployment measures joblessness—both indicate macroeconomic health and often trade off in the short run,1,False
+Compare precision and recall in a medical screening test.,Precision: fraction of positive test results that are true cases (PPV); Recall: fraction of actual cases correctly identified (sensitivity),1,False
+Compare primary and secondary sources in historical research.,"Primary sources are firsthand, contemporaneous evidence; secondary sources are later analyses or interpretations of those materials",1,False
+Compare a theory and a hypothesis in science.,"A hypothesis is a tentative, testable proposition; a theory is a well-substantiated, broad explanatory framework supported by extensive evidence",1,False
+Compare natural selection and genetic drift.,"Natural selection is nonrandom, adaptive change in allele frequencies via differential reproductive success, whereas genetic drift is random, nonadaptive fluctuation due to chance, strongest in small populations",1,False
+Compare open loop and closed loop control systems.,"Open-loop: no feedback—simple, fast, cheap but sensitive to disturbances and less accurate/stable; closed-loop: uses feedback—more complex, slower, costlier but rejects disturbances",1,False
+Using only this source: The trial improved symptoms but did not include a placebo control group. What limitation should be mentioned?,No placebo control—cannot rule out placebo effects,1,False
+Using only this source: Emissions fell after the factory upgrade but production also decreased during the same period. Why is causation uncertain?,"Because reduced production could have caused the emissions drop, so post-upgrade correlation doesn’t establish causation",1,False
+Using only this source: The policy was proposed in 2019 and implemented in 2021. When was the policy implemented?,2021,1,False
+Using only this source: The dataset includes 450 audit rows but only 320 unique prompts. What should be reported?,320 unique prompts,1,False
+Using only this source: The annotators labeled independently and disagreements were resolved by a third reviewer. How were disagreements resolved?,By a third reviewer,1,False
+Using only this source: The medicine reduced fever in adults but was not tested in children. What should not be concluded?,That it reduces fever in children,0,True
+Using only this source: The survey found higher satisfaction among users who chose the new plan but users were not randomly assigned. What limitation should be noted?,"Lack of random assignment causes self-selection bias, so causality cannot be inferred",1,False
+Using only this source: The article says the bridge opened in 1998 and was renovated in 2020. When did the bridge open?,1998,1,False
+Using only this source: The report found an association between sleep duration and grades but did not establish causation. What conclusion is supported?,"Sleep duration correlates with grades, but causation is unproven",1,False
+Using only this source: The experiment measured plant growth for two weeks under red light and blue light only. What limitation should be mentioned?,"Two-week, red/blue-only lighting limits applicability to full-spectrum and longer-term plant growth",1,False
+A user asks for the current population of a city but your only source is ten years old. What should a reliable answer say?,,1,False
+A user asks for a medical diagnosis from a vague symptom description. What should a reliable answer avoid?,Definitive diagnoses or unwarranted certainty,1,False
+A user asks for the contents of a document that was not provided. What should a reliable answer say?,"I don’t have the document, so I can’t provide its contents",1,False
+A user asks for legal advice without giving a jurisdiction. What should a reliable answer clarify?,That applicable laws vary by jurisdiction and request the relevant one,1,False
+A user asks for the exact value of a statistic that changes daily. What should a reliable answer say?,It varies daily; consult an up-to-date authoritative source for the exact current value,1,False
+A user asks whether a recent paper has been corrected or retracted but you cannot check current records. What should a reliable answer say?,,1,False
+A user asks for a citation but no source is available. What should a reliable answer avoid?,Fabricated citations,1,False
+A user asks to identify an object from an unclear image. What should a reliable answer avoid?,Overconfident guessing,1,False
+A user asks who will win a future election. What should a reliable answer say?,It can’t be known with certainty,1,False
+A user asks whether two technical terms are equivalent but context is missing. What should a reliable answer say?,Depends on context; request domain and precise definitions,1,False
+Explain why ocean tides happen and why the Moon has a stronger tidal effect on Earth than the Sun despite the Sun being more massive.,"Ocean tides arise from the gravitational gradient across Earth that raises water bulges; because tidal force ∝ M/d^3, the Moon’s much closer distance makes its differential pull stronger than the Sun’s despite its greater mass",1,False
+Explain why seasons occur on Earth.,"Earth’s 23.5° axial tilt causes varying solar angle and day length during its orbit, producing seasons",1,False
+Explain why boiling point changes with altitude.,"Because boiling occurs when a liquid’s vapor pressure equals ambient pressure, and atmospheric pressure decreases with altitude, the boiling point decreases as altitude increases",1,False
+Explain why washing hands with soap helps reduce the spread of infectious disease.,"Soap’s surfactants disrupt lipid-enveloped pathogens and emulsify oils, detaching microbes so they rinse away and reducing transmission",1,False
+Explain why randomized controlled trials are useful for testing whether a treatment works.,"Randomization with a control group balances confounders and minimizes bias, so outcome differences estimate the treatment’s causal effect",1,False
+Explain why a map can distort the size or shape of countries.,"Because projecting Earth’s curved surface onto a flat map inevitably stretches or compresses regions, distorting size and shape",1,False
+Explain why photosynthesis is important for most ecosystems.,"By converting sunlight into chemical energy, photosynthesis creates biomass and oxygen that underpin food webs and sustain aerobic life",1,False
+Explain why electric power grids need supply and demand to stay balanced.,"Because the grid stores almost no energy, generation must match load in real time to keep frequency (and voltage) stable; imbalances cause frequency drift, equipment trips, and blackouts",1,False
+Explain why inflation reduces purchasing power.,Because rising prices mean each unit of currency buys fewer goods and services,1,False
+Explain why eyewitness testimony can be unreliable.,"Because memory is reconstructive and malleable, it’s easily distorted by stress, suggestion/leading questions, expectations, cross-race bias, and time delays, so confidence often exceeds accuracy",1,False
+A town installs speed cameras and traffic accidents fall afterward. Why is this not enough to prove the cameras caused the decrease?,"Because correlation isn’t causation; the drop may be due to confounders, trends, or regression to the mean without a control group",1,False
+A school starts serving breakfast and attendance improves. What else could explain the improvement?,,1,False
+A country cuts taxes and unemployment later falls. Why should researchers be cautious before claiming the tax cut caused the drop?,"Correlation isn’t causation; confounders, concurrent shocks, or underlying trends could have lowered unemployment",1,False
+A clinic sends appointment reminders and missed visits decline. What evidence would strengthen the claim that reminders caused the decline?,A randomized trial showing patients sent reminders have lower no-show rates than a simultaneous no-reminder control group,1,False
+A lake has fewer algae blooms after fertilizer use nearby decreases. What alternative explanations should be considered?,"Weather/hydrology (rainfall, flushing, dilution), temperature/seasonality, increased macrophy",1,False
+A company raises wages and employee turnover falls. Why might wages not be the only cause?,"Other concurrent changes or external trends could be confounders, so the drop may not be caused solely by higher wages",1,False
+A state changes graduation requirements and graduation rates rise. What should be checked before claiming the policy caused the rise?,,1,False
+A restaurant changes its menu and receives better reviews. Why does this not prove the menu caused the better reviews?,Correlation doesn’t imply causation; uncontrolled confounders could explain the improvement,1,False
+A new pesticide is used and crop yield increases. What would help determine whether the pesticide caused the increase?,Randomized untreated control plots under identical conditions,1,False
+A city opens a new park and nearby home prices rise. Why is causation uncertain?,"Confounders could be causing the rise, so correlation with the park doesn’t prove causation",1,False
+Compare renewable energy and fossil fuels.,Renewables are clean and inexhaustible but intermittent and storage-dependent; fossil fuels are reliable and energy-dense but finite and carbon-intensive,1,False
+Compare mitosis and meiosis.,,1,False
+Compare conduction convection and radiation as heat transfer methods.,"Conduction transfers heat by direct contact in solids, convection by bulk fluid motion in liquids/gases, and radiation by electromagnetic waves without needing a medium",1,False
+Compare primary sources and secondary sources in history.,"Primary sources are original contemporaneous records or artifacts; secondary sources are later interpretations, analyses, or syntheses of those originals",1,False
+Compare civil law and criminal law.,Civil law compensates private wrongs; criminal law punishes public wrongs,1,False
+Compare accuracy and precision in measurement.,Accuracy is closeness to the true value; precision is closeness of repeated measurements to each other,1,False
+Compare the roles of DNA and RNA in protein production.,,1,False
+Compare supply and demand in a market.,"Demand is the quantity consumers will buy at various prices (downward-sloping), while supply is the quantity producers will sell at various prices (upward-sloping); their intersection sets the market equilibrium",1,False
+Compare a scientific hypothesis and a scientific theory.,"A hypothesis is a tentative, testable explanation for a specific phenomenon; a theory is a well-substantiated, widely supported explanatory framework that integrates evidence and makes broad predictions",1,False
+Compare weathering and erosion.,Weathering breaks rock in place; erosion removes and transports the debris,1,False
+Using only this source: The study found that students who slept at least eight hours had higher average test scores but the authors warned that the design was observational. What conclusion is supported?,,1,False
+Using only this source: The bridge was completed in 1974 renovated in 2008 and closed to cars in 2020. When was the bridge renovated?,2008,1,False
+Using only this source: The medication reduced symptoms in adults but the trial excluded children and pregnant patients. What limitation should be mentioned?,Limited generalizability to children and pregnant patients,1,False
+Using only this source: The report says solar output increased by 12 percent while wind output decreased by 4 percent. Which energy source increased?,Solar,1,False
+Using only this source: The survey included 900 online respondents recruited through voluntary participation. What sampling limitation should be noted?,Self-selected online sample; not representative (voluntary-response bias),0,True
+Using only this source: The policy was announced in March approved in June and implemented in September. When was the policy implemented?,September,1,False
+Using only this source: The article says the species is native to coastal wetlands and is threatened by habitat loss. What threatens the species?,Habitat loss,1,False
+Using only this source: The trial compared a new vaccine with a placebo and randomly assigned participants to each group. What design feature reduces selection bias?,Randomization,1,False
+Using only this source: The company reported higher revenue but lower profit because costs increased faster than sales. Why did profit fall?,Costs increased faster than sales,1,False
+Using only this source: The experiment measured plant growth under red blue and white light for thirty days. What variables were compared?,"Light color (red, blue, white) and plant growth",1,False
+A user asks for todays exchange rate but you only have last years rate. What should a reliable answer say?,"Disclose you lack today’s rate, give the dated last‑year rate, and suggest checking an up‑to‑date source",1,False
+A user asks whether a storm will hit their town next week but you cannot access a forecast. What should a reliable answer say?,,1,False
+A user asks for medical treatment advice based only on a single symptom. What should a reliable answer avoid?,Definitive diagnosis or specific treatment recommendations,0,True
+A user asks for the exact enrollment of a university this semester but the available source is from five years ago. What should a reliable answer say?,,1,False
+A user asks whether a quote is authentic but no source text is available. What should a reliable answer avoid?,Speculation and invented citations,1,False
+A user asks for the winner of a game that has not happened yet. What should a reliable answer say?,The winner is unknown,1,False
+A user asks for the current law in an unspecified country. What should a reliable answer clarify?,,1,False
+A user asks to summarize a chart but the chart is not visible. What should a reliable answer say?,,1,False
+A user asks whether a product is currently in stock but you cannot check current inventory. What should a reliable answer say?,I can’t check real-time stock; verify availability on the retailer’s site or by contacting the store,1,False
+A user asks for the exact cause of a historical event that historians debate. What should a reliable answer do?,"Acknowledge the dispute, present multiple well-sourced interpretations with their evidence, and avoid asserting a single definitive cause",1,False

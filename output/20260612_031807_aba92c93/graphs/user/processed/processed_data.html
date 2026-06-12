@@ -1,0 +1,612 @@
+<table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th>prompt</th>
+      <th>model_response</th>
+      <th>is_correct</th>
+      <th>hallucinated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Explain why Venus is hotter on average than Mercury even though Mercury is closer to the Sun.</td>
+      <td>Because Venus’s dense CO2 atmosphere drives an extreme greenhouse effect that traps heat, while airless Mercury cannot retain it</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why antibiotics do not work against viral infections.</td>
+      <td>Because antibiotics act on bacterial-specific targets (e.g., cell walls, ribosomes) that viruses lack, as viruses replicate using host-cell machinery</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why the sky appears blue during the day but red or orange near sunset.</td>
+      <td>Rayleigh scattering makes short blue wavelengths scatter across the sky when the Sun is high, but at sunset the longer path through air scatters out blue, leaving red/orange light</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why increasing sample size reduces random error but does not automatically remove bias.</td>
+      <td>More data averages out random noise (reducing variance), but bias is a systematic shift from design/measurement/confounding that doesn’t shrink with n, yielding a more precise yet still wrong estimate</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why peer review improves scientific reliability but does not guarantee correctness.</td>
+      <td>Expert scrutiny filters many flaws, boosting reliability; but reviewers don’t replicate studies or audit data and can miss errors, bias, or fraud, so findings remain provisional</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why GDP is an incomplete measure of national well being.</td>
+      <td>Because it tracks market output, not welfare, ignoring inequality, non‑market work and leisure, environmental costs, health and education outcomes, sustainability, and overall quality of life</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why correlation alone does not prove causation.</td>
+      <td>Correlation can arise from confounding variables, reverse causation, or chance rather than a direct causal relationship</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why exact match grading can incorrectly mark a correct answer wrong.</td>
+      <td>Because it compares literal strings, semantically correct answers with different wording, formatting, units, or rounding won’t match</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a legal rule may differ between jurisdictions.</td>
+      <td>Because independent lawmaking reflects each jurisdiction’s unique history, culture, constitution, politics, and precedent</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why climate is not disproved by one unusually cold day.</td>
+      <td>Climate is long-term average weather; one cold day is normal variability</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A new tutoring program begins and student test scores rise. Why is this not enough to prove the tutoring caused the increase?</td>
+      <td>Because without a control or randomization, other factors could explain the rise; correlation isn’t causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A city bans cars downtown and air pollution decreases. What else should be checked before claiming the ban caused the decrease?</td>
+      <td>Concurrent confounders—weather/seasonality, other regulations or emission sources, economic/traffic shifts, measurement changes, and pre-existing trends—ideally tested against a control area</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A hospital introduces a new checklist and patient complications fall. Why might the checklist not be the only cause?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A company launches a new advertisement and sales increase. What evidence would make the causal claim stronger?</td>
+      <td>A randomized A/B test showing higher sales in ad-exposed markets than matched controls, with no concurrent changes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A person drinks more coffee and later reports better grades. Why does this not prove coffee caused the improvement?</td>
+      <td>Because correlation does not prove causation; other factors or reverse causality could explain the improvement</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A region plants more trees and summer temperatures fall. What alternative explanations should be considered?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A model update is followed by fewer wrong answers on a test set. Why might the update not be the only cause?</td>
+      <td>Correlation isn’t causation; random variation, test-set shifts, or evaluation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A search engine changes its ranking algorithm and user satisfaction rises. What would help establish causation?</td>
+      <td>A randomized A/B test</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A new law is followed by lower crime rates. Why should researchers be careful before claiming the law caused the drop?</td>
+      <td>Because temporal correlation doesn’t imply causation; the drop could be due to confounding factors or broader trends (e.g., economic shifts, policing/reporting changes, regression to the mean)</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A fitness app user loses weight after installing the app. Why is that weak evidence that the app caused the weight loss?</td>
+      <td>Because temporal correlation alone doesn’t establish causation; confounders, selection bias, or regression to the mean could explain the weight loss</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare weather and climate.</td>
+      <td>Weather is short-term atmospheric conditions; climate is the long-term average and variability of those conditions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare bacteria and viruses in relation to antibiotic treatment.</td>
+      <td>Antibiotics treat bacteria, not viruses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare renewable and nonrenewable energy sources.</td>
+      <td>Renewables replenish naturally and have low emissions; nonrenewables are finite and generally more polluting</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare judicial review and legislation.</td>
+      <td>Legislation makes laws; judicial review interprets the constitution to uphold or strike down laws and government actions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare inflation and unemployment as economic indicators.</td>
+      <td>Inflation gauges changes in the price level and purchasing power, while unemployment gauges labor‑market slack and real activity; together they reflect price stability versus employment conditions and guide policy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare precision and recall in a medical screening test.</td>
+      <td>Precision is the fraction of positive screens that are true cases (PPV), while recall is the fraction of actual cases the test detects (sensitivity)</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare primary and secondary sources in historical research.</td>
+      <td>Primary sources are original contemporaneous records; secondary sources are later interpretations of them</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare a theory and a hypothesis in science.</td>
+      <td>A hypothesis is a tentative, testable explanation for a specific observation, whereas a theory is a well-substantiated, broadly applicable explanation supported by extensive evidence and repeated testing</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare natural selection and genetic drift.</td>
+      <td>Both change allele frequencies, but natural selection is nonrandom and adaptive via differential fitness (more effective in large populations), whereas genetic drift is random sampling (strongest in small populations) that can fix or lose alleles regardless of fitness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare open loop and closed loop control systems.</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The trial improved symptoms but did not include a placebo control group. What limitation should be mentioned?</td>
+      <td>Lack of a placebo control, so improvements may reflect placebo effects rather than the intervention</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: Emissions fell after the factory upgrade but production also decreased during the same period. Why is causation uncertain?</td>
+      <td>Because reduced output could explain the emissions drop</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The policy was proposed in 2019 and implemented in 2021. When was the policy implemented?</td>
+      <td>2021</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The dataset includes 450 audit rows but only 320 unique prompts. What should be reported?</td>
+      <td>320 unique prompts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The annotators labeled independently and disagreements were resolved by a third reviewer. How were disagreements resolved?</td>
+      <td>By a third reviewer</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The medicine reduced fever in adults but was not tested in children. What should not be concluded?</td>
+      <td>That the medicine reduces fever in children</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The survey found higher satisfaction among users who chose the new plan but users were not randomly assigned. What limitation should be noted?</td>
+      <td>Self-selection bias prevents causal inference</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The article says the bridge opened in 1998 and was renovated in 2020. When did the bridge open?</td>
+      <td>1998</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The report found an association between sleep duration and grades but did not establish causation. What conclusion is supported?</td>
+      <td>Sleep duration and grades are correlated, not causally linked</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The experiment measured plant growth for two weeks under red light and blue light only. What limitation should be mentioned?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the current population of a city but your only source is ten years old. What should a reliable answer say?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for a medical diagnosis from a vague symptom description. What should a reliable answer avoid?</td>
+      <td>Providing a definitive diagnosis or treatment recommendation from vague symptoms</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A user asks for the contents of a document that was not provided. What should a reliable answer say?</td>
+      <td>I don’t have the document, so I can’t provide its contents</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for legal advice without giving a jurisdiction. What should a reliable answer clarify?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the exact value of a statistic that changes daily. What should a reliable answer say?</td>
+      <td>Provide the latest available value with its date and note it may have changed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks whether a recent paper has been corrected or retracted but you cannot check current records. What should a reliable answer say?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for a citation but no source is available. What should a reliable answer avoid?</td>
+      <td>Fabricating citations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks to identify an object from an unclear image. What should a reliable answer avoid?</td>
+      <td>Definitive identification</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks who will win a future election. What should a reliable answer say?</td>
+      <td>It’s impossible to know</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks whether two technical terms are equivalent but context is missing. What should a reliable answer say?</td>
+      <td>Equivalence is context-dependent; ask for the specific domain and definitions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why ocean tides happen and why the Moon has a stronger tidal effect on Earth than the Sun despite the Sun being more massive.</td>
+      <td>Tides come from differential gravity across Earth; since tidal force ∝ M/d^3, the much closer Moon exerts a stronger effect than the far more massive but distant Sun</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why seasons occur on Earth.</td>
+      <td>Earth’s 23.5° axial tilt makes solar angle and daylight length vary during its orbit, creating seasons</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why boiling point changes with altitude.</td>
+      <td>Because atmospheric pressure decreases with altitude, a liquid’s vapor pressure equals the surroundings at a lower temperature, so its boiling point falls</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why washing hands with soap helps reduce the spread of infectious disease.</td>
+      <td>Soap’s surfactants disrupt many pathogens’ lipid membranes and emulsify skin oils, lifting microbes off to be rinsed away, reducing transmission</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why randomized controlled trials are useful for testing whether a treatment works.</td>
+      <td>By randomly assigning participants to treatment or control (often with blinding), RCTs balance known and unknown confounders and provide a controlled comparison, yielding unbiased causal estimates of treatment effect</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a map can distort the size or shape of countries.</td>
+      <td>Because projecting Earth’s curved surface onto a flat map inevitably stretches or compresses regions, distorting size and shape</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why photosynthesis is important for most ecosystems.</td>
+      <td>It converts sunlight into chemical energy in organic matter and releases oxygen, forming the base of most food webs and sustaining aerobic life</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why electric power grids need supply and demand to stay balanced.</td>
+      <td>With minimal storage, generation must equal consumption in real time to keep frequency and voltage stable; imbalance shifts frequency, trips protection, and can cause blackouts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why inflation reduces purchasing power.</td>
+      <td>Because inflation raises overall prices, each unit of money buys fewer goods and services</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why eyewitness testimony can be unreliable.</td>
+      <td>Human memory is reconstructive and easily distorted by stress, limited attention, suggestion, bias, and post-event misinformation, yielding confident yet inaccurate accounts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A town installs speed cameras and traffic accidents fall afterward. Why is this not enough to prove the cameras caused the decrease?</td>
+      <td>Because a before–after drop is mere correlation; without a control, confounders or regression to the mean could explain it</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A school starts serving breakfast and attendance improves. What else could explain the improvement?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A country cuts taxes and unemployment later falls. Why should researchers be cautious before claiming the tax cut caused the drop?</td>
+      <td>Correlation isn’t causation; confounders or concurrent shocks may explain the drop</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A clinic sends appointment reminders and missed visits decline. What evidence would strengthen the claim that reminders caused the decline?</td>
+      <td>An RCT showing patients randomly sent reminders had fewer missed visits than concurrent controls</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A lake has fewer algae blooms after fertilizer use nearby decreases. What alternative explanations should be considered?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A company raises wages and employee turnover falls. Why might wages not be the only cause?</td>
+      <td>Other concurrent changes—benefits, schedules, management practices, hiring/selection, or labor‑market shifts—could explain the drop; correlation isn’t causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A state changes graduation requirements and graduation rates rise. What should be checked before claiming the policy caused the rise?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A restaurant changes its menu and receives better reviews. Why does this not prove the menu caused the better reviews?</td>
+      <td>Correlation isn’t causation; confounders could explain the improvement</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A new pesticide is used and crop yield increases. What would help determine whether the pesticide caused the increase?</td>
+      <td>Randomized controlled experiment with untreated control plots</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A city opens a new park and nearby home prices rise. Why is causation uncertain?</td>
+      <td>Because concurrent confounders and preexisting trends could explain the increase, so correlation doesn’t imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare renewable energy and fossil fuels.</td>
+      <td>Renewables are low-carbon and inexhaustible but intermittent; fossil fuels are energy-dense and on-demand but finite and polluting</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare mitosis and meiosis.</td>
+      <td>Mitosis: one division producing two identical diploid cells for growth/repair, no homolog pairing or crossing over; meiosis: two divisions producing four nonidentical haploid gametes with homolog pairing and crossing over for sexual reproduction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare conduction convection and radiation as heat transfer methods.</td>
+      <td>Conduction: direct particle contact in matter (mainly solids); convection: bulk motion of fluids; radiation: electromagnetic waves, no medium required</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare primary sources and secondary sources in history.</td>
+      <td>Primary sources are firsthand, contemporaneous records or artifacts; secondary sources are later interpretations, analyses, or syntheses derived from them</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare civil law and criminal law.</td>
+      <td>Civil law resolves private disputes and awards remedies under a preponderance of the evidence; criminal law prosecutes offenses against the state and imposes punishment proven beyond a reasonable doubt</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare accuracy and precision in measurement.</td>
+      <td>Accuracy is closeness to the true value; precision is closeness of repeated measurements to each other</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the roles of DNA and RNA in protein production.</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare supply and demand in a market.</td>
+      <td>Demand: quantity consumers will buy at each price (downward sloping); Supply: quantity producers will sell at each price (upward sloping); their intersection sets equilibrium price and quantity</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare a scientific hypothesis and a scientific theory.</td>
+      <td>A scientific hypothesis is a tentative, testable explanation for a specific observation; a scientific theory is a well-substantiated, broadly applicable explanation supported by extensive evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare weathering and erosion.</td>
+      <td>Weathering breaks rock in place; erosion moves the broken material</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The study found that students who slept at least eight hours had higher average test scores but the authors warned that the design was observational. What conclusion is supported?</td>
+      <td>Sleeping ≥8 hours correlates with higher test scores; causation unproven</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The bridge was completed in 1974 renovated in 2008 and closed to cars in 2020. When was the bridge renovated?</td>
+      <td>2008</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The medication reduced symptoms in adults but the trial excluded children and pregnant patients. What limitation should be mentioned?</td>
+      <td>Limited generalizability to children and pregnant patients</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The report says solar output increased by 12 percent while wind output decreased by 4 percent. Which energy source increased?</td>
+      <td>Solar</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The survey included 900 online respondents recruited through voluntary participation. What sampling limitation should be noted?</td>
+      <td>Self-selected online sample—nonrandom and likely unrepresentative, limiting generalizability</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The policy was announced in March approved in June and implemented in September. When was the policy implemented?</td>
+      <td>September</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The article says the species is native to coastal wetlands and is threatened by habitat loss. What threatens the species?</td>
+      <td>Habitat loss</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The trial compared a new vaccine with a placebo and randomly assigned participants to each group. What design feature reduces selection bias?</td>
+      <td>Randomization</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The company reported higher revenue but lower profit because costs increased faster than sales. Why did profit fall?</td>
+      <td>Costs increased faster than sales</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: The experiment measured plant growth under red blue and white light for thirty days. What variables were compared?</td>
+      <td>Light color and plant growth</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for todays exchange rate but you only have last years rate. What should a reliable answer say?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks whether a storm will hit their town next week but you cannot access a forecast. What should a reliable answer say?</td>
+      <td>I don’t have real-time forecasts, so I can’t say; check your local weather service or a trusted weather app for the latest alerts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for medical treatment advice based only on a single symptom. What should a reliable answer avoid?</td>
+      <td>Definitive diagnosis or treatment advice</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A user asks for the exact enrollment of a university this semester but the available source is from five years ago. What should a reliable answer say?</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks whether a quote is authentic but no source text is available. What should a reliable answer avoid?</td>
+      <td>Definitive claims or fabricated citations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the winner of a game that has not happened yet. What should a reliable answer say?</td>
+      <td>The winner is unknown because the game hasn’t happened yet</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the current law in an unspecified country. What should a reliable answer clarify?</td>
+      <td>The jurisdiction and the date the information is current</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks to summarize a chart but the chart is not visible. What should a reliable answer say?</td>
+      <td>Explain the chart isn’t visible, avoid speculation, and ask for the image or its data/description</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks whether a product is currently in stock but you cannot check current inventory. What should a reliable answer say?</td>
+      <td>I can’t check live inventory; please verify availability on the retailer’s site or by contacting them directly</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the exact cause of a historical event that historians debate. What should a reliable answer do?</td>
+      <td>Acknowledge the debate, summarize the main theories with evidence, and avoid asserting a single definitive cause</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>

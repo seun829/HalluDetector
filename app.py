@@ -185,58 +185,6 @@ def detect():
 
 
 # ------------------------------------------------------------------------------
-# /predict (prompt-only BERT classifier)
-# ------------------------------------------------------------------------------
-# Try to lazily load a local text-classification pipeline from ./bert_model
-_BERT = None
-_BERT_ERR = None
-
-
-def _load_bert():
-    global _BERT, _BERT_ERR
-    if _BERT is not None or _BERT_ERR is not None:
-        return
-    model_dir = os.getenv("BERT_MODEL_DIR", os.path.join(PROJECT_ROOT, "bert_model"))
-    try:
-        from transformers import pipeline  # lazy import
-        _BERT = pipeline(
-            "text-classification",
-            model=model_dir,
-            tokenizer=model_dir,
-            return_all_scores=False,
-        )
-    except Exception as e:
-        _BERT = None
-        _BERT_ERR = f"Failed to load BERT classifier from {model_dir}: {e}"
-        logging.warning(_BERT_ERR)
-
-
-@app.route("/predict", methods=["POST"])
-def predict():
-    _load_bert()
-    if _BERT is None:
-        return jsonify({"error": _BERT_ERR or "BERT model not available."}), 500
-
-    data = request.get_json(silent=True) or {}
-    prompt = str(data.get("prompt", "")).strip()
-    if not prompt:
-        return jsonify({"error": "Missing 'prompt'"}), 400
-
-    try:
-        result = _BERT(prompt)[0]  # {'label': 'LABEL_0/1', 'score': float}
-        will_hallucinate = (result.get("label") == "LABEL_1")
-        return jsonify(
-            {
-                "hallucination_probability": float(result.get("score", 0.0)),
-                "will_hallucinate": bool(will_hallucinate),
-                "raw": result,
-            }
-        )
-    except Exception as e:
-        return jsonify({"error": f"Prediction failed: {e}"}), 500
-
-
-# ------------------------------------------------------------------------------
 # /run_pipeline (end-to-end orchestration)
 # ------------------------------------------------------------------------------
 @app.route("/run_pipeline", methods=["POST"])

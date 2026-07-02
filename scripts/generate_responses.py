@@ -204,6 +204,7 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
         b_embed = []
         b_embed_score = []
         b_embed_method = []
+        reason = []
 
         for _, r in df.iterrows():
             ans = (r.get("model_response") or "").strip()
@@ -218,6 +219,7 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
             b_embed.append(bool(details.get("baseline_embed", False)))
             b_embed_score.append(details.get("baseline_embed_score", None))
             b_embed_method.append(details.get("baseline_embed_method", "none"))
+            reason.append(details.get("reason"), "none")
 
 
         df["hallucinated"] = hallu
@@ -225,6 +227,7 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
         df["baseline_embed"] = b_embed
         df["baseline_embed_score"] = b_embed_score
         df["baseline_embed_method"] = b_embed_method
+        df["reasoning"] = reason
 
         # Write with model_response included
         out_df = df[[

@@ -115,15 +115,11 @@ python app.py
 
 **UI panels**
 1. **Detect with Ground Truth** → calls `/detect`  
-2. **Prompt-only Predict** → calls `/predict` (needs a trained `./bert_model`)  
-3. **Run Entire Pipeline** → calls `/run_pipeline` to copy prompts → generate → analyze → evaluate
+2. **Run Entire Pipeline** → calls `/run_pipeline` to copy prompts → generate → analyze → evaluate
 
 **Endpoints**
 - `POST /detect`  
   Body: `{"answer":"Paris","correct":"Paris"}` → `{"hallucinated": false}`
-- `POST /predict` (prompt-only BERT)  
-  Body: `{"prompt":"..."}` → `{"hallucination_probability": 0.xx, "will_hallucinate": false}`  
-  *(Requires a model saved in `./bert_model`.)*
 - `POST /run_pipeline`  
   Body: `{"model":"gpt2"}` `{"model":"gpt-3.5-turbo"}`  `{"model":"gpt-4"}`   `{"model":"gpt-4o"}`  
   Returns `{ stage, run_id, logs, graphs, metrics, processed_csvs }` and writes files under `static/output/<run_id>/...`.
@@ -189,17 +185,6 @@ Each JSON: `{"hallucination_rate": <float|null>}`
 ### Metrics (`src/hallu_detector/evaluate.py`)
 - `compute_metrics(labels)` → hallucination rate  
 - CLI function `process_files(...)` reads CSVs and writes JSON metrics.
-
----
-
-## Train the Prompt-only BERT
-`train_model.py` fine-tunes a sequence classifier (BERT) and saves to `./bert_model` (for `/predict`).
-
-Example:
-```bash
-python train_model.py   --epochs 5   --batch-size 16   --learning-rate 2e-5   --model-dir ./bert_model   --output-dir ./results
-```
-> Script references HaluEval and the `datasets` library; install `datasets` and ensure your data/flags match the script.
 
 ---
 

@@ -19,7 +19,15 @@
     </div>
 
     <div class="card">
-      <h2>2) Full Pipeline</h2>
+      <h2>2) Predict Whether a Hallucination Will Occur<br/>
+      (Model Trained on GPT-4 Responses)</h2>
+      <textarea id="predict-prompt" placeholder="Enter prompt/question…"></textarea>
+      <button    id="predict-btn">Predict</button>
+      <div      id="predict-result" class="result"></div>
+    </div>
+
+    <div class="card">
+      <h2>3) Full Pipeline</h2>
       <label for="pipeline-model">Choose model:</label>
       <select id="pipeline-model">
         <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>

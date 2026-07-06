@@ -219,7 +219,7 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
             b_embed.append(bool(details.get("baseline_embed", False)))
             b_embed_score.append(details.get("baseline_embed_score", None))
             b_embed_method.append(details.get("baseline_embed_method", "none"))
-            reason.append(details.get("reason"), "none")
+            reason.append(details.get("reason", "none"))
 
 
         df["hallucinated"] = hallu
@@ -241,6 +241,7 @@ def process_files(prompt_files: List[str], response_files: List[str], model_name
             "baseline_embed",
             "baseline_embed_score",
             "baseline_embed_method",
+            "reasoning"
         ]].copy()
 
         try:

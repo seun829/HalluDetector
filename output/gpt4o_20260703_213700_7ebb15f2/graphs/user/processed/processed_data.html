@@ -1,0 +1,2412 @@
+<table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th>prompt</th>
+      <th>model_response</th>
+      <th>is_correct</th>
+      <th>hallucinated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Explain why increasing sample size reduces random error but not measurement bias.</td>
+      <td>Increasing sample size reduces random error by averaging out fluctuations but doesn’t affect measurement bias, which is a systematic error</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that increasing sample size reduces random error but not measurement bias.</td>
+      <td>Increasing sample size does not affect measurement bias, only reduces random error</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why increasing sample size reduces random error but not measurement bias, including the key limitation.</td>
+      <td>Increasing sample size reduces random error by averaging out fluctuations, increasing precision, but does not affect measurement bias, which is a systematic error unaffected by sample size</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: increasing sample size reduces random error but not measurement bias. Explain why the student's claim is wrong.</td>
+      <td>Increasing sample size reduces random error but does not affect measurement bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why antibiotics often work against bacteria but not viruses.</td>
+      <td>Antibiotics target bacterial structures/functions not present in viruses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that antibiotics often work against bacteria but not viruses.</td>
+      <td>Antibiotics target bacteria, not viruses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why antibiotics often work against bacteria but not viruses, including the key limitation.</td>
+      <td>Antibiotics target specific bacterial structures and functions, such as cell walls or protein synthesis, which viruses lack. Viruses replicate inside host cells, making them inaccessible to antibiotics that can't target intracellular processes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: antibiotics often work against bacteria but not viruses. Explain why the student's claim is wrong.</td>
+      <td>Antibiotics are effective against bacteria, not viruses, because viruses lack the structures antibiotics target</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a low p-value does not prove a hypothesis is true.</td>
+      <td>A low p-value indicates strong evidence against the null hypothesis, not proof of the hypothesis</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a low p-value does not prove a hypothesis is true.</td>
+      <td>A low p-value indicates statistical significance, not proof of truth, as it only suggests evidence against the null hypothesis</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a low p-value does not prove a hypothesis is true, including the key limitation.</td>
+      <td>A low p-value indicates strong evidence against the null hypothesis, suggesting the data is unlikely under it, but it does not prove the alternative hypothesis is true. The key limitation is that p-values do not measure the probability that the hypothesis itself is true or false, nor do they account for the possibility of Type I or Type II errors</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a low p-value does not prove a hypothesis is true. Explain why the student's claim is wrong.</td>
+      <td>A low p-value indicates strong evidence against the null hypothesis, not proof that a hypothesis is true</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a single cold day does not disprove climate warming.</td>
+      <td>Weather variability doesn't negate long-term climate trends</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a single cold day does not disprove climate warming.</td>
+      <td>Weather is short-term; climate is long-term</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a single cold day does not disprove climate warming, including the key limitation.</td>
+      <td>Climate warming refers to long-term trends, not isolated weather events; a single cold day is a short-term fluctuation, not indicative of global climate patterns</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a single cold day does not disprove climate warming. Explain why the student's claim is wrong.</td>
+      <td>Weather is not climate; a single day doesn't represent long-term climate trends</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why high training accuracy can still indicate overfitting.</td>
+      <td>High training accuracy with low test accuracy indicates overfitting</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that high training accuracy can still indicate overfitting.</td>
+      <td>High training accuracy can indicate overfitting if the model performs poorly on unseen data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why high training accuracy can still indicate overfitting, including the key limitation.</td>
+      <td>High training accuracy can indicate overfitting because the model may have learned the noise and specific patterns of the training data rather than generalizing to new data. The key limitation is that the model may perform poorly on unseen data, failing to predict accurately outside the training set</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: high training accuracy can still indicate overfitting. Explain why the student's claim is wrong.</td>
+      <td>High training accuracy can indicate overfitting if the model performs poorly on new, unseen data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why correlation between two variables is not enough to prove causation.</td>
+      <td>Correlation does not account for confounding variables or establish a direct cause-effect relationship</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that correlation between two variables is not enough to prove causation.</td>
+      <td>Correlation doesn't imply causation because a third variable could influence both variables</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why correlation between two variables is not enough to prove causation, including the key limitation.</td>
+      <td>Correlation does not prove causation due to potential confounding variables and bidirectional influences</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: correlation between two variables is not enough to prove causation. Explain why the student's claim is wrong.</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a placebo control helps interpret treatment studies.</td>
+      <td>It distinguishes treatment effects from psychological or other non-specific effects</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a placebo control helps interpret treatment studies.</td>
+      <td>A placebo control distinguishes treatment effects from placebo effects, not overall study interpretation</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a placebo control helps interpret treatment studies, including the key limitation.</td>
+      <td>A placebo control helps determine if a treatment's effects are due to the treatment itself or patients' expectations. It allows for distinguishing between the actual efficacy of the treatment and psychological effects. A key limitation is that it may not account for all variables influencing outcomes, such as natural symptom fluctuations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a placebo control helps interpret treatment studies. Explain why the student's claim is wrong.</td>
+      <td>Placebo controls help eliminate bias and determine the treatment's true effect</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a map projection cannot preserve all properties of Earth.</td>
+      <td>A map projection cannot preserve all properties because the Earth is a 3D sphere, and projections onto a 2D plane inherently distort shape, area, distance, or direction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a map projection cannot preserve all properties of Earth.</td>
+      <td>No map projection can preserve all properties; it's impossible to maintain area, shape, distance, and direction simultaneously</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a map projection cannot preserve all properties of Earth, including the key limitation.</td>
+      <td>A map projection cannot preserve all properties of Earth because it involves translating the curved surface of a sphere onto a flat plane, leading to distortions. The key limitation is that it cannot simultaneously preserve area, shape, distance, and direction, forcing cartographers to prioritize certain properties over others depending on the projection type</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a map projection cannot preserve all properties of Earth. Explain why the student's claim is wrong.</td>
+      <td>A map projection cannot preserve all properties of Earth due to the inherent distortion when representing a 3D surface on a 2D plane</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a confidence interval is not a guarantee that the parameter is inside one realized interval.</td>
+      <td>A confidence interval reflects probability over many samples, not certainty in one instance</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a confidence interval is not a guarantee that the parameter is inside one realized interval.</td>
+      <td>A confidence interval provides a range that, under repeated sampling, would contain the parameter a certain percentage of times but does not guarantee any specific interval contains the parameter</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a confidence interval is not a guarantee that the parameter is inside one realized interval, including the key limitation.</td>
+      <td>A confidence interval provides a range where the parameter is likely to fall, based on sample data, but it does not guarantee the parameter is inside any specific interval. The key limitation is that it depends on the sample; different samples can produce different intervals, and only a certain percentage will contain the true parameter if repeated sampling occurs</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a confidence interval is not a guarantee that the parameter is inside one realized interval. Explain why the student's claim is wrong.</td>
+      <td>The student's claim is wrong because a confidence interval provides a range where the parameter is likely to fall, but it is not a guarantee</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a neural network can produce confident wrong answers.</td>
+      <td>Overfitting, biased training data, or misinterpreting complex patterns</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a neural network can produce confident wrong answers.</td>
+      <td>Neural networks can output high-confidence scores even for incorrect predictions due to overfitting or biased training data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a neural network can produce confident wrong answers, including the key limitation.</td>
+      <td>Neural networks can produce confident wrong answers due to overfitting, where the model learns noise instead of underlying patterns, and a lack of interpretability, making it difficult to understand decision-making. Additionally, they rely on learned probabilities, which can be misleading in unfamiliar situations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a neural network can produce confident wrong answers. Explain why the student's claim is wrong.</td>
+      <td>Neural networks can produce confident wrong answers due to overfitting or insufficient training data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a short answer can be correct but incomplete.</td>
+      <td>A short answer may lack context or detail</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a short answer can be correct but incomplete.</td>
+      <td>A correct answer may lack context or details</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a short answer can be correct but incomplete, including the key limitation.</td>
+      <td>A short answer can be correct but incomplete as it may capture the essential point yet lack context, details, or supporting information, limiting understanding</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a short answer can be correct but incomplete. Explain why the student's claim is wrong.</td>
+      <td>A short answer can be both correct and complete</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Explain why water expands when it freezes.</td>
+      <td>Water expands when it freezes because hydrogen bonds form a crystalline structure that occupies more space than liquid water</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that water expands when it freezes.</td>
+      <td>Water expands when it freezes because its molecules form a crystalline structure that is less dense than liquid water, not because it expands in the traditional sense</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why water expands when it freezes, including the key limitation.</td>
+      <td>Water expands when it freezes due to the formation of a crystalline structure called ice, where molecules are arranged in a hexagonal pattern, maximizing hydrogen bonding and increasing volume. This expansion is limited to the temperature range between 0°C and 4°C, beyond which water behaves differently</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: water expands when it freezes. Explain why the student's claim is wrong.</td>
+      <td>Water expands when it freezes because its molecules form a crystalline structure that occupies more space</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why a balanced chemical equation must conserve atoms.</td>
+      <td>Atoms are conserved due to the law of conservation of mass</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that a balanced chemical equation must conserve atoms.</td>
+      <td>A balanced equation conserves mass, not individual atoms</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why a balanced chemical equation must conserve atoms, including the key limitation.</td>
+      <td>Atoms are conserved in a balanced chemical equation to satisfy the law of conservation of mass, ensuring the same number of each type of atom exists in both reactants and products; this principle hinges on the fact that atoms cannot be created or destroyed in chemical reactions</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: a balanced chemical equation must conserve atoms. Explain why the student's claim is wrong.</td>
+      <td>The student's claim is wrong because the law of conservation of mass requires that atoms are conserved in a chemical reaction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why random assignment differs from random sampling.</td>
+      <td>Random assignment assigns participants to groups randomly in an experiment, while random sampling selects participants from a population randomly</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that random assignment differs from random sampling.</td>
+      <td>Random assignment relates to experimental control, while random sampling pertains to selecting participants from a population</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why random assignment differs from random sampling, including the key limitation.</td>
+      <td>Random assignment is used in experiments to allocate participants to different groups to ensure each group is similar, allowing for causal inferences. Random sampling is used to select a representative subset from a population for generalization. The key limitation of random sampling is that it does not control for confounding variables within the sample, unlike random assignment</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: random assignment differs from random sampling. Explain why the student's claim is wrong.</td>
+      <td>Random assignment and random sampling serve different purposes; they are not opposites</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why an average can mislead for skewed data.</td>
+      <td>An average can be misleading for skewed data because it doesn't represent the central tendency accurately, as it can be disproportionately affected by extreme values</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that an average can mislead for skewed data.</td>
+      <td>An average can mislead for skewed data because it doesn't represent the central tendency accurately</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why an average can mislead for skewed data, including the key limitation.</td>
+      <td>An average can mislead for skewed data because it is sensitive to extreme values, potentially not representing the typical experience. In skewed distributions, the mean may be dragged towards the tail, overshadowing the median, which better reflects central tendency</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: an average can mislead for skewed data. Explain why the student's claim is wrong.</td>
+      <td>The mean can be distorted by outliers, leading to a misleading representation of central tendency in skewed data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why source-grounded answers should not invent missing facts.</td>
+      <td>To ensure accuracy and reliability</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that source-grounded answers should not invent missing facts.</td>
+      <td>Source-grounded answers can clarify or logically infer information without fabricating unsupported details</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why source-grounded answers should not invent missing facts, including the key limitation.</td>
+      <td>Source-grounded answers should not invent missing facts because doing so can lead to misinformation, reducing trustworthiness. The key limitation is the potential for spreading inaccuracies if the generated information is not based on verified sources</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: source-grounded answers should not invent missing facts. Explain why the student's claim is wrong.</td>
+      <td>The claim is wrong because inventing facts undermines accuracy and credibility</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why abstention can lower contradiction rates without proving task success.</td>
+      <td>Abstention reduces contradictions by avoiding uncertain responses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that abstention can lower contradiction rates without proving task success.</td>
+      <td>Abstention may reduce observed contradictions by avoiding difficult cases, not by improving accuracy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why abstention can lower contradiction rates without proving task success, including the key limitation.</td>
+      <td>Abstention reduces contradiction rates by allowing systems to withhold responses when uncertain, avoiding incorrect answers. However, it may not demonstrate true task success, as it doesn't improve underlying accuracy or address all errors</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: abstention can lower contradiction rates without proving task success. Explain why the student's claim is wrong.</td>
+      <td>Abstention can increase contradiction rates by avoiding engagement and failing to address task success, not lowering them</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Explain why embedding similarity can help paraphrase matching but cannot prove correctness.</td>
+      <td>Embedding similarity measures semantic closeness but doesn't ensure identical meaning</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that embedding similarity can help paraphrase matching but cannot prove correctness.</td>
+      <td>Embedding similarity can suggest semantic similarity but doesn't guarantee contextual correctness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why embedding similarity can help paraphrase matching but cannot prove correctness, including the key limitation.</td>
+      <td>Embedding similarity helps paraphrase matching by capturing semantic meaning and context, but it cannot prove correctness due to potential loss of nuance and context-specific meanings</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: embedding similarity can help paraphrase matching but cannot prove correctness. Explain why the student's claim is wrong.</td>
+      <td>Embedding similarity enhances paraphrase matching by effectively capturing semantic meanings</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Explain why uncertainty-aware answers may look contradictory to simple detectors.</td>
+      <td>They account for a range of possibilities and probabilities rather than definitive outcomes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that uncertainty-aware answers may look contradictory to simple detectors.</td>
+      <td>Uncertainty-aware answers reflect probabilistic reasoning, not binary outcomes, unlike simple detectors</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why uncertainty-aware answers may look contradictory to simple detectors, including the key limitation.</td>
+      <td>Uncertainty-aware answers accommodate multiple possibilities and reflect the inherent ambiguity in data. Simple detectors may misinterpret this as contradiction because they often seek definitive answers</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: uncertainty-aware answers may look contradictory to simple detectors. Explain why the student's claim is wrong.</td>
+      <td>Uncertainty-aware answers account for nuance and complexity, unlike simple detectors</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain why large samples can still be unrepresentative.</td>
+      <td>Large samples can be unrepresentative due to sampling bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Explain the common misconception behind the statement that large samples can still be unrepresentative.</td>
+      <td>Large samples can be biased if not randomly selected</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a multi-sentence explanation of why large samples can still be unrepresentative, including the key limitation.</td>
+      <td>Large samples can still be unrepresentative if they are biased in their selection process, leading to skewed results. The key limitation is that sample size alone doesn't ensure representativeness; proper random sampling methods are essential</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A student claims the opposite of this idea: large samples can still be unrepresentative. Explain why the student's claim is wrong.</td>
+      <td>Bias or sampling errors can affect representativeness regardless of sample size</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a school introduces a reading app and test scores rise. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a school introduces a reading app and test scores rise, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased student motivation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a school introduces a reading app and test scores rise?</td>
+      <td>Randomized controlled trial evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a school introduces a reading app and test scores rise?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that cities with more parks have lower obesity rates. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that cities with more parks have lower obesity rates, identify one plausible confounder or alternative explanation.</td>
+      <td>Socioeconomic status</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if cities with more parks have lower obesity rates?</td>
+      <td>Randomized controlled trials showing reduced obesity rates after increasing park availability</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: cities with more parks have lower obesity rates?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that students who attend optional tutoring earn higher grades. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that students who attend optional tutoring earn higher grades, identify one plausible confounder or alternative explanation.</td>
+      <td>Motivation level</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if students who attend optional tutoring earn higher grades?</td>
+      <td>Randomized controlled trial</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: students who attend optional tutoring earn higher grades?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a hospital checklist begins and infection rates fall. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a hospital checklist begins and infection rates fall, identify one plausible confounder or alternative explanation.</td>
+      <td>Improved hygiene practices</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a hospital checklist begins and infection rates fall?</td>
+      <td>Randomized controlled trial data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a hospital checklist begins and infection rates fall?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that sales rise after a new advertising campaign. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that sales rise after a new advertising campaign, identify one plausible confounder or alternative explanation.</td>
+      <td>Seasonal demand fluctuations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if sales rise after a new advertising campaign?</td>
+      <td>Controlled experiment showing the campaign caused sales increase</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: sales rise after a new advertising campaign?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that people who sleep more score higher on memory tests. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that people who sleep more score higher on memory tests, identify one plausible confounder or alternative explanation.</td>
+      <td>Overall health</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if people who sleep more score higher on memory tests?</td>
+      <td>Randomized controlled trial data showing sleep directly improves memory test scores</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: people who sleep more score higher on memory tests?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a city installs cameras and crime reports increase. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a city installs cameras and crime reports increase, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased reporting due to heightened awareness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a city installs cameras and crime reports increase?</td>
+      <td>Evidence of a correlation between camera installation and increased crime detection</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a city installs cameras and crime reports increase?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a supplement group loses more weight than non-users. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a supplement group loses more weight than non-users, identify one plausible confounder or alternative explanation.</td>
+      <td>Dietary changes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a supplement group loses more weight than non-users?</td>
+      <td>Randomized controlled trial</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a supplement group loses more weight than non-users?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a bus line opens and nearby store revenue increases. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a bus line opens and nearby store revenue increases, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased foot traffic</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a bus line opens and nearby store revenue increases?</td>
+      <td>Controlled experiments showing direct correlation</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a bus line opens and nearby store revenue increases?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a later school start time is followed by better attendance. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a later school start time is followed by better attendance, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased sleep duration</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a later school start time is followed by better attendance?</td>
+      <td>Controlled experiments or longitudinal studies</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a later school start time is followed by better attendance?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a fertilizer is applied and crop yield rises. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a fertilizer is applied and crop yield rises, identify one plausible confounder or alternative explanation.</td>
+      <td>Improved weather conditions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a fertilizer is applied and crop yield rises?</td>
+      <td>Randomized controlled trial evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a fertilizer is applied and crop yield rises?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that people who volunteer report greater happiness. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation, as other variables may influence the relationship</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that people who volunteer report greater happiness, identify one plausible confounder or alternative explanation.</td>
+      <td>Social support</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if people who volunteer report greater happiness?</td>
+      <td>Randomized controlled trial evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: people who volunteer report greater happiness?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a new security system is installed and theft decreases. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a new security system is installed and theft decreases, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased surveillance awareness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a new security system is installed and theft decreases?</td>
+      <td>A controlled experiment showing theft decrease only where the system is installed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a new security system is installed and theft decreases?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a neighborhood opens a grocery store and diabetes rates fall. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a neighborhood opens a grocery store and diabetes rates fall, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased physical activity</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a neighborhood opens a grocery store and diabetes rates fall?</td>
+      <td>Longitudinal study data showing a direct correlation between grocery store access and decreased diabetes rates</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a neighborhood opens a grocery store and diabetes rates fall?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a company raises pay and turnover falls. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a company raises pay and turnover falls, identify one plausible confounder or alternative explanation.</td>
+      <td>Improved working conditions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a company raises pay and turnover falls?</td>
+      <td>Longitudinal study evidence showing a consistent correlation between pay raises and reduced turnover</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a company raises pay and turnover falls?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a new textbook is used and this year's class scores higher. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a new textbook is used and this year's class scores higher, identify one plausible confounder or alternative explanation.</td>
+      <td>Improved teaching methods</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a new textbook is used and this year's class scores higher?</td>
+      <td>Randomized controlled trial</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a new textbook is used and this year's class scores higher?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a city adds bike lanes and cycling increases. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a city adds bike lanes and cycling increases, identify one plausible confounder or alternative explanation.</td>
+      <td>Improved weather conditions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a city adds bike lanes and cycling increases?</td>
+      <td>A controlled experiment showing a direct correlation between bike lane addition and increased cycling</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a city adds bike lanes and cycling increases?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that patients receiving more tests have worse outcomes. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that patients receiving more tests have worse outcomes, identify one plausible confounder or alternative explanation.</td>
+      <td>Severity of illness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if patients receiving more tests have worse outcomes?</td>
+      <td>Randomized controlled trial results showing causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: patients receiving more tests have worse outcomes?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that a recycling campaign starts and recycling rates rise. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that a recycling campaign starts and recycling rates rise, identify one plausible confounder or alternative explanation.</td>
+      <td>Increased environmental awareness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if a recycling campaign starts and recycling rates rise?</td>
+      <td>Controlled experimental data showing a direct link between the campaign and increased recycling rates</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: a recycling campaign starts and recycling rates rise?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A study reports that remote workers appear more productive than office workers. Why is this not enough to prove causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>In the finding that remote workers appear more productive than office workers, identify one plausible confounder or alternative explanation.</td>
+      <td>Selection bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What kind of evidence would make the causal claim stronger if remote workers appear more productive than office workers?</td>
+      <td>Randomized controlled trials showing increased productivity among remote workers compared to office workers</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Why should a reliable answer avoid saying that this proves the cause: remote workers appear more productive than office workers?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: bacteria have cellular targets and viruses replicate inside host cells. What conclusion follows?</td>
+      <td>Bacteria target cells, while viruses use host cells to replicate</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: bacteria have cellular targets and viruses replicate inside host cells.</td>
+      <td>Bacteria have cellular targets while viruses require host cells for replication</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: bacteria have cellular targets and viruses replicate inside host cells.</td>
+      <td>Bacteria attack specific cell components, while viruses hijack host cells for reproduction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: bacteria have cellular targets and viruses replicate inside host cells?</td>
+      <td>Confusing bacterial infections with viral infections</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: large samples reduce random error and biased sampling creates systematic error. What conclusion follows?</td>
+      <td>Large samples reduce random error but cannot eliminate systematic error from biased sampling</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: large samples reduce random error and biased sampling creates systematic error.</td>
+      <td>Large samples reduce random error, while biased sampling creates systematic error</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: large samples reduce random error and biased sampling creates systematic error.</td>
+      <td>Large samples enhance accuracy by minimizing random error, while biased sampling introduces consistent inaccuracies through systematic error</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: large samples reduce random error and biased sampling creates systematic error?</td>
+      <td>Avoid assuming large samples eliminate systematic error</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: randomized trials support causality and observational studies show associations. What conclusion follows?</td>
+      <td>Randomized trials establish causality; observational studies indicate associations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: randomized trials support causality and observational studies show associations.</td>
+      <td>Randomized trials determine causality; observational studies identify associations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: randomized trials support causality and observational studies show associations.</td>
+      <td>Randomized trials provide evidence of cause-effect relationships, while observational studies indicate correlations without proving causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: randomized trials support causality and observational studies show associations?</td>
+      <td>Assuming causality from observational studies</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: precision measures flagged-case reliability and recall measures captured positives. What conclusion follows?</td>
+      <td>High precision indicates reliable flagged cases, while high recall indicates most positives are captured</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: precision measures flagged-case reliability and recall measures captured positives.</td>
+      <td>Precision measures the accuracy of positive identifications, while recall measures the completeness of captured positives</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: precision measures flagged-case reliability and recall measures captured positives.</td>
+      <td>Precision indicates the accuracy of positive identifications, while recall indicates the proportion of actual positives correctly identified</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: precision measures flagged-case reliability and recall measures captured positives?</td>
+      <td>Confusing precision with recall</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: weather varies daily and climate describes long-term patterns. What conclusion follows?</td>
+      <td>Weather is short-term, while climate is long-term</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: weather varies daily and climate describes long-term patterns.</td>
+      <td>Weather is short-term; climate is long-term</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: weather varies daily and climate describes long-term patterns.</td>
+      <td>Weather refers to short-term atmospheric conditions, while climate describes long-term trends and averages</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: weather varies daily and climate describes long-term patterns?</td>
+      <td>Confusing weather with climate</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: source-grounded answers must follow evidence and LLMs may add plausible outside knowledge. What conclusion follows?</td>
+      <td>Source-grounded answers should primarily follow evidence, but LLMs can supplement with plausible outside knowledge when necessary</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: source-grounded answers must follow evidence and LLMs may add plausible outside knowledge.</td>
+      <td>Source-grounded answers rely strictly on provided evidence, while LLMs can include additional plausible information not in the original source</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: source-grounded answers must follow evidence and LLMs may add plausible outside knowledge.</td>
+      <td>Source-grounded answers are based strictly on provided evidence, while LLMs may incorporate additional plausible information</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: source-grounded answers must follow evidence and LLMs may add plausible outside knowledge?</td>
+      <td>Avoid assuming LLM-generated knowledge is evidence-based</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: abstention avoids some false claims and also withholds answers. What conclusion follows?</td>
+      <td>Abstention prevents false claims but may limit information</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: abstention avoids some false claims and also withholds answers.</td>
+      <td>Abstention avoids errors but may limit information</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: abstention avoids some false claims and also withholds answers.</td>
+      <td>Abstention reduces false claims but limits information provided</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: abstention avoids some false claims and also withholds answers?</td>
+      <td>Avoid assuming abstention equates to neutrality</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: semantic adequacy requires usefulness and contradiction detection checks conflict. What conclusion follows?</td>
+      <td>Semantic adequacy requires contradiction detection</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: semantic adequacy requires usefulness and contradiction detection checks conflict.</td>
+      <td>Semantic adequacy ensures meaningfulness, while contradiction detection ensures consistency</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: semantic adequacy requires usefulness and contradiction detection checks conflict.</td>
+      <td>Semantic adequacy ensures information is relevant; contradiction detection ensures consistency</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: semantic adequacy requires usefulness and contradiction detection checks conflict?</td>
+      <td>Avoid assuming usefulness is equivalent to contradiction detection</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: embedding similarity captures closeness and NLI estimates entailment or contradiction. What conclusion follows?</td>
+      <td>Embedding similarity and NLI together assess semantic relationship and logical consistency</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: embedding similarity captures closeness and NLI estimates entailment or contradiction.</td>
+      <td>Embedding similarity measures semantic closeness, while NLI assesses logical relationships like entailment or contradiction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: embedding similarity captures closeness and NLI estimates entailment or contradiction.</td>
+      <td>Embedding similarity indicates how semantically close two texts are, while NLI assesses whether one text logically entails or contradicts another</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: embedding similarity captures closeness and NLI estimates entailment or contradiction?</td>
+      <td>Avoid conflating similarity with entailment or contradiction</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: uncertainty expression can be reliable and simple negation cues can over-trigger. What conclusion follows?</td>
+      <td>Reliable uncertainty expressions can prevent over-triggering by simple negation cues</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: uncertainty expression can be reliable and simple negation cues can over-trigger.</td>
+      <td>Uncertainty expression is reliable; simple negation cues can over-trigger</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: uncertainty expression can be reliable and simple negation cues can over-trigger.</td>
+      <td>Uncertainty expressions can provide dependable context, but simple negation cues may cause excessive activation of responses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: uncertainty expression can be reliable and simple negation cues can over-trigger?</td>
+      <td>Avoid over-triggering negation cues when expressing uncertainty reliably</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: control groups provide baselines and random assignment reduces confounding. What conclusion follows?</td>
+      <td>Randomly assigned control groups provide reliable baselines for comparison</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: control groups provide baselines and random assignment reduces confounding.</td>
+      <td>Both are essential for ensuring validity in experiments</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: control groups provide baselines and random assignment reduces confounding.</td>
+      <td>Control groups establish comparison standards, while random assignment minimizes bias by evenly distributing variables</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: control groups provide baselines and random assignment reduces confounding?</td>
+      <td>Avoid using non-random assignment in control groups</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: unsupported claims go beyond evidence and contradicted claims conflict with evidence. What conclusion follows?</td>
+      <td>Claims must align with evidence to be credible</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: unsupported claims go beyond evidence and contradicted claims conflict with evidence.</td>
+      <td>Unsupported claims lack evidence, while contradicted claims are disproven by evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: unsupported claims go beyond evidence and contradicted claims conflict with evidence.</td>
+      <td>Unsupported claims lack sufficient evidence, while contradicted claims are disproven by existing evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: unsupported claims go beyond evidence and contradicted claims conflict with evidence?</td>
+      <td>Avoid treating unsupported claims as contradicted claims</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: duplicate prompts inflate row counts and prompt-level aggregation reduces dependence. What conclusion follows?</td>
+      <td>Prompt-level aggregation mitigates the impact of duplicate prompts on row counts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: duplicate prompts inflate row counts and prompt-level aggregation reduces dependence.</td>
+      <td>Duplicate prompts inflate row counts; prompt-level aggregation reduces dependence</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: duplicate prompts inflate row counts and prompt-level aggregation reduces dependence.</td>
+      <td>Duplicate prompts increase data entries, while aggregating prompts minimizes reliance on individual entries</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: duplicate prompts inflate row counts and prompt-level aggregation reduces dependence?</td>
+      <td>Avoid aggregating duplicate prompts</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: short-answer prompts have compact references and non-atomic prompts allow varied valid responses. What conclusion follows?</td>
+      <td>Short-answer prompts yield specific responses, while non-atomic prompts yield diverse responses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: short-answer prompts have compact references and non-atomic prompts allow varied valid responses.</td>
+      <td>Short-answer prompts require concise responses, while non-atomic prompts allow for diverse responses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: short-answer prompts have compact references and non-atomic prompts allow varied valid responses.</td>
+      <td>Short-answer prompts require specific, succinct responses; non-atomic prompts permit multiple acceptable answers</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: short-answer prompts have compact references and non-atomic prompts allow varied valid responses?</td>
+      <td>Avoid over-generalizing responses</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: calibration means confidence matches accuracy and high confidence can still be wrong. What conclusion follows?</td>
+      <td>Confidence should be calibrated to improve accuracy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: calibration means confidence matches accuracy and high confidence can still be wrong.</td>
+      <td>Both concepts involve confidence assessment, but calibration focuses on alignment with accuracy, while high confidence being wrong highlights overconfidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: calibration means confidence matches accuracy and high confidence can still be wrong.</td>
+      <td>Calibration ensures that the probability of being correct matches the stated confidence level, but a high confidence level does not guarantee accuracy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: calibration means confidence matches accuracy and high confidence can still be wrong?</td>
+      <td>Assuming confidence guarantees accuracy</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: claim-level evaluation separates statements and response-level evaluation assigns one label. What conclusion follows?</td>
+      <td>Claim-level evaluation provides granular analysis, whereas response-level evaluation offers a holistic judgment</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: claim-level evaluation separates statements and response-level evaluation assigns one label.</td>
+      <td>Claim-level evaluation assesses individual statements, while response-level evaluation provides a single overall label</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: claim-level evaluation separates statements and response-level evaluation assigns one label.</td>
+      <td>Claim-level evaluation assesses individual statements, while response-level evaluation provides an overall assessment for the entire response</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: claim-level evaluation separates statements and response-level evaluation assigns one label?</td>
+      <td>Avoid assigning one label to separated statements</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: model transparency exposes rules and audits reveal failure cases. What conclusion follows?</td>
+      <td>Model transparency aids in identifying and understanding failure cases through audits</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: model transparency exposes rules and audits reveal failure cases.</td>
+      <td>Model transparency explains how a model works, while audits identify where it fails</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: model transparency exposes rules and audits reveal failure cases.</td>
+      <td>Model transparency clarifies decision-making processes, while audits identify where these processes fail</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: model transparency exposes rules and audits reveal failure cases?</td>
+      <td>Avoid overlooking the potential for biased interpretations</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: current-fact questions need fresh evidence and stable facts change little. What conclusion follows?</td>
+      <td>Current-fact questions require regular updates, while stable facts need less frequent review</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: current-fact questions need fresh evidence and stable facts change little.</td>
+      <td>Current-fact questions require ongoing evidence, while stable facts remain largely unchanged</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: current-fact questions need fresh evidence and stable facts change little.</td>
+      <td>Current-fact questions require updated information, while stable facts remain largely unchanged</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: current-fact questions need fresh evidence and stable facts change little?</td>
+      <td>Assuming stable facts don't need verification</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: assertion scope separates endorsed claims from mentioned claims. What conclusion follows?</td>
+      <td>Assertion scope distinguishes between claims that are supported and those that are merely referenced</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: assertion scope separates endorsed claims from mentioned claims.</td>
+      <td>Assertion scope differentiates between claims a speaker endorses and those they merely mention</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: assertion scope separates endorsed claims from mentioned claims.</td>
+      <td>Assertion scope distinguishes claims the speaker supports (endorsed) from those merely referenced (mentioned)</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: assertion scope separates endorsed claims from mentioned claims?</td>
+      <td>Avoid conflating endorsed claims with mentioned claims</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Synthesize these two ideas: category-balanced prompts improve inference and sparse categories leave recall undefined. What conclusion follows?</td>
+      <td>Category-balanced prompts improve recall by defining sparse categories</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Compare the two concepts in this pair: category-balanced prompts improve inference and sparse categories leave recall undefined.</td>
+      <td>Category-balanced prompts improve inference by providing uniform data distribution, while sparse categories lack sufficient data for defining recall</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Use both parts of this statement to give a careful interpretation: category-balanced prompts improve inference and sparse categories leave recall undefined.</td>
+      <td>Category-balanced prompts enhance inference accuracy, while sparse categories make recall calculation impossible</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What mistake should be avoided when combining these facts: category-balanced prompts improve inference and sparse categories leave recall undefined?</td>
+      <td>Avoid assuming sparse categories provide reliable inference</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The trial improved symptoms after eight weeks but did not include a placebo control group.' What limitation should be mentioned about placebo control group?</td>
+      <td>The trial lacked a placebo control group</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The trial improved symptoms after eight weeks but did not include a placebo control group.' What claim should a reliable answer avoid?</td>
+      <td>Placebo effect</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The trial improved symptoms after eight weeks but did not include a placebo control group.' Give the careful conclusion supported by the source.</td>
+      <td>The trial improved symptoms after eight weeks</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The trial improved symptoms after eight weeks but did not include a placebo control group.' What is the strongest source-grounded answer?</td>
+      <td>The trial improved symptoms after eight weeks</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The survey included 120 students from one urban high school.' What limitation should be mentioned about generalization?</td>
+      <td>The sample is not representative of all students</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The survey included 120 students from one urban high school.' What claim should a reliable answer avoid?</td>
+      <td>Generalizing results to all urban high schools</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The survey included 120 students from one urban high school.' Give the careful conclusion supported by the source.</td>
+      <td>120 students from one urban high school were surveyed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The survey included 120 students from one urban high school.' What is the strongest source-grounded answer?</td>
+      <td>120 students were surveyed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The chart reports sales for January through June only.' What limitation should be mentioned about time coverage?</td>
+      <td>The chart excludes data beyond June</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The chart reports sales for January through June only.' What claim should a reliable answer avoid?</td>
+      <td>Sales data beyond June</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The chart reports sales for January through June only.' Give the careful conclusion supported by the source.</td>
+      <td>Sales data is available only for January through June</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The chart reports sales for January through June only.' What is the strongest source-grounded answer?</td>
+      <td>The chart reports sales for January through June only</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found an association between screen time and sleep duration.' What limitation should be mentioned about causation?</td>
+      <td>Correlation does not imply causation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found an association between screen time and sleep duration.' What claim should a reliable answer avoid?</td>
+      <td>Causation between screen time and sleep duration</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found an association between screen time and sleep duration.' Give the careful conclusion supported by the source.</td>
+      <td>Screen time is associated with sleep duration</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found an association between screen time and sleep duration.' What is the strongest source-grounded answer?</td>
+      <td>The study found an association between screen time and sleep duration</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The battery lasted 9 hours in lab testing at medium brightness.' What limitation should be mentioned about battery conditions?</td>
+      <td>Medium brightness setting</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The battery lasted 9 hours in lab testing at medium brightness.' What claim should a reliable answer avoid?</td>
+      <td>The battery lasted 9 hours in real-world conditions</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The battery lasted 9 hours in lab testing at medium brightness.' Give the careful conclusion supported by the source.</td>
+      <td>The battery lasted 9 hours at medium brightness in lab testing</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The battery lasted 9 hours in lab testing at medium brightness.' What is the strongest source-grounded answer?</td>
+      <td>9 hours</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The experiment used adult mice only.' What limitation should be mentioned about population?</td>
+      <td>Results may not be generalizable to non-adult mice or other species</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The experiment used adult mice only.' What claim should a reliable answer avoid?</td>
+      <td>The experiment involved non-adult mice</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The experiment used adult mice only.' Give the careful conclusion supported by the source.</td>
+      <td>The experiment's results are applicable only to adult mice</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The experiment used adult mice only.' What is the strongest source-grounded answer?</td>
+      <td>Adult mice only</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The app was tested on Android phones, not iPhones.' What limitation should be mentioned about platform?</td>
+      <td>Tested only on Android, not iOS</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The app was tested on Android phones, not iPhones.' What claim should a reliable answer avoid?</td>
+      <td>The app was tested on iPhones</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The app was tested on Android phones, not iPhones.' Give the careful conclusion supported by the source.</td>
+      <td>The app was tested only on Android phones</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The app was tested on Android phones, not iPhones.' What is the strongest source-grounded answer?</td>
+      <td>The app was tested on Android phones</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The questionnaire was optional and completed by 35% of invited participants.' What limitation should be mentioned about response bias?</td>
+      <td>The limitation is that the 35% response rate may not be representative of the entire invited population</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The questionnaire was optional and completed by 35% of invited participants.' What claim should a reliable answer avoid?</td>
+      <td>A reliable answer should avoid claiming that the questionnaire was completed by all invited participants</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The questionnaire was optional and completed by 35% of invited participants.' Give the careful conclusion supported by the source.</td>
+      <td>35% of invited participants completed the optional questionnaire</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The questionnaire was optional and completed by 35% of invited participants.' What is the strongest source-grounded answer?</td>
+      <td>35%</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report covers data through 2021.' What limitation should be mentioned about date coverage?</td>
+      <td>The data is only up to 2021</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report covers data through 2021.' What claim should a reliable answer avoid?</td>
+      <td>The report includes data from 2022</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report covers data through 2021.' Give the careful conclusion supported by the source.</td>
+      <td>The report includes data up to 2021</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report covers data through 2021.' What is the strongest source-grounded answer?</td>
+      <td>2021</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The clinical note reports fever and cough but no test result.' What limitation should be mentioned about diagnosis?</td>
+      <td>No confirmed diagnosis due to missing test result</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The clinical note reports fever and cough but no test result.' What claim should a reliable answer avoid?</td>
+      <td>The claim that a specific illness is diagnosed</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The clinical note reports fever and cough but no test result.' Give the careful conclusion supported by the source.</td>
+      <td>The patient has fever and cough but no confirmed diagnosis</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The clinical note reports fever and cough but no test result.' What is the strongest source-grounded answer?</td>
+      <td>No test result</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study measured short-term recall after 10 minutes.' What limitation should be mentioned about memory duration?</td>
+      <td>The study only measures short-term memory</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study measured short-term recall after 10 minutes.' What claim should a reliable answer avoid?</td>
+      <td>Long-term recall results</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study measured short-term recall after 10 minutes.' Give the careful conclusion supported by the source.</td>
+      <td>The study measured short-term recall after 10 minutes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study measured short-term recall after 10 minutes.' What is the strongest source-grounded answer?</td>
+      <td>Short-term recall was measured after 10 minutes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The treatment group improved, but the control group improved by a similar amount.' What limitation should be mentioned about treatment advantage?</td>
+      <td>No treatment advantage evident</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The treatment group improved, but the control group improved by a similar amount.' What claim should a reliable answer avoid?</td>
+      <td>The treatment caused the improvement</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The treatment group improved, but the control group improved by a similar amount.' Give the careful conclusion supported by the source.</td>
+      <td>The treatment had no significant effect</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The treatment group improved, but the control group improved by a similar amount.' What is the strongest source-grounded answer?</td>
+      <td>The treatment was not more effective than the control</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The machine learning model was evaluated only on English text.' What limitation should be mentioned about language scope?</td>
+      <td>The model's evaluation is limited to English text</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The machine learning model was evaluated only on English text.' What claim should a reliable answer avoid?</td>
+      <td>The model's performance on non-English text</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The machine learning model was evaluated only on English text.' Give the careful conclusion supported by the source.</td>
+      <td>The evaluation was limited to English text</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The machine learning model was evaluated only on English text.' What is the strongest source-grounded answer?</td>
+      <td>The machine learning model was evaluated only on English text</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The figure shows population estimates with wide error bars.' What limitation should be mentioned about uncertainty?</td>
+      <td>The limitation is the wide error bars in the population estimates</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The figure shows population estimates with wide error bars.' What claim should a reliable answer avoid?</td>
+      <td>Certainty about the exact population size</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The figure shows population estimates with wide error bars.' Give the careful conclusion supported by the source.</td>
+      <td>The population estimates are uncertain</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The figure shows population estimates with wide error bars.' What is the strongest source-grounded answer?</td>
+      <td>Population estimates have wide error bars</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report states that the law was proposed but not passed.' What limitation should be mentioned about legal status?</td>
+      <td>The law was not passed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report states that the law was proposed but not passed.' What claim should a reliable answer avoid?</td>
+      <td>The law was passed</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report states that the law was proposed but not passed.' Give the careful conclusion supported by the source.</td>
+      <td>The law was proposed but not passed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The report states that the law was proposed but not passed.' What is the strongest source-grounded answer?</td>
+      <td>The law was proposed but not passed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found no statistically significant difference between groups.' What limitation should be mentioned about group difference?</td>
+      <td>The limitation is the potential lack of statistical power</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found no statistically significant difference between groups.' What claim should a reliable answer avoid?</td>
+      <td>A significant difference between groups</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found no statistically significant difference between groups.' Give the careful conclusion supported by the source.</td>
+      <td>There is no statistically significant difference between the groups</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study found no statistically significant difference between groups.' What is the strongest source-grounded answer?</td>
+      <td>No statistically significant difference</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study reports a simulation result but no real-world validation.' What limitation should be mentioned about validation?</td>
+      <td>Lack of real-world validation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study reports a simulation result but no real-world validation.' What claim should a reliable answer avoid?</td>
+      <td>Real-world validation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study reports a simulation result but no real-world validation.' Give the careful conclusion supported by the source.</td>
+      <td>The study's findings lack real-world validation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study reports a simulation result but no real-world validation.' What is the strongest source-grounded answer?</td>
+      <td>Simulation result only</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study says the material is water-resistant, not waterproof.' What limitation should be mentioned about material claim?</td>
+      <td>The material is water-resistant, not waterproof</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study says the material is water-resistant, not waterproof.' What claim should a reliable answer avoid?</td>
+      <td>Waterproof</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study says the material is water-resistant, not waterproof.' Give the careful conclusion supported by the source.</td>
+      <td>The material is water-resistant</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The study says the material is water-resistant, not waterproof.' What is the strongest source-grounded answer?</td>
+      <td>Water-resistant</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The source says the device supports Bluetooth, but does not mention Wi-Fi.' What limitation should be mentioned about connectivity?</td>
+      <td>No Wi-Fi support</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The source says the device supports Bluetooth, but does not mention Wi-Fi.' What claim should a reliable answer avoid?</td>
+      <td>The device supports Wi-Fi</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The source says the device supports Bluetooth, but does not mention Wi-Fi.' Give the careful conclusion supported by the source.</td>
+      <td>The device supports Bluetooth, but Wi-Fi is not mentioned</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The source says the device supports Bluetooth, but does not mention Wi-Fi.' What is the strongest source-grounded answer?</td>
+      <td>The device supports Bluetooth</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The article describes the plan as preliminary and subject to approval.' What limitation should be mentioned about plan status?</td>
+      <td>It's preliminary and subject to approval</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The article describes the plan as preliminary and subject to approval.' What claim should a reliable answer avoid?</td>
+      <td>The claim that the plan is finalized</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The article describes the plan as preliminary and subject to approval.' Give the careful conclusion supported by the source.</td>
+      <td>The plan is preliminary and subject to approval</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Using only this source: 'The article describes the plan as preliminary and subject to approval.' What is the strongest source-grounded answer?</td>
+      <td>Preliminary and subject to approval</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for current population of a city, but the only source is ten years old. What should a reliable answer say?</td>
+      <td>The population data is from ten years ago and may not reflect the current number</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for current population of a city, but the only source is ten years old?</td>
+      <td>Estimate may be outdated; verification with recent data is recommended</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about current population of a city, but the only source is ten years old?</td>
+      <td>Assuming the population hasn't changed</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about current population of a city, but the only source is ten years old.</td>
+      <td>The population may have changed significantly since the source is ten years old</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for this year's award winner, but the source covers only last year's award. What should a reliable answer say?</td>
+      <td>The source covers only last year's award</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for this year's award winner, but the source covers only last year's award?</td>
+      <td>The answer should acknowledge the limitation of the source and indicate uncertainty about this year's winner</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about this year's award winner, but the source covers only last year's award?</td>
+      <td>Assuming last year's winner is this year's winner</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about this year's award winner, but the source covers only last year's award.</td>
+      <td>"The award winner information is not available."</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for a diagnosis from symptoms without test results or clinician assessment. What should a reliable answer say?</td>
+      <td>Consult a healthcare professional</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for a diagnosis from symptoms without test results or clinician assessment?</td>
+      <td>Advise seeking professional medical evaluation</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about a diagnosis from symptoms without test results or clinician assessment?</td>
+      <td>Assuming a definitive diagnosis</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about a diagnosis from symptoms without test results or clinician assessment.</td>
+      <td>Consult a healthcare professional</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A user asks for a value from a missing chart image. What should a reliable answer say?</td>
+      <td>Image unavailable</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for a value from a missing chart image?</td>
+      <td>State that the value cannot be determined without the chart</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about a value from a missing chart image?</td>
+      <td>Assuming the value without evidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about a value from a missing chart image.</td>
+      <td>"I'm unable to provide the value without the chart image."</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a product is safe for children when only adult testing is provided. What should a reliable answer say?</td>
+      <td>Safety for children cannot be confirmed without specific testing</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a product is safe for children when only adult testing is provided?</td>
+      <td>State the lack of information on child safety</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a product is safe for children when only adult testing is provided?</td>
+      <td>Assuming the product is safe for children</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a product is safe for children when only adult testing is provided.</td>
+      <td>Consult a pediatrician or safety expert</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for tomorrow's weather when only climate averages are available. What should a reliable answer say?</td>
+      <td>I cannot predict specific weather, only climate averages</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for tomorrow's weather when only climate averages are available?</td>
+      <td>Provide climate averages and state uncertainty due to lack of specific forecast data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about tomorrow's weather when only climate averages are available?</td>
+      <td>Predicting exact weather conditions</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about tomorrow's weather when only climate averages are available.</td>
+      <td>Consult local weather forecasts for accurate information</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a proposed law is currently in effect. What should a reliable answer say?</td>
+      <td>Check the current legal status of the proposed law with authoritative sources</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a proposed law is currently in effect?</td>
+      <td>Check the current legal status of the law and state whether it is in effect</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a proposed law is currently in effect?</td>
+      <td>Assuming without verification</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a proposed law is currently in effect.</td>
+      <td>Check the official government website or legal database for current status</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for exact election results while counting is incomplete. What should a reliable answer say?</td>
+      <td>Results are not yet final</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for exact election results while counting is incomplete?</td>
+      <td>An uncertainty-aware answer should acknowledge the incompleteness and provide the latest available figures with a disclaimer about potential changes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about exact election results while counting is incomplete?</td>
+      <td>Claiming victory or predicting exact outcomes</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about exact election results while counting is incomplete.</td>
+      <td>Results are not yet final; please wait for official confirmation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for the cause of a fire when the report says the investigation is ongoing. What should a reliable answer say?</td>
+      <td>The cause is under investigation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for the cause of a fire when the report says the investigation is ongoing?</td>
+      <td>Pending investigation results</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about the cause of a fire when the report says the investigation is ongoing?</td>
+      <td>Claiming to know the cause</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about the cause of a fire when the report says the investigation is ongoing.</td>
+      <td>The cause of the fire is still under investigation</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for a stock recommendation based only on historical prices. What should a reliable answer say?</td>
+      <td>Consider consulting a financial advisor</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for a stock recommendation based only on historical prices?</td>
+      <td>It should advise caution and consider additional factors</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about a stock recommendation based only on historical prices?</td>
+      <td>Assuming future performance will mirror past trends</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about a stock recommendation based only on historical prices.</td>
+      <td>Past performance is not indicative of future results</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a drug cures a disease when the source only reports symptom improvement in a small trial. What should a reliable answer say?</td>
+      <td>The drug shows symptom improvement in a small trial, but more research is needed to confirm a cure</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a drug cures a disease when the source only reports symptom improvement in a small trial?</td>
+      <td>Report symptom improvement with caution due to limited trial size</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a drug cures a disease when the source only reports symptom improvement in a small trial?</td>
+      <td>Claiming the drug cures the disease</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a drug cures a disease when the source only reports symptom improvement in a small trial.</td>
+      <td>Further research is needed to confirm efficacy</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for an exact attendance number when the source says only 'thousands'. What should a reliable answer say?</td>
+      <td>Unavailable</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for an exact attendance number when the source says only 'thousands'?</td>
+      <td>Estimate with 'thousands' or provide a range</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about an exact attendance number when the source says only 'thousands'?</td>
+      <td>Stating a precise number</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about an exact attendance number when the source says only 'thousands'.</td>
+      <td>The attendance was in the thousands</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for events after 2022 when the dataset ends in 2022. What should a reliable answer say?</td>
+      <td>No data available</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for events after 2022 when the dataset ends in 2022?</td>
+      <td>Acknowledge the limitation and state that the dataset is up to 2022</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about events after 2022 when the dataset ends in 2022?</td>
+      <td>Assuming knowledge of events after 2022</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about events after 2022 when the dataset ends in 2022.</td>
+      <td>Events after 2022 are beyond my dataset's knowledge</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a rumor is true when the source is an unverified social media post. What should a reliable answer say?</td>
+      <td>Verify with credible sources</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a rumor is true when the source is an unverified social media post?</td>
+      <td>The answer should indicate uncertainty and advise further verification</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a rumor is true when the source is an unverified social media post?</td>
+      <td>Assuming the rumor is true without verification</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a rumor is true when the source is an unverified social media post.</td>
+      <td>Verify with reliable sources before drawing conclusions</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a model is unbiased when only overall accuracy is reported. What should a reliable answer say?</td>
+      <td>Overall accuracy alone does not determine bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a model is unbiased when only overall accuracy is reported?</td>
+      <td>It should state that accuracy alone cannot determine bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a model is unbiased when only overall accuracy is reported?</td>
+      <td>Assuming the model is unbiased</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a model is unbiased when only overall accuracy is reported.</td>
+      <td>Request additional metrics like demographic parity and equal opportunity to assess bias</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a treatment has no side effects when none were observed in 30 participants. What should a reliable answer say?</td>
+      <td>More research is needed to conclusively determine the absence of side effects</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a treatment has no side effects when none were observed in 30 participants?</td>
+      <td>Acknowledge the sample size is small and absence of evidence is not evidence of absence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a treatment has no side effects when none were observed in 30 participants?</td>
+      <td>Assuming the treatment has no side effects based on a small sample size</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a treatment has no side effects when none were observed in 30 participants.</td>
+      <td>Further studies with larger sample sizes are needed to confirm</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a trend will continue when only past data are shown. What should a reliable answer say?</td>
+      <td>Future trends cannot be predicted with certainty based solely on past data</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a trend will continue when only past data are shown?</td>
+      <td>State the trend with a probability or level of confidence</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a trend will continue when only past data are shown?</td>
+      <td>Assuming the trend will continue without considering external factors</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a trend will continue when only past data are shown.</td>
+      <td>Past performance does not guarantee future results</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a legal case sets national precedent when the source identifies only a local court. What should a reliable answer say?</td>
+      <td>No</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a legal case sets national precedent when the source identifies only a local court?</td>
+      <td>It should state the case does not set national precedent</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a legal case sets national precedent when the source identifies only a local court?</td>
+      <td>Assuming it sets national precedent</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a legal case sets national precedent when the source identifies only a local court.</td>
+      <td>Consult legal experts or verify with higher court rulings</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether all experts agree when the source quotes only two experts. What should a reliable answer say?</td>
+      <td>No</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether all experts agree when the source quotes only two experts?</td>
+      <td>Not all experts can be assumed to agree based on two opinions</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether all experts agree when the source quotes only two experts?</td>
+      <td>Assuming consensus</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether all experts agree when the source quotes only two experts.</td>
+      <td>Emphasize the diversity of expert opinions</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>A user asks for whether a benchmark proves a detector works generally when it covers one benchmark. What should a reliable answer say?</td>
+      <td>No</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>How should an uncertainty-aware answer handle a request for whether a benchmark proves a detector works generally when it covers one benchmark?</td>
+      <td>It should indicate that the benchmark alone is insufficient to prove general effectiveness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>What would be an overconfident mistake when answering about whether a benchmark proves a detector works generally when it covers one benchmark?</td>
+      <td>Assuming the detector works in all scenarios based on one benchmark</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Give a cautious response policy for a question about whether a benchmark proves a detector works generally when it covers one benchmark.</td>
+      <td>One benchmark alone is insufficient to prove general effectiveness</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>

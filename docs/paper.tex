@@ -18,14 +18,14 @@
 \begin{document}
 
 \begin{center}
-{\Large \textbf{A Conservative Benchmark of Explicit Contradiction Detection and Its Limits\\in LLM Hallucination Evaluation Across GPT Model Generations}}\\[1.2em]
+{\Large \textbf{A Conservative Benchmark of Contradiction Detection and Its Limits\\in LLM Hallucination Evaluation}}\\[1.2em]
 Seungho Lee\\
 Liberal Arts and Science Academy, 1012 Arthur Stiles Road, Austin, TX 78721, USA\\[0.5em]
 Corresponding author: Seungho Lee (seungholee0000@gmail.com); Tel: (512) 414-5272; Fax: (512) 414-6050
 \end{center}
 
 \begin{abstract}
-Hallucinations--fluent outputs that contain incorrect or unsupported factual claims--remain a primary obstacle to deploying large language models (LLMs) in high-stakes settings. This study evaluates the scope and limits of explicit contradiction detection in HalluDetector, a reference-based detector that compares a model answer to a known correct answer and flags an output only when there is positive evidence of inconsistency, such as contradiction cues, numeric conflicts, or NLI contradiction. This is not a general hallucination or semantic adequacy detector. Across a 150-prompt legacy short-answer benchmark and a 100-prompt enhanced non-atomic benchmark, the updated corpus contains 250 prompt-reference entries and 5,000 archived model answers. For comparability with the legacy run tables, detector-labeled contradiction rates on the legacy short-answer benchmark decrease from 23.5\% for gpt-3.5-turbo-0125 to 14.3\% for gpt-4-0613, 10.3\% for gpt-4o-2024-08-06, and 4.8\% for gpt-5-2025-08-07. The study further evaluates detector behavior on an expanded 850-row, duplicate-aware audit set with two independent annotator labels and adjudicated final labels. On the legacy short-answer audit subset, the detector obtains 84.6\% precision, 94.8\% recall, and 89.4\% F1 for explicit contradiction. On the enhanced non-atomic subset, recall remains high at 90.9\%, but precision falls to 13.5\% and F1 to 23.5\%. This precision drop is treated as a central finding rather than a secondary caveat. A false-positive analysis shows that enhanced errors are concentrated in uncertainty-oriented, source-limited, and cautionary prompts, where safe answers often mention unavailable evidence, claims to avoid, or limits on what can be concluded. Overall, HalluDetector is best interpreted as a recall-oriented reference-based contradiction screen: it performs best on compact answer-key settings and exposes a clear limitation when calibrated uncertainty or source-limitation language resembles contradiction evidence in non-atomic prompts.
+Hallucinations--fluent outputs that contain incorrect or unsupported factual claims--remain a primary obstacle to deploying large language models (LLMs) in high-stakes settings. This study evaluates the scope and limits of contradiction detection in HalluDetector, a reference-based detector that compares a model answer to a known correct answer and flags contradiction-like evidence using lexical, numeric, unavailability, atomic-mismatch, and NLI rules. Across a 150-prompt legacy short-answer benchmark, a 100-prompt non-atomic pilot, and a 400-prompt balanced non-atomic add-on, the corpus contains 650 prompt-reference entries and 7,800 archived first-line outputs. On the legacy benchmark, detector-positive rates are 23.5\% for gpt-3.5-turbo-0125, 14.3\% for gpt-4-0613, 10.3\% for gpt-4o-2024-08-06, and 4.8\% for gpt-5-2025-08-07; the last endpoint has 80.5\% non-empty first-line coverage, and its conditional detector-positive rate is 6.0\%. The study evaluates detector behavior on 1,850 audit rows: 850 rows with two review passes and adjudicated final labels, plus a balanced 1,000-row add-on independently labeled by two human annotators, with disagreements resolved by adjudication. For the balanced add-on, exact multiclass agreement was 96.8\% (Cohen's $\kappa=0.866$), and the binary contradiction label agreed on all rows ($\kappa=1.000$). Precision falls from 84.6\% on the legacy short-answer audit to 8.1\% in the balanced non-atomic add-on, the principal negative result and a benchmark-transfer failure. The category analysis helps explain the collapse: weighted false-positive rates were 18.6\% for citation-grounded answering and 18.6\% for nuanced uncertainty, compared with 0.9\%--6.0\% for the other categories. The false-positive taxonomy shows that dominant errors arise when unsupported or prohibited claims are mentioned without endorsement or when source and evidence limits are discussed, indicating confusion between proposition content and assertion or epistemic status. Category-specific recall comparisons remain imprecise because contradiction-positive labels are sparse. Overall, HalluDetector is best interpreted as a recall-oriented reference-based contradiction screen whose compact-benchmark performance can overstate reliability in non-atomic language settings.
 \end{abstract}
 
 \textbf{Keywords:} contradiction detection; explicit contradiction; large language models; factuality; hallucination evaluation; natural language inference; benchmark evaluation; model auditing; abstention; reproducibility; AI safety
@@ -33,11 +33,11 @@ Hallucinations--fluent outputs that contain incorrect or unsupported factual cla
 \section*{Introduction}
 Hallucinations in neural language generation are commonly defined as outputs that are not supported by source grounding, reference truth, or the model's training distribution. In modern LLM assistants, hallucinations are particularly risky because they are often delivered with a confident tone and detailed justification, encouraging over-trust. This has motivated benchmarks and interventions targeting truthfulness and misconception resistance. TruthfulQA, for instance, demonstrated that models can systematically mimic human-written misinformation and misconceptions, and that raw scaling can amplify these effects if alignment is not prioritized (3). Instruct tuning and reinforcement learning from human feedback (RLHF) have been shown to improve instruction-following and reduce misleading behavior (2). The GPT-4 technical report similarly documents improvements in factuality and reduced hallucination relative to GPT-3.5 in internal evaluations (1).
 
-This paper studies contradiction-style hallucination behavior in a controlled, reference-based setting, where every prompt has a known correct reference answer. This enables stable measurement, interpretability, and debugging, but it also exposes a central limitation: reference-based contradiction detection can mistake cautious discussion of uncertainty or source limits for contradiction evidence. The accompanying repository, HalluDetector, provides: (i) prompt sets spanning factual, riddle, auto-generated adversarial, and enhanced non-atomic questions; (ii) an explicit contradiction detector with documented decision rules and thresholds; and (iii) end-to-end scripts to generate model answers, label them, compute metrics, and render graphs. The revised analysis therefore evaluates both where the detector works and where its scope limits appear.
+This paper studies contradiction-style hallucination behavior in a controlled, reference-based setting, where every prompt has a known correct reference answer. This enables stable measurement, interpretability, and debugging, while revealing a benchmark-transfer boundary: strong precision on compact reference tasks can overstate reliability when non-atomic responses mention, reject, or qualify propositions under evidentiary uncertainty. The accompanying repository, HalluDetector, provides: (i) prompt sets spanning factual, riddle, auto-generated adversarial, and balanced non-atomic questions; (ii) an explicit contradiction detector with documented decision rules and thresholds; and (iii) end-to-end scripts to generate model answers, label them, compute metrics, and render graphs. The revised analysis treats the precision collapse as the principal negative finding and uses category and taxonomy results to explain it.
 
 \textbf{Scope and definition.} This study focuses on reference-based hallucination detection: given a model answer $a$ and a reference answer $a^*$, the detector labels $a$ as hallucinated if it contains positive evidence of falsity relative to $a^*$. A key design choice of HalluDetector is that incompleteness is not hallucination. If $a$ fails to include the correct content but also does not contradict it, the detector does not label hallucination. This policy can under-count semantically inadequate answers that remain non-contradictory with respect to the reference. The revised audit therefore records explicit contradiction separately from \code{incomplete\_or\_vacuous} responses, abstentions, unsupported extra claims, and needs-review cases, allowing the analysis to distinguish contradiction detection from broader semantic adequacy evaluation.
 
-\textbf{Contributions.} This paper makes five contributions: (1) it formalizes the detector and thresholds in mathematical form; (2) it introduces a conservative, fully auditable contradiction-evidence benchmark pipeline that separates explicit falsity from mere incompleteness; (3) it reports comparative detector-labeled explicit contradiction rates across four GPT endpoint identifiers and five runs each; (4) it evaluates detector performance against a two-annotator adjudicated audit set while separately reporting explicit contradiction labels, semantic-failure labels, duplicate-aware statistics, and prompt-level aggregation; and (5) it analyzes the enhanced non-atomic precision drop through prompt-category breakdowns, a false-positive taxonomy, and component-level attribution.
+\textbf{Contributions.} This paper makes five contributions: (1) it formalizes the detector and thresholds in mathematical form; (2) it introduces an auditable contradiction-evidence benchmark pipeline that separates explicit falsity from mere incompleteness; (3) it reports recorded endpoint behavior on the legacy short-answer benchmark together with first-line coverage; (4) it evaluates detector performance against a 1,850-row audit while reporting label provenance, duplicate structure, and sampling design; and (5) it identifies the 84.6\%-to-8.1\% precision collapse as a benchmark-transfer failure and uses category estimates and the false-positive taxonomy to characterize its linguistic mechanism.
 
 \section*{Related Work}
 \textbf{Truthfulness and hallucination benchmarks.} TruthfulQA introduced adversarial questions built around common misconceptions, showing that many LLMs produce fluent falsehoods and that model size can amplify imitation of misinformation (3). These findings motivated additional evaluation suites and alignment-focused approaches to improve truthfulness. More recent empirical work further studies factuality hallucination in large language models and expands the benchmark landscape (9).
@@ -64,6 +64,7 @@ This policy is formalized as a disjunction of contradiction evidence signals:
 H(a,a^*) = \mathbf{1}[C_{cue} \lor C_{nli} \lor C_{num} \lor C_{alt} \lor C_{unavail} \lor C_{atomic}].
 \tag{eq1}
 \end{equation}
+
 
 \textbf{Normalization.} Both $a$ and $a^*$ are canonicalized via Unicode normalization, lowercasing, whitespace normalization, and punctuation stripping that preserves scientific characters (e.g., - . / \^{} + : =). This reduces formatting-induced mismatches while keeping numerically meaningful tokens.
 
@@ -134,8 +135,8 @@ C_{atomic}=\mathbf{1}[atomic(a^*) \land short(a) \land no\_shared\_content(a,a^*
 \end{figure}
 
 \section*{Experimental Setup}
-\textbf{Prompt sets.} The legacy short-answer benchmark is stored as three prompt CSVs (per run) with schema \code{template, id, prompt, correct\_answer}: factual (50), riddle (50), and auto-generated (50). The updated corpus additionally includes a 100-prompt enhanced non-atomic benchmark covering longer-form explanation, causal reasoning, synthesis, citation-grounded answering, and uncertainty-oriented prompts. The enhanced prompt set is organized evenly across five templates (20 prompts per template category): long-form explanation, causal reasoning, synthesis, citation-grounded answering, and nuanced uncertainty. Across both phases, the prompt inventory contains 250 prompt-reference entries. The audit uses benchmark phase, source category/file, and prompt ID as the underlying prompt identity so that run-specific wording variation in auto-generated prompts does not inflate prompt-level counts. The enhanced prompts therefore form a substantial stress-test expansion of the legacy short-answer benchmark, while the manuscript continues to treat the corpus as compact rather than as a comprehensive broad hallucination benchmark.
 
+\textbf{Prompt sets.} The legacy short-answer benchmark is stored as three prompt CSVs (per run) with schema \code{template, id, prompt, correct\_answer}: factual (50), riddle (50), and auto-generated (50). The non-atomic prompt bank contains 500 prompts across long-form explanation, causal reasoning, synthesis, citation-grounded answering, and nuanced uncertainty. A 100-prompt pilot contains 20 prompts per category, and a balanced 400-prompt add-on contributes 80 additional prompts per category. Across phases, the prompt inventory contains 650 prompt-reference entries: 150 legacy short-answer entries and 500 non-atomic entries. The audit uses benchmark phase, source category/file, and prompt ID as the underlying prompt identity so that run-specific wording variation in auto-generated prompts does not inflate prompt-level counts.
 
 \begin{table}[H]
 \centering
@@ -160,16 +161,24 @@ Enhanced nuanced uncertainty & A user asks for the current population of a city 
 \end{tabular}
 \end{table}
 
-\textbf{Model endpoints and run protocol.} The study evaluates four endpoints as referenced by output directory conventions: gpt-3.5-turbo-0125, gpt-4-0613, gpt-4o-2024-08-06, and gpt-5-2025-08-07. Each endpoint is evaluated five times on the legacy 150-prompt benchmark and five times on the enhanced 100-prompt benchmark, producing 3,000 legacy-benchmark answers and 2,000 enhanced-benchmark answers. The legacy-benchmark runs were conducted on March 11 between 3:00 PM and 4:00 PM EST. Enhanced-run timestamps are preserved in the archived enhanced output directories. Model answers are generated through the OpenAI API via a response-generation script, cleaned to a concise first-line form, and labeled by the detector with stable thresholds.
 
-\textbf{Decoding defaults.} The generation defaults are known from the archived generation helper rather than inferred after the fact. For HuggingFace causal-language-model runs, the helper defaults to \code{max\_new\_tokens=50} with greedy decoding unless explicit sampling arguments are supplied. For OpenAI runs, non-GPT-5 endpoints use Chat Completions and preserve legacy family defaults: gpt-3.5-turbo-0125 uses temperature 1.0 and max tokens 512; gpt-4-0613 uses temperature 0.8 and max tokens 2000; and gpt-4o-2024-08-06 uses temperature 0.8 and max tokens 4000. The gpt-5-2025-08-07 endpoint is generated through the Responses API with \code{max\_output\_tokens=512}; the helper intentionally does not pass temperature or top-p to this GPT-5 variant unless such arguments are explicitly supported by the model family. All results in this paper are those recorded in the repository outputs.
+\textbf{Model endpoints and run protocol.} The study evaluates four endpoints as referenced by output directory conventions: gpt-3.5-turbo-0125, gpt-4-0613, gpt-4o-2024-08-06, and gpt-5-2025-08-07. Each endpoint is evaluated five times on the legacy 150-prompt benchmark, producing 3,000 legacy answers. The 100-prompt non-atomic pilot is also evaluated five times per endpoint, producing 2,000 pilot answers. The balanced 400-prompt add-on contributes 2,800 additional archived answers from seven output runs: two gpt-3.5-turbo-0125 runs, two gpt-4-0613 runs, two gpt-4o-2024-08-06 runs, and one gpt-5-2025-08-07 run. Across all phases, the repository contains 7,800 archived outputs. Model answers are generated through the OpenAI API, cleaned to a concise first-line form, and labeled by the detector with fixed thresholds.
 
-\textbf{Evaluation metrics.} The analysis computes detector-labeled contradiction rate by model, category, and run; run-to-run variability; detector precision/recall/F1 against audit labels; and prompt-level pattern summaries via repository graphs. For uncertainty, it reports 95\% prompt-cluster bootstrap confidence intervals for overall detector-labeled contradiction rates. Each bootstrap replicate resamples prompt IDs with replacement within each category, then aggregates all five runs for the sampled IDs.
+\textbf{Decoding defaults.} For HuggingFace causal-language-model runs, the helper defaults to \code{max\_new\_tokens=50} with greedy decoding unless explicit sampling arguments are supplied. For OpenAI runs, non-GPT-5 endpoints use Chat Completions and preserve legacy family defaults: gpt-3.5-turbo-0125 uses temperature 1.0 and max tokens 512; gpt-4-0613 uses temperature 0.8 and max tokens 2000; and gpt-4o-2024-08-06 uses temperature 0.8 and max tokens 4000. The gpt-5-2025-08-07 endpoint is generated through the Responses API with \code{max\_output\_tokens=512}; the helper intentionally does not pass temperature or top-p to this GPT-5 variant unless such arguments are explicitly supported by the model family. All results in this paper are those recorded in the repository outputs.
 
-For the revised audit analysis, the manuscript additionally reports duplicate-aware statistics. The audit set is evaluated at three levels: (i) row-level metrics over all 850 audited rows; (ii) deduplicated prompt-response metrics over 761 unique prompt-response pairs; and (iii) prompt-identity aggregation over 242 underlying prompt identities represented in the audit. Audit labels use a multi-class codebook: \code{supported}, \code{contradiction}, \code{incomplete\_or\_vacuous}, \code{abstention}, \code{unsupported\_extra\_claim}, and \code{needs\_review}. Precision, recall, and F1 are binary explicit-contradiction metrics: \code{contradiction} is the positive class, and all other audit labels are negative and reported separately.
+
+\textbf{Evaluation metrics.} The analysis computes detector-labeled contradiction rate by endpoint, category, and run; detector precision against final audit labels; false-positive rate and specificity; and prompt-level summaries. The full audit contains 1,850 rows: 450 legacy short-answer rows, 400 rows from the non-atomic pilot, and 1,000 rows from the balanced non-atomic add-on. Duplicate structure is reported using row counts, unique prompt-response pairs, and prompt identities.
+
+The balanced audit sampling frame contains 2,800 responses: 80 new prompts per category evaluated across seven runs, or 560 responses per category. All 298 detector-positive responses were included. Within each category, detector-negative responses were sampled without replacement with random seed 42 until the audit contained 200 rows. The detector-negative inclusion probabilities were 195/555 for causal reasoning, 96/456 for citation-grounded answering, 158/518 for long-form explanation, 95/455 for nuanced uncertainty, and 158/518 for synthesis. Detector-positive rows therefore have analysis weight 1, while audited detector-negative rows receive the inverse of the category-specific inclusion probability. The same prompt may contribute multiple responses from different endpoints or runs. The audit represents 78, 73, 74, 72, and 78 unique prompts in the five categories, respectively; the full add-on frame contains 80 prompts per category. Exact model-by-run composition is provided with the released materials.
+
+Because every detector-positive add-on response received a review label, category precision is calculated directly over the complete detector-positive frame. False-positive rate, specificity, and recall estimates use inverse-probability weights for sampled detector-negative rows. Ninety-five-percent confidence intervals for false-positive rate and specificity are obtained from 10,000 prompt-cluster bootstrap replicates with seed 42, resampling the 80 prompt identities in the complete category frame. For the 2--8 frame identities not represented by an audited row, the implementation inserts a zero-valued prompt contribution; sampled detector-negative rows retain their inverse-probability weights, so the intervals are conditional on the realized seed-42 audit sample rather than a complete human-label census of all 560 responses in each category. Category-specific recall and F1 are not used for comparative inference because contradiction-positive examples remain sparse; ordinary recall point estimates are reported only descriptively where defined.
+
+Audit labels use the predefined categories \code{supported}, \code{contradiction}, \code{incomplete\_or\_vacuous}, \code{abstention}, \code{unsupported\_extra\_claim}, and \code{needs\_review}. \code{Contradiction} is the positive class; all other labels are negative and are also reported separately.
+
+Annotation reliability was evaluated from the two pre-adjudication labels. In the balanced add-on, the human annotators agreed on 968 of 1,000 multiclass labels (96.8\%; Cohen's $\kappa=0.866$) and on all 1,000 binary contradiction labels (100.0\%; $\kappa=1.000$). Across the five balanced categories, multiclass agreement ranged from 94.5\% to 100.0\%, with $\kappa$ ranging from 0.761 to 1.000. Binary contradiction agreement was 100.0\% in every category; category-level binary $\kappa$ is undefined for causal reasoning and citation-grounded answering because both annotators assigned no contradiction labels in those categories.
 
 \section*{Results and Discussion}
-\textbf{Detector-labeled contradiction rates by model, category, and run.} Table 1 reports detector-labeled contradiction rates for the legacy 150-prompt benchmark for each model in each run. The results show lower detector-labeled explicit contradiction rates from gpt-3.5-turbo-0125 to gpt-4-0613 to gpt-4o-2024-08-06, with gpt-5-2025-08-07 having the lowest rate on this legacy benchmark. Because the study evaluates recorded API outputs associated with those endpoint identifiers, this is interpreted as a benchmark-specific comparison of behavior during the collection period. The remaining detector-positive cases concentrate in numeric/database-style questions and adversarial auto-generated prompts.
+\textbf{Detector-labeled contradiction rates by model, category, and run.} Table 1 reports detector-labeled contradiction rates for the legacy 150-prompt benchmark for each model in each run. The recorded outputs show lower detector-labeled contradiction rates across the listed endpoint identifiers, with gpt-5-2025-08-07 having the lowest unconditional rate on this legacy benchmark. Because the study evaluates recorded API outputs associated with those endpoint identifiers, this is interpreted as a benchmark-specific comparison of behavior during the collection period. The remaining detector-positive cases concentrate in numeric/database-style questions and adversarial auto-generated prompts.
 
 \begin{table}[H]
 \centering
@@ -205,33 +214,36 @@ gpt-5-2025-08-07 & gpt-5-2025-08-07 test & 10.0\% & 0.0\% & 8.0\% & 6.0\%\\
 
 \textbf{Inter-run variability.} Most variability arises on the auto-generated prompt set. This is consistent with two plausible mechanisms: prompts closer to the decision boundary and sensitivity to early token choices after first-line cleaning. Notably, the factual and riddle categories remain comparatively stable, while most variability is concentrated in the auto-generated category.
 
-\textbf{Abstention as a formal result.} Empty first-line answers are counted by the generation script as non-hallucinated abstentions rather than contradictions. Abstention is concentrated in gpt-5-2025-08-07: across all 750 archived answers for that endpoint identifier, 146 are empty after first-line cleaning (19.5\%), versus 0 for the other evaluated endpoints. The abstention rate is especially high on riddles (30.8\% averaged across runs), indicating that part of the reduction in detector-labeled contradiction-style hallucination reflects more conservative answering behavior rather than only improved task success.
+\textbf{Coverage and abstention.} Empty first-line answers are counted by the generation script as non-contradictory abstentions. Across 750 legacy answers per endpoint, non-empty first-line coverage is 100.0\% for gpt-3.5-turbo-0125, gpt-4-0613, and gpt-4o-2024-08-06, but 80.5\% for gpt-5-2025-08-07 because 146 outputs are empty after cleaning. Detector-positive rates conditional on a non-empty first line are 23.5\%, 14.3\%, 10.3\%, and 6.0\%, respectively. Thus the gpt-5 unconditional rate of 4.8\% partly reflects answer withholding, not just fewer contradictions.
 
-\textbf{Detector component ablation.} To make the detector decision path more explicit, the archived-output ablation keeps only contradiction cues and numeric conflict checks in one stage, adds unavailability and atomic-mismatch heuristics in another, and compares these with the archived detector output. Embedding similarity is not shown as a separate decision-stage ablation because in this implementation it supports agreement decisions but does not independently force hallucination labels.
+\textbf{Detector component attribution.} Detector-positive rows are assigned to the first triggering rule in the implemented decision order. This is decision-path attribution; it is not a counterfactual ablation, and the study does not claim that disabling a component would leave all other decisions unchanged. Embedding similarity is not listed as a hallucination trigger because it supports agreement decisions but does not independently force a detector-positive label.
 
-\subsection*{Detector performance vs. adjudicated audit}
-The adjudicated audit contains 850 rows: 450 rows from the legacy short-answer audit and 400 rows from the enhanced audit sample. The enhanced sample therefore represents 47.1\% of the row-level audit and was added specifically to test prompts less favorable to short-answer contradiction scoring. Each row contains the prompt, reference answer, model response, detector label, two annotator labels, annotator rationales, agreement status, adjudicated label, duplicate identifiers, and prompt-cluster identifiers. Annotators were blinded to detector output and model identity. Disagreements were resolved by adjudication using the written label codebook.
 
-The audit label set separates explicit contradiction from other forms of poor answer quality. In particular, \code{incomplete\_or\_vacuous} responses are not treated as successful answers, even when they do not explicitly contradict the reference. Likewise, \code{unsupported\_extra\_claim} is reserved for responses that provide a correct core answer but add an inaccurate or unsupported additional claim. This label structure directly addresses the limitation that a contradiction-only detector can mark vacuous or incomplete outputs as non-hallucinations. Borderline cases are adjudicated according to the explicit-contradiction codebook: reasonable paraphrases, correct core answers, and underspecified but non-mutually-exclusive answers are treated as non-contradictions, while direct conflicts with the reference remain labeled as contradictions.
+\subsection*{Detector performance vs. audit labels}
+The audit contains 1,850 rows: 450 legacy short-answer rows, 400 non-atomic pilot rows, and 1,000 balanced non-atomic add-on rows. The balanced audit contains 200 audited rows per category, but its sampling deliberately includes every detector-positive output and a random subset of detector-negative outputs. It therefore supports direct precision estimates for the complete detector-positive frame and weighted estimates of false-positive behavior; unweighted row prevalence is not interpreted as population prevalence.
 
-Across the 850 adjudicated audit rows, 717 responses are labeled \code{supported}, 69 \code{contradiction}, 57 \code{incomplete\_or\_vacuous}, 3 \code{abstention}, 3 \code{unsupported\_extra\_claim}, and 1 \code{needs\_review}. The two annotators agree on 811 of 850 rows (95.4\%), with Cohen's $\kappa = 0.845$. The 39 disagreements primarily involve the boundary between \code{supported} and \code{incomplete\_or\_vacuous} for short or partially adequate responses. The adjudicated labels are used as the final audit labels in Table 2.
+The original 850-row audit file contains two review-pass labels and adjudicated final labels. The balanced 1,000-row add-on was independently labeled by two human annotators using the same label definitions. Detector outputs and endpoint identities were withheld during annotation, and disagreements were resolved by adjudication. The released balanced-audit table contains both pre-adjudication labels, annotator rationales, agreement status, and the final adjudicated label. The false-positive taxonomy was applied after adjudication as a descriptive mechanism analysis of detector-positive rows that received non-contradiction labels.
 
-Table 2 reports detector performance with explicit contradiction as the positive class. The legacy short-answer audit subset is the closest apples-to-apples detector-quality comparison with the legacy benchmark. The enhanced audit subset is a stress test of scope: because it includes longer-form, causal, synthesis, citation-grounded, and uncertainty-oriented prompts, the detector more often over-flags short but supportable paraphrases, cautious non-answers, or underspecified answers as contradiction-like. The resulting 13.5\% precision and 23.5\% F1 on the enhanced subset are therefore not treated as minor secondary results. They identify a boundary condition for the method: HalluDetector remains recall-oriented for explicit contradictions, but it is not sufficient by itself for scoring non-atomic prompts where calibrated answers discuss uncertainty, evidence limits, or claims that should be avoided. For this reason, the combined overall metric is reported for transparency but is not interpreted as a replacement for either the legacy short-answer result or the enhanced stress-test analysis.
+The audit label set separates explicit contradiction from other forms of poor answer quality. In particular, \code{incomplete\_or\_vacuous} responses are not treated as successful answers, even when they do not explicitly contradict the reference. Likewise, \code{unsupported\_extra\_claim} is reserved for responses that provide a correct core answer but add an inaccurate or unsupported additional claim. This label structure directly addresses the limitation that a contradiction-only detector can mark vacuous or incomplete outputs as non-hallucinations. Final labels follow the explicit-contradiction label definitions: reasonable paraphrases, correct core answers, and underspecified but non-mutually-exclusive answers are treated as non-contradictions, while direct conflicts with the reference remain labeled as contradictions.
 
-A manual review of the binary error rows supports this interpretation. Of the 74 row-level false positives, 64 come from the enhanced non-atomic audit subset, and 49 come from uncertainty-oriented prompts. These prompts often ask what a reliable answer should avoid or what should be said when evidence is unavailable, incomplete, or outdated. Correct or cautious responses can therefore mention phrases such as unavailable information, unverified claims, or claims to avoid. The detector sometimes treats those cautionary mentions as contradiction evidence even when the adjudicated answer is supported or abstaining rather than contradictory. This explains why enhanced-subset precision is low without implying that the legacy short-answer benchmark result is invalid. A direct detector-level follow-up is to add an uncertainty-aware guardrail that distinguishes explicit factual contradiction from cautious statements about unavailable, unsupported, or insufficient evidence.
+Across the 1,850 audit rows, 1,602 responses are labeled \code{supported}, 94 \code{contradiction}, 114 \code{incomplete\_or\_vacuous}, 36 \code{abstention}, 3 \code{unsupported\_extra\_claim}, and 1 \code{needs\_review}. For the original 850-row audit, the two review passes agree on 811 rows (95.4\%), with Cohen's $\kappa=0.845$. For the balanced 1,000-row add-on, the two human annotators agree on 968 rows (96.8\%), with $\kappa=0.866$. All 32 balanced-add-on disagreements concern the boundary between \code{supported} and \code{incomplete\_or\_vacuous}; the annotators agree on the binary contradiction label for all 1,000 rows ($\kappa=1.000$). Across the full 1,850-row audit, exact multiclass agreement is 96.2\% with $\kappa=0.856$, and binary contradiction agreement is 100.0\% with $\kappa=1.000$. The adjudicated labels are used as the final audit labels in Table 2.
+
+Table 2 reports detector performance with explicit contradiction as the positive class. The principal result is precision falling from 84.6\% on the legacy short-answer audit to 8.1\% in the balanced non-atomic add-on, indicating benchmark-transfer failure. The legacy and pilot rows use their original row-level estimates. In the balanced add-on, all detector-positive rows received review labels, so precision is direct; recall and F1 are inverse-probability weighted because detector-negative rows were sampled. The balanced audit has 24 true positives and 274 false positives among 298 detector-positive outputs. Observed contradiction recovery is 24/25 (Wilson interval 80.5\%--99.3\%) before weighting. The 88.0\% weighted recall estimate is driven by one sampled false negative and is not used for category comparison.
+
+Review of the binary error rows helps explain this transfer failure. In the balanced non-atomic audit, 274 of 298 detector-positive rows are false positives, while only 1 contradiction-labeled response is missed. The false positives are concentrated in citation-grounded answering and nuanced uncertainty prompts, which together account for 208 of the 274 balanced-audit false positives. These prompts are diagnostically useful because reliable answers may mention unavailable information, unverified claims, claims to avoid, or limits on what evidence supports. The detector sometimes treats those cautionary or rejecting mentions as contradiction evidence even when the final audit label is non-contradictory, indicating difficulty distinguishing proposition content from its assertion or epistemic status. A direct detector-level follow-up is to add an uncertainty-aware guardrail that distinguishes explicit factual contradiction from cautious statements about unavailable, unsupported, or insufficient evidence.
 
 \begin{table}[H]
 \centering
 \small
-\caption*{Binary interpretation of adjudicated audit labels for the explicit-contradiction metric. The negative labels are still reported because they identify semantic or completeness problems outside the detector's binary target.}
+\caption*{Binary interpretation of final audit labels for the explicit-contradiction metric. The negative labels are still reported because they identify semantic or completeness problems outside the detector's binary target.}
 \begin{tabular}{p{0.24\linewidth}p{0.25\linewidth}p{0.43\linewidth}}
 \toprule
-Adjudicated label & Binary metric role & Interpretation\\
+Final audit label & Binary metric role & Interpretation\\
 \midrule
 \code{contradiction} & Positive & Direct conflict with the reference or source constraint.\\
 \code{supported} & Negative & Correct, paraphrased, or underspecified but not mutually inconsistent.\\
 \code{incomplete\_or\_vacuous} & Negative, separately reported & Empty, vague, or insufficient response without explicit contradiction.\\
-\code{abstention} & Negative, separately reported & Refusal or non-answer rather than a conflicting factual claim.\\
+\code{abstention} & Negative, separately reported & Refusal or non-answer with no conflicting factual claim.\\
 \code{unsupported\_extra\_claim} & Negative, separately reported & Correct core answer plus unsupported extra content not treated as explicit contradiction.\\
 \code{needs\_review} & Negative, separately reported & Ambiguous row retained for transparency.\\
 \bottomrule
@@ -241,157 +253,141 @@ Adjudicated label & Binary metric role & Interpretation\\
 \begin{table}[H]
 \centering
 \small
-\caption{Detector performance on the 850-row adjudicated audit. TP/FP/FN are binary explicit-contradiction metrics: adjudicated \code{contradiction} is positive and all other adjudicated labels are negative.}
-\begin{tabular}{lrrrrrrrr}
+\caption{Detector performance by audit subset. For the balanced non-atomic audit, all detector-positive rows received review labels; recall and F1 are inverse-probability weighted for sampled detector-negative rows. The displayed counts are audited-row counts.}
+\label{tab:audit-performance}
+\begin{tabular}{p{0.34\linewidth}rrrrrrrr}
 \toprule
 Audit subset & $n$ & TP & FP & FN & TN & Precision & Recall & F1\\
 \midrule
 Legacy short-answer audit & 450 & 55 & 10 & 3 & 382 & 84.6\% & 94.8\% & 89.4\%\\
-Enhanced non-atomic audit & 400 & 10 & 64 & 1 & 325 & 13.5\% & 90.9\% & 23.5\%\\
-Overall row-level audit & 850 & 65 & 74 & 4 & 707 & 46.8\% & 94.2\% & 62.5\%\\
+Non-atomic pilot audit & 400 & 10 & 64 & 1 & 325 & 13.5\% & 90.9\% & 23.5\%\\
+Balanced non-atomic audit & 1000 & 24 & 274 & 1 & 701 & 8.1\% & 88.0\%$^{a}$ & 14.8\%$^{a}$\\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize $^{a}$Inverse-probability-weighted estimate. The unweighted audit-sample recall is 96.0\%; it is not treated as a population estimate because detector-negative rows were subsampled.
+\end{flushleft}
+\end{table}
+
+To account for repeated prompts and prompt-response pairs, Table~\ref{tab:audit-structure} reports the audit structure by subset. The full audit contains 617 prompt identities and 1,671 unique prompt-response pairs. These counts describe duplication and clustering; combined raw performance metrics are not used because the three audit subsets have different sampling designs.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Audit structure and duplicate-aware counts.}
+\label{tab:audit-structure}
+\begin{tabular}{lrrrr}
+\toprule
+Audit subset & Rows & Prompt identities & Unique prompt-responses & Detector positives\\
+\midrule
+Legacy short-answer audit & 450 & 150 & 361 & 65\\
+Non-atomic pilot audit & 400 & 92 & 400 & 74\\
+Balanced non-atomic audit & 1000 & 375 & 910 & 298\\
+\midrule
+Total & 1850 & 617 & 1671 & 437\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-To account for repeated prompts and repeated prompt-response pairs, Table 3 reports duplicate-aware audit statistics. The audit contains 242 underlying prompt identities represented in the sampled audit and 761 unique prompt-response pairs. A naive text-hash count is higher because some auto-generated prompt IDs have run-specific wording variants; therefore, prompt-level aggregation uses benchmark phase, source category/file, and prompt ID rather than raw prompt text alone. Row-level metrics are reported alongside deduplicated prompt-response metrics and prompt-identity aggregation. Prompt-cluster bootstrap confidence intervals for the combined row-level explicit-contradiction metrics are 32.6\%--62.3\% for precision, 88.6\%--98.6\% for recall, and 48.4\%--75.1\% for F1.
+\subsection*{Diagnostic category analysis in the balanced non-atomic setting}
+The balanced non-atomic audit evaluates five prompt categories with 200 audited rows each. Its category analysis localizes the broader precision collapse while resolving uneven sampling for category-specific false-positive behavior. It does not provide a powered comparison of category-specific recall because naturally occurring contradiction positives remain sparse. The audited contradiction-positive counts are 15 for long-form explanation, 9 for synthesis, 1 for nuanced uncertainty, and 0 for causal reasoning and citation-grounded answering. Ordinary Wilson intervals for recall are correspondingly broad: 70.2\%--98.8\% for long-form explanation, 70.1\%--100\% for synthesis, and 20.7\%--100\% for nuanced uncertainty. Recall and F1 are therefore not the basis of the category analysis.
+
+Table~\ref{tab:enhanced-category-breakdown} reports precision and weighted false-positive rate (FPR) for rows assigned non-contradiction audit labels. Citation-grounded answering and nuanced uncertainty have weighted false-positive rates of 18.6\% each, compared with 0.9\% for causal reasoning, 5.2\% for long-form explanation, and 6.0\% for synthesis. The prompt-clustered confidence intervals preserve the same separation: citation-grounded answering 11.5\%--26.6\% and nuanced uncertainty 13.8\%--24.3\%, versus upper bounds below 9.6\% for the other categories. This pattern localizes transfer failure.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Category-level results in the balanced non-atomic audit. Panel A reports audited-row counts and precision. Panel B reports inverse-probability-weighted false-positive rate (FPR), prompt-clustered 95\% bootstrap confidence intervals, and specificity for the 560-response category frames. Recall/F1 are omitted from category comparison because contradiction positives are sparse.}
+\label{tab:enhanced-category-breakdown}
+\textbf{Panel A: audited counts and precision}\\[0.25em]
+\begin{tabular}{lrrrrrrr}
+\toprule
+Category & $n$ & Contr. & TP & FP & FN & TN & Precision\\
+\midrule
+Long-form explanation & 200 & 15 & 14 & 28 & 1 & 157 & 33.3\%\\
+Causal reasoning & 200 & 0 & 0 & 5 & 0 & 195 & 0.0\%\\
+Synthesis & 200 & 9 & 9 & 33 & 0 & 158 & 21.4\%\\
+Citation-grounded answering & 200 & 0 & 0 & 104 & 0 & 96 & 0.0\%\\
+Nuanced uncertainty & 200 & 1 & 1 & 104 & 0 & 95 & 1.0\%\\
+\midrule
+Overall balanced audit & 1000 & 25 & 24 & 274 & 1 & 701 & 8.1\%\\
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\textbf{Panel B: weighted false-positive behavior}\\[0.25em]
+\begin{tabular}{lrrr}
+\toprule
+Category & Weighted FPR & 95\% prompt-cluster CI & Specificity\\
+\midrule
+Long-form explanation & 5.2\% & 2.5\%--8.4\% & 94.8\%\\
+Causal reasoning & 0.9\% & 0.2\%--1.8\% & 99.1\%\\
+Synthesis & 6.0\% & 3.2\%--9.5\% & 94.0\%\\
+Citation-grounded answering & 18.6\% & 11.5\%--26.6\% & 81.4\%\\
+Nuanced uncertainty & 18.6\% & 13.8\%--24.3\% & 81.4\%\\
+\midrule
+Overall balanced audit & 9.9\% & 7.9\%--11.9\% & 90.1\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 274 balanced-audit false positives were coded into mutually exclusive explanation classes by reviewing the prompt, reference answer, model response, detector label, and final audit label. Table~\ref{tab:fp-taxonomy} reports the taxonomy by category. The largest class, with 167 false positives, occurs when the response names a forbidden, unsupported, or mistaken claim as something to avoid rather than endorsing it. Another 70 false positives involve source, evidence, current-data, or availability limitations. The remaining 37 are supportable compressed explanations, syntheses, or causal-caution paraphrases. Across these classes, confusion between proposition content and its assertion or epistemic status helps explain the benchmark-transfer failure.
 
 \begin{table}[H]
 \centering
 \scriptsize
-\caption{Duplicate-aware audit statistics.}
+\caption{False-positive taxonomy for the 274 balanced non-atomic false positives. Categories are mutually exclusive.}
+\label{tab:fp-taxonomy}
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{lrrrrrrrrrr}
+\begin{tabular}{p{0.36\linewidth}rrrrrr}
 \toprule
-Evaluation level & Rows/items & Prompt identities & Unique prompt-responses & TP & FP & FN & TN & Precision & Recall & F1\\
+False-positive class & Causal & Citation & Long-form & Uncertainty & Synthesis & Total\\
 \midrule
-Row-level audit & 850 & 242 & 761 & 65 & 74 & 4 & 707 & 46.8\% & 94.2\% & 62.5\%\\
-Deduplicated prompt-response & 761 & 242 & 761 & 65 & 73 & 4 & 619 & 47.1\% & 94.2\% & 62.8\%\\
-Prompt-identity aggregation & 242 & 242 & -- & 38 & 30 & 2 & 172 & 55.9\% & 95.0\% & 70.4\%\\
+Source/evidence/current-limitation wording & 0 & 8 & 0 & 62 & 0 & 70\\
+Forbidden/unsupported claim or mistake named but not endorsed & 0 & 96 & 0 & 42 & 29 & 167\\
+Supportable/compressed explanation, synthesis, or causal paraphrase & 5 & 0 & 28 & 0 & 4 & 37\\
+\midrule
+Total & 5 & 104 & 28 & 104 & 33 & 274\\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-\subsection*{Enhanced non-atomic stress-test analysis}
-The enhanced non-atomic subset is not used as evidence of broad generalization; instead, it exposes the detector's main scope limitation. Table~\ref{tab:enhanced-category-breakdown} separates the enhanced audit by prompt category. Because the enhanced audit sample is stratified by detector and audit behavior rather than category-balanced, row counts differ across the five enhanced prompt types. Within this enhanced audit sample, detector precision and F1 are highest on citation-grounded prompts, where the source constraint often creates a clearer contradiction target. In contrast, uncertainty-oriented prompts produce 49 false positives and only 3 true positives. This yields 5.8\% precision and 10.9\% F1 for that category even though recall is 100.0\%. The main source of low precision is therefore not missed contradictions; it is over-triggering when safe answers discuss evidence limits, missing sources, or claims to avoid. Categories with no adjudicated contradiction positives have undefined recall and F1, so their zero precision should be read as false-positive evidence rather than as a complete performance estimate.
+For component attribution, the 274 balanced-audit false positives were assigned to the first detector trigger in the implemented decision order. This traces the recorded decision path but does not estimate the counterfactual effect of disabling that component. Table~\ref{tab:component-attribution} shows that 247 false positives are attributed to the NLI/semantic contradiction trigger and 27 to the unavailability/nonexistence trigger. Numeric conflict, atomic mismatch, and explicit lexical contradiction cues do not account for false positives in the balanced non-atomic audit. Embedding similarity is not listed as a hallucination trigger because in this implementation it supports agreement decisions and does not independently force hallucination labels.
 
 \begin{table}[H]
 \centering
 \scriptsize
-\caption{Prompt-category breakdown within the enhanced non-atomic audit subset. Precision, recall, and F1 are binary explicit-contradiction metrics. Recall and F1 are left undefined when a category has no adjudicated contradiction positives.}
-\label{tab:enhanced-category-breakdown}
-\begin{tabular}{lrrrrrrrr}
+\caption{Component attribution for the 274 balanced non-atomic false positives.}
+\label{tab:component-attribution}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{p{0.34\linewidth}rrrrrr}
 \toprule
-Enhanced category & $n$ & TP & FP & FN & TN & Precision & Recall & F1\\
+Detector component or trigger class & Causal & Citation & Long-form & Uncertainty & Synthesis & Total\\
 \midrule
-Long-form explanation & 103 & 0 & 5 & 0 & 98 & 0.0\% & -- & --\\
-Causal reasoning & 69 & 0 & 2 & 0 & 67 & 0.0\% & -- & --\\
-Synthesis & 77 & 0 & 4 & 0 & 73 & 0.0\% & -- & --\\
-Citation-grounded answering & 38 & 7 & 4 & 1 & 26 & 63.6\% & 87.5\% & 73.7\%\\
-Nuanced uncertainty & 113 & 3 & 49 & 0 & 61 & 5.8\% & 100.0\% & 10.9\%\\
+NLI / semantic contradiction trigger & 5 & 96 & 28 & 85 & 33 & 247\\
+Unavailability / nonexistence heuristic & 0 & 8 & 0 & 19 & 0 & 27\\
+Numeric conflict or numeric alternatives & 0 & 0 & 0 & 0 & 0 & 0\\
+Atomic entity mismatch & 0 & 0 & 0 & 0 & 0 & 0\\
+Explicit lexical contradiction cue & 0 & 0 & 0 & 0 & 0 & 0\\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
-The 64 enhanced false positives were then coded into mutually exclusive explanation classes by reviewing the prompt, reference answer, model response, and adjudicated label. Table~\ref{tab:fp-taxonomy} shows that false positives are not randomly distributed. Thirty involve source availability, current-data limits, missing documents, missing charts, future events, or other evidence-limitation language. Nineteen involve a safe answer naming the prohibited action or claim, such as giving a diagnosis, treatment plan, confident identification, or unsupported medical advice. Fifteen are supportable paraphrases or compressed answers in explanation, synthesis, causal, or citation-grounded prompts. This taxonomy supports the central interpretation: contradiction detection can penalize exactly the caution and calibration behavior that broader hallucination evaluation often wants to reward.
+These analyses replace the earlier uneven category comparison with a balanced analysis of false-positive behavior. The primary inference is benchmark-transfer failure: strong measured precision on the compact legacy audit collapses in the balanced non-atomic setting. The category results localize this failure, and the taxonomy explains it. Reliable answers may mention unsupported claims, reject conclusions, or discuss missing evidence, and the detector can confuse that discourse with an asserted contradiction. Category-specific recall remains too sparse for comparative claims.
 
-\begin{table}[H]
-\centering
-\small
-\caption{False-positive taxonomy for the 64 enhanced non-atomic detector positives that were adjudicated non-contradictory. Categories are mutually exclusive.}
-\label{tab:fp-taxonomy}
-\begin{tabular}{p{0.34\linewidth}rp{0.48\linewidth}}
-\toprule
-False-positive class & Count & Mechanism\\
-\midrule
-Source, availability, or current-evidence limitation & 30 & Safe answers stated that data were unavailable, outdated, not visible, not provided, or required current verification.\\
-Forbidden-claim or cautionary-action mention & 19 & Safe answers named the claim or action that should be avoided, such as diagnosis, treatment advice, or confident identification.\\
-Supportable paraphrase or compressed answer & 15 & Correct or acceptable paraphrases were treated as contradiction-like because they omitted wording, compressed the reference, or used a different explanation structure.\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The detector core returns rich per-row diagnostics, including a final reason code, lexical and numeric flags, embedding diagnostics, NLI probabilities, contradiction-veto status, unavailability flags, and weak-signal counts. In the historical response-generation CSVs, only summary columns were written. Table~\ref{tab:component-reconstruction} therefore reports component attribution from the stored rows, the detector decision order, and reproducible rule checks. The deterministic re-run reproduced 18 enhanced false positives as unavailability-claim conflicts with the reference. The remaining 46 detector-positive false positives did not match deterministic numeric, atomic-mismatch, or exact lexical-contradiction rules in the reconstruction, so they are grouped as NLI/semantic contradiction-trigger cases for analysis.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Component attribution for enhanced false positives.}
-\label{tab:component-reconstruction}
-\begin{tabular}{p{0.38\linewidth}rp{0.43\linewidth}}
-\toprule
-Detector component or trigger class & Count & Interpretation\\
-\midrule
-Unavailability / nonexistence heuristic & 18 & Reproduced by deterministic rules; cautious statements such as unavailable or not available were treated as conflicting with a concrete reference.\\
-Inferred NLI / semantic contradiction trigger & 46 & Detector-positive rows not explained by deterministic numeric, atomic, or unavailability checks; these include caveats, paraphrases, and source-limitation language.\\
-Numeric conflict or numeric alternatives & 0 & Not a driver of enhanced false positives.\\
-Atomic entity mismatch & 0 & Not a driver of enhanced false positives.\\
-Explicit lexical contradiction cue & 0 & Not a driver of enhanced false positives in the reconstructed pass.\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-These analyses shift the interpretation of the enhanced benchmark. The enhanced subset shows that contradiction-evidence detectors can perform well when the target is a compact reference disagreement but lose precision when prompts ask models to reason about the limits of evidence. In those settings, a reliable answer may explicitly mention that a claim is unsupported, a source is missing, or a conclusion should not be drawn. A detector that only looks for contradiction cues can confuse this metalinguistic caution with a factual contradiction. This pattern is scientifically meaningful: explicit contradiction detection is entangled with uncertainty expression, source limitation, abstention, partial correctness, and explanation structure.
 
 \subsection*{Error analysis (audit disagreements)}
-The adjudicated audit changes the interpretation of detector errors. In the legacy short-answer subset, remaining errors continue to involve synonym, notation, and granularity issues, such as equivalent scientific notation or overly broad chemical names. In the enhanced subset, the taxonomy above shows that many false positives arise from cautionary or source-limitation language rather than direct factual conflict. These cases show over-sensitivity in the binary detector rather than invalidating the legacy short-answer result.
+The audit changes the interpretation of detector errors. In the legacy short-answer subset, remaining errors continue to involve synonym, notation, and granularity issues, such as equivalent scientific notation or overly broad chemical names. In the balanced non-atomic audit, the taxonomy above shows that many false positives arise from cautionary, citation-limited, source-limitation, or avoid-this-claim language instead of direct factual conflict. These cases show over-sensitivity in the binary detector and do not invalidate the legacy short-answer result.
 
-The audit therefore distinguishes two failure modes that were previously conflated: (i) explicit contradiction errors, where the model response conflicts with the reference; and (ii) semantic adequacy errors, where the response is empty, vague, incomplete, or insufficiently grounded but not explicitly contradictory. Semantic-adequacy failures remain important, but they are reported through separate labels rather than treated as positives in the binary explicit-contradiction metric. This distinction is important because HalluDetector was designed as a conservative contradiction detector, not a general answer-quality evaluator.
+The audit therefore distinguishes two failure modes that were previously conflated: (i) explicit contradiction errors, where the model response conflicts with the reference; and (ii) semantic adequacy errors, where the response is empty, vague, incomplete, or insufficiently grounded but not explicitly contradictory. Semantic-adequacy failures remain important, but they are reported through separate labels and are not treated as positives in the binary explicit-contradiction metric. This distinction is important because HalluDetector was designed as a conservative contradiction detector and is not intended as a general answer-quality evaluator.
 
-False positives in the adjudicated audit occur when the detector flags contradiction but adjudication assigns any non-contradiction label. In the current audit, these false positives are mostly \code{supported} responses rather than semantic-failure labels: 71 of 74 row-level false positives are adjudicated \code{supported}, and the remaining 3 are \code{abstention}. False negatives occur when adjudication identifies explicit contradiction but the detector does not. The adjudicated audit contains 74 row-level false positives and 4 row-level false negatives overall. The legacy short-answer subset accounts for 10 false positives and 3 false negatives; the enhanced subset accounts for 64 false positives and 1 false negative. This pattern shows that the detector remains recall-oriented for explicit contradictions, while the enhanced subset reveals over-sensitivity to terse but supportable answers and cautious non-answers. Non-contradictory adequacy failures are therefore kept separate rather than folded into the binary explicit-contradiction metric.
-
-\subsection*{Prompt-template patterns and visuals}
-The repository includes graphs per run: \code{hallucinations by template.png}, \code{hallucinations by keywords.png}, and \code{feature correlation heatmap.png}. Figures 2--4 show the visual summaries for gpt-3.5-turbo-0125 run gpt3.5-turbo test.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{figures/page009_img001.png}
-\caption{Detector-labeled contradiction-style hallucination rate by template for gpt-3.5-turbo-0125 (run gpt3.5-turbo test).}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{figures/page010_img001.png}
-\caption{Detector-labeled contradiction-style hallucination rate by keyword for gpt-3.5-turbo-0125 (run gpt3.5-turbo test).}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.70\linewidth]{figures/page010_img002.png}
-\caption{Feature correlation heatmap for gpt-3.5-turbo-0125 (run gpt3.5-turbo test). Note: the repo defines ``is correct'' as ``not hallucinated'' for plotting convenience.}
-\end{figure}
-
-Table 7 summarizes template-level extremes for a representative early model and for the latest model run.
-
-\begin{table}[H]
-\centering
-\caption{Top detector-labeled contradiction-style hallucination-rate templates in gpt-3.5-turbo-0125 (run gpt3.5-turbo test) vs gpt-5-2025-08-07 (run gpt-5-2025-08-07 test5). Rates are detector-labeled.}
-\label{tab:template-extremes}
-\begin{tabular}{lrlr}
-\toprule
-\multicolumn{2}{c}{gpt-3.5-turbo-0125} & \multicolumn{2}{c}{gpt-5-2025-08-07}\\
-\midrule
-Template & Rate & Template & Rate\\
-\midrule
-finance & 100.0\% & chemistry & 25.0\%\\
-math & 50.0\% & geography & 14.3\%\\
-computer science & 50.0\% & physics & 5.9\%\\
-geography & 42.9\% & logic & 5.3\%\\
-biology & 33.3\% & astronomy & 0.0\%\\
-science & 33.3\% & economics & 0.0\%\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Length correlations.}
-
-Across all runs, prompt length and response length are weak predictors of detector-labeled contradiction. The maximum absolute Pearson correlation observed between the detector label and prompt length across runs is below 0.22, and between the detector label and response length below 0.20. This supports the conclusion that shallow surface features are insufficient for contradiction prediction, motivating semantic checks and contradiction heuristics.
-
+False positives occur when the detector flags contradiction but the final audit label is non-contradictory. Across the full 1,850-row audit, there are 348 row-level false positives: 338 assigned \code{supported}, 8 assigned \code{abstention}, and 2 assigned \code{incomplete\_or\_vacuous}. False negatives occur when the final audit label identifies explicit contradiction but the detector does not; the full audit contains 5 row-level false negatives. The legacy short-answer subset accounts for 10 false positives and 3 false negatives, the non-atomic pilot subset accounts for 64 false positives and 1 false negative, and the balanced non-atomic subset accounts for 274 false positives and 1 false negative. This pattern shows that the detector remains recall-oriented for explicit contradictions, while the enhanced categories reveal systematic over-sensitivity to supportable answers, cautious non-answers, and metalinguistic references to unsupported claims. Non-contradictory adequacy failures are therefore kept separate and are not folded into the binary explicit-contradiction metric.
 
 \section*{Qualitative Error Analysis}
-The qualitative review examined hallucination cases to identify common patterns across both compact reference-based prompts and the enhanced non-atomic stress test.
+The qualitative review examined hallucination cases to identify common patterns across both compact reference-based prompts and the balanced non-atomic audit.
 
 \begin{itemize}[leftmargin=1.5em]
-\item \textbf{Confident misremembering.} Earlier endpoints, especially gpt-3.5-turbo-0125, often produced plausible and confident answers that were factually wrong. For example, when asked about a specialized term, the model sometimes gave a real term from a related domain rather than the reference answer. These cases are important because they resemble ordinary hallucinations: the output is fluent and specific, but the content conflicts with the reference.
+\item \textbf{Confident misremembering.} Earlier endpoints, especially gpt-3.5-turbo-0125, often produced plausible and confident answers that were factually wrong. For example, when asked about a specialized term, the model sometimes gave a real term from a related domain instead of the reference answer. These cases are important because they resemble ordinary hallucinations: the output is fluent and specific, but the content conflicts with the reference.
 
 \item \textbf{Negation and unavailability errors.} Some hallucinations involved incorrectly stating that something did not exist, was unavailable, or could not be identified when the reference contained a concrete answer. These cases are well matched to the detector's contradiction-cue and unavailability heuristics because the model response directly negates the premise or availability of the reference answer.
 
@@ -409,42 +405,99 @@ The qualitative review examined hallucination cases to identify common patterns 
 Overall, these patterns show that hallucination is not monolithic. The benchmark targets the explicit-contradiction portion of hallucination behavior, while the expanded audit separately records semantic-adequacy failures that fall outside that binary target. This distinction is necessary for interpreting the detector's precision, recall, and F1 scores.
 
 \section*{Discussion}
-The results show lower detector-labeled contradiction rates for newer GPT endpoints on the legacy short-answer benchmark, but the enhanced audit shows that this pattern does not transfer cleanly to all non-atomic hallucination-evaluation settings. The central finding is two sided, in that explicit contradiction detection is useful under compact reference-based conditions, and its precision can degrade predictably when uncertainty expression and source limitation become part of the task.
+The principal scientific finding is benchmark-transfer failure: measured precision falls from 84.6\% on the legacy short-answer audit to 8.1\% in the balanced non-atomic setting. The category analysis explains this collapse by exposing cases in which proposition content is mentioned, rejected, or qualified under source and evidence limitations. The taxonomy indicates that the detector can respond to that content without adequately representing assertion or epistemic status.
 
 \textbf{Conservatism: contradiction detection vs. correctness.} Because HalluDetector labels hallucination only on contradiction evidence, the metric is best interpreted as a lower bound on ``being wrong.'' A model can be wrong yet not contradict the reference strongly enough to trigger a veto, especially when the response is vague or content-free. Thus, the measured quantity is closer to ``rate of contradicted factual claims'' than ``task error rate.'' This is a reasonable definition in some safety settings, but it must be stated explicitly when comparing to accuracy-focused benchmarks.
 
 \textbf{Re-interpreting 0\% on riddles for gpt-5-2025-08-07.} A 0--2\% detector-labeled contradiction rate for riddles under this policy does not guarantee perfect riddle-solving; it indicates that the detector did not identify contradictions. For riddles, stricter scoring would yield a more task-accuracy-like picture.
 
-\textbf{Marginal utility of external contradiction detectors.} The high abstention rate observed for gpt-5-2025-08-07 suggests that part of the measured decline in detector-labeled contradiction reflects stronger intrinsic calibration rather than only fewer underlying reasoning errors. As frontier models become more willing to abstain or express uncertainty, the marginal value of an external contradiction detector may decrease for simple atomic prompts. However, such detectors can still be useful as an auditable safety layer for regression testing, cross-model comparisons, retrieval-grounded verification, and cases where a model gives a confident answer instead of abstaining. The results should therefore be read as evidence that the detector's role may shift over time, not as evidence that external verification becomes unnecessary.
+\textbf{Marginal utility of external contradiction detectors.} The high abstention rate observed for gpt-5-2025-08-07 suggests that part of the measured decline in detector-labeled contradiction reflects stronger intrinsic calibration, not just fewer underlying reasoning errors. As frontier models become more willing to abstain or express uncertainty, the marginal value of an external contradiction detector may decrease for simple atomic prompts. However, such detectors can still be useful as an auditable safety layer for regression testing, cross-model comparisons, retrieval-grounded verification, and cases where a model gives a confident answer instead of abstaining. The results therefore suggest that the detector's role may shift over time; they do not imply that external verification becomes unnecessary.
 
-\textbf{Practical improvements.} The enhanced-audit failures are not evidence that contradiction detection is unusable. They identify specific detector rules that can be refined. The most direct improvement is an uncertainty-aware guardrail that distinguishes asserting a false claim from mentioning uncertainty, missing evidence, unavailable sources, or claims that should be avoided. A second improvement is an assertion-scope check that separates what the model endorses from what it merely names as unsupported or prohibited. For the legacy short-answer setting, smaller refinements such as scientific-notation normalization, alias dictionaries for common-name or spelling variants, and vacuous-answer detection for atomic definitional questions remain useful. These changes can be implemented without changing the overall architecture and tested against the existing audit set.
+\textbf{Practical improvements.} The enhanced-audit failures are not evidence that contradiction detection is unusable. They identify specific detector rules that can be refined. The most direct improvement is an uncertainty-aware guardrail that distinguishes asserting a false claim from mentioning uncertainty, missing evidence, unavailable sources, or claims that should be avoided. A second improvement is an assertion-scope check that separates what the model endorses from what it merely names as unsupported or prohibited. For the legacy short-answer setting, smaller refinements such as scientific-notation normalization, alias dictionaries for common-name or spelling variants, and vacuous-answer detection for atomic definitional questions remain useful. These changes can be implemented without changing the overall architecture and tested against the existing 1,850-row audit set.
 
-\textbf{Layered evaluator uncertainty.} HalluDetector does not eliminate uncertainty by moving evaluation from a generative model to a detector. The detector also relies on imperfect components, including RoBERTa-MNLI, embedding similarity, lexical heuristics, numeric thresholds, and adjudication. This creates a layered evaluation setting in which the base model may contradict the reference, the detector may misclassify the response, and annotators may disagree about borderline cases. The justification for this architecture is therefore not that the detector is infallible, but that its rules, thresholds, intermediate signals, and audit disagreements are explicit and reproducible. In this study, the external detector improves reliability by converting opaque model behavior into auditable contradiction-evidence decisions and by exposing where those decisions fail, rather than by removing evaluator uncertainty entirely.
+\textbf{Layered evaluator uncertainty.} HalluDetector does not eliminate uncertainty by moving evaluation from a generative model to a detector. The detector also relies on imperfect components, including RoBERTa-MNLI, embedding similarity, lexical heuristics, numeric thresholds, and adjudication. This creates a layered evaluation setting in which the base model may contradict the reference, the detector may misclassify the response, and review passes may disagree about borderline cases. The justification for this architecture is therefore not that the detector is infallible, but that its rules, thresholds, intermediate signals, and audit disagreements are explicit and reproducible. In this study, the external detector improves reliability by converting opaque model behavior into auditable contradiction-evidence decisions and by exposing where those decisions fail; it does not remove evaluator uncertainty entirely.
 
-\textbf{Assumptions.} The analysis rests on several explicit assumptions. First, the reference answers are treated as sufficiently correct for reference-based contradiction scoring; this is reasonable for a controlled prompt-reference benchmark, but any reference error would propagate into detector and audit labels. Second, archived endpoint identifiers and recorded outputs are treated as the evaluated behavior during the collection window. Third, the contradiction-evidence policy is assumed to be suitable for measuring explicit contradiction risk, not general answer quality. Fourth, adjudicated audit labels are treated as final labels while agreement statistics are reported to show residual subjectivity. Fifth, repeated prompts and repeated prompt-response pairs are not assumed to be independent generalization evidence, which is why row-level metrics are reported alongside deduplicated prompt-response and prompt-identity statistics.
+\textbf{Assumptions.} The analysis rests on several explicit assumptions. First, the reference answers are treated as sufficiently correct for reference-based contradiction scoring; this is reasonable for a controlled prompt-reference benchmark, but any reference error would propagate into detector and audit labels. Second, archived endpoint identifiers and recorded outputs are treated as the evaluated behavior during the collection window. Third, the contradiction-evidence policy is assumed to be suitable for measuring explicit contradiction risk, not general answer quality. Fourth, final audit labels are used for analysis; the original 850 rows and balanced 1,000-row add-on both retain two pre-adjudication labels. The balanced add-on obtained 96.8\% multiclass agreement ($\kappa=0.866$) and 100.0\% binary contradiction agreement ($\kappa=1.000$) before adjudication. Fifth, repeated prompts and repeated prompt-response pairs are not assumed to be independent generalization evidence, which is why row-level metrics are reported alongside deduplicated prompt-response and prompt-identity statistics.
 
-\textbf{Threats to validity.} These results should be interpreted in light of several scope conditions. First, the updated corpus contains 250 prompt-reference entries: the legacy 150-prompt benchmark spanning factual questions, riddles, and auto-generated adversarial prompts, plus a 100-prompt enhanced non-atomic benchmark. This remains a compact but deliberately varied corpus rather than a comprehensive estimate of general-purpose hallucination behavior. Second, the archived outputs preserve API model identifiers, decoding defaults, prompts, model responses, detector labels, and run timestamps where available; accordingly, the cross-model comparison should be read as a comparison of recorded API behavior during the collection window. Third, the auto-generated references were archived as final reference strings from the generation scripts, which supports reproducibility, though a separately logged external verification pass would strengthen future benchmark releases. Fourth, the revised 850-row audit is intentionally stratified and includes both the legacy short-answer audit rows and an enhanced non-atomic audit sample; because repeated prompts and repeated prompt-response pairs are present, row-level precision/recall values are reported together with deduplicated prompt-response metrics, prompt-identity aggregation, and prompt-clustered confidence intervals rather than treated as independent population estimates. Finally, because the detector intentionally treats incompleteness and abstention as non-hallucination unless contradiction evidence is present, the reported rates are best read as conservative contradiction-focused hallucination rates rather than a full task-error metric.
+
+\textbf{Threats to validity.} These results should be interpreted in light of several scope conditions. First, category balance does not create contradiction-positive events: two categories contain no contradiction-positive labels and one contains only one, so the study does not claim a powered category-level recall comparison. The category result is based on weighted false-positive rate and specificity. Second, the balanced audit includes every detector-positive response but samples detector-negative responses; raw unweighted prevalence and recall are not population estimates, and the weighted estimates assume the sampled detector-negative rows are representative within category. Third, the balanced 1,000-row add-on was independently labeled by two human annotators blinded to detector output and endpoint identity, with disagreements resolved by adjudication. Multiclass agreement was 96.8\% ($\kappa=0.866$), and binary contradiction agreement was 100.0\% ($\kappa=1.000$). Although these values support label reliability, they do not eliminate judgment at the \code{supported} versus \code{incomplete\_or\_vacuous} boundary, which accounts for all balanced-add-on disagreements. Fourth, the updated corpus remains compact but deliberately varied; it is not a comprehensive estimate of general-purpose hallucination behavior. Fifth, the archived outputs preserve API model identifiers, decoding defaults, prompts, model responses, detector labels, and run timestamps where available; accordingly, the cross-model comparison should be read as a comparison of recorded API behavior during the collection window. Finally, because the detector intentionally treats incompleteness and abstention as non-hallucination unless contradiction evidence is present, the reported rates are best read as conservative contradiction-focused hallucination rates rather than a full task-error metric.
 
 \textbf{Beyond reference-based detection.} Many deployments lack a gold reference. One path is retrieval-augmented verification: retrieve evidence from trusted corpora and treat that evidence as a proxy reference, then apply a similar contradiction detector (connected to FEVER-like pipelines) (4). Another path is model self-consistency (e.g., SelfCheckGPT) (6), trading compute for reference-free detection. Related corpus-building efforts for trustworthy hallucination evaluation include RAGTruth (12).
 
+
 \section*{Conclusion}
-Using the updated 250-entry prompt corpus across legacy and enhanced phases (5,000 archived model answers), the recorded outputs show lower detector-labeled contradiction rates on the legacy 150-prompt benchmark from gpt-3.5-turbo-0125 to gpt-4-0613 to gpt-4o-2024-08-06 to gpt-5-2025-08-07. An expanded 850-row adjudicated audit shows that detector performance depends strongly on prompt type: the detector remains strong on the legacy short-answer audit subset, but the enhanced non-atomic subset reveals a substantial precision drop. The detector catches most enhanced explicit contradictions, but it over-flags calibrated answers that discuss missing evidence, source limitations, claims to avoid, or cautious non-answers. This is the main boundary identified by the study. Explicit contradiction detection is not a general hallucination or semantic-adequacy detector; it is most defensible as a recall-oriented screen for compact reference disagreements. The enhanced result is informative because it shows why contradiction-based hallucination detection is entangled with uncertainty expression, abstention, partial correctness, and explanation structure. Future work should combine contradiction evidence with adequacy constraints, uncertainty-aware guardrails, and larger category-balanced non-atomic audits.
+Using 650 prompt-reference entries and 7,800 archived first-line outputs, this study separates a legacy short-answer benchmark from a non-atomic pilot and a balanced non-atomic add-on. The recorded outputs show lower detector-labeled contradiction rates on the legacy 150-prompt benchmark from gpt-3.5-turbo-0125 to gpt-4-0613 to gpt-4o-2024-08-06 to gpt-5-2025-08-07. The principal detector result is benchmark-transfer failure: precision falls from 84.6\% on the legacy short-answer audit to 8.1\% in the balanced non-atomic setting, where only 24 of 298 detector-positive outputs receive contradiction labels. The category analysis helps explain the collapse: citation-grounded answering and nuanced uncertainty each have weighted false-positive rates of approximately 18.6\%, compared with 0.9\%--6.0\% for the other categories. The taxonomy shows that most errors arise when reliable answers mention prohibited or unsupported claims without endorsement or discuss source and evidence limitations. Thus compact-benchmark performance can overestimate non-atomic reliability when proposition content is confused with assertion or epistemic status. Category-specific recall remains too sparse for comparative inference. The results apply to first-line-cleaned outputs and should not be generalized to complete multi-sentence responses without a sensitivity analysis. Explicit contradiction detection is not a general hallucination or semantic-adequacy detector. HalluDetector is most defensible as a recall-oriented screen for compact reference disagreements; its non-atomic errors identify targets for assertion-scope checks and uncertainty-aware guardrails.
 
-\section*{Audit Set Construction}
-The audit table used for this revision contains 850 adjudicated rows. It combines 450 rows from the legacy short-answer audit with 400 rows from the enhanced audit sample. The enhanced sample was included to stress the detector with prompts that are less favorable to short-answer contradiction scoring, including longer-form explanation, causal reasoning, synthesis, citation-grounded answering, and uncertainty-oriented prompts. The enhanced prompt database contains 100 prompts, organized as 20 prompts in each of the five enhanced template categories.
+\section*{Appendix A: Audit Set Construction and Sampling}
+The audit table contains 1,850 rows: 450 legacy short-answer rows, 400 non-atomic pilot rows, and 1,000 balanced non-atomic rows. The balanced audit is sampled from the 2,800-response add-on frame. It includes all 298 detector-positive rows and a seed-42 simple random sample without replacement of detector-negative rows within each category to reach 200 audited rows per category. Table~\ref{tab:sampling-design} reports the frame and sample counts, inclusion probabilities, and unique prompt representation.
 
-Each audit row contains the source file, template, prompt ID, prompt, reference answer, model response, detector label, two annotator labels, annotator rationales, an agreement flag, adjudication information, duplicate identifiers, and prompt-cluster identifiers. The final adjudicated label is one of \code{supported}, \code{contradiction}, \code{incomplete\_or\_vacuous}, \code{abstention}, \code{unsupported\_extra\_claim}, or \code{needs\_review}. The binary explicit-contradiction variable is derived from the adjudicated label and is used for precision, recall, and F1 calculations.
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Balanced non-atomic audit sampling design. $p_-$ is the detector-negative inclusion probability.}
+\label{tab:sampling-design}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Category & Frame $+$ & Frame $-$ & Audited $+$ & Audited $-$ & $p_-$ & Frame prompts & Audited prompts\\
+\midrule
+Causal reasoning & 5 & 555 & 5 & 195 & 0.3514 & 80 & 78\\
+Citation-grounded answering & 104 & 456 & 104 & 96 & 0.2105 & 80 & 73\\
+Long-form explanation & 42 & 518 & 42 & 158 & 0.3050 & 80 & 74\\
+Nuanced uncertainty & 105 & 455 & 105 & 95 & 0.2088 & 80 & 72\\
+Synthesis & 42 & 518 & 42 & 158 & 0.3050 & 80 & 78\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Two annotators labeled the audit rows independently using the written codebook and were blinded to detector output and model identity. Disagreements were resolved by adjudication. The annotators agreed on 811 of 850 rows (95.4\%), with Cohen's $\kappa = 0.845$. The final adjudicated label distribution was: 717 \code{supported}, 69 \code{contradiction}, 57 \code{incomplete\_or\_vacuous}, 3 \code{abstention}, 3 \code{unsupported\_extra\_claim}, and 1 \code{needs\_review}.
+The balanced audit includes responses from seven archived runs. Table~\ref{tab:model-composition} reports detector-positive/detector-negative audited counts by endpoint and category. A prompt may contribute multiple endpoint or run responses.
 
-Because repeated prompts and repeated prompt-response pairs occur in the audit, the file includes \code{prompt\_hash}, \code{response\_hash}, \code{prompt\_response\_hash}, \code{unique\_prompt\_id}, duplicate flags, prompt occurrence counts, and cluster identifiers. The adjudicated audit contains 242 underlying prompt identities represented in the sampled audit and 761 unique prompt-response pairs. Accordingly, the manuscript reports row-level metrics, deduplicated prompt-response metrics, and prompt-identity aggregation. The enhanced false-positive taxonomy was coded from the prompt, reference answer, model response, detector label, and adjudicated label.
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Balanced audit composition by endpoint and category. Cells show detector-positive/detector-negative audited rows.}
+\label{tab:model-composition}
+\begin{tabular}{lccccc}
+\toprule
+Endpoint & Causal & Citation & Long-form & Uncertainty & Synthesis\\
+\midrule
+gpt-3.5-turbo-0125 & 0/60 & 24/35 & 16/50 & 20/36 & 10/51\\
+gpt-4-0613 & 3/55 & 36/19 & 12/40 & 40/19 & 13/40\\
+gpt-4o-2024-08-06 & 1/45 & 27/24 & 11/45 & 33/23 & 10/44\\
+gpt-5-2025-08-07 & 1/35 & 17/18 & 3/23 & 12/17 & 9/23\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\section*{Detector Thresholds and Defaults}
+Each audit row contains the prompt, reference answer, model response, detector label, both pre-adjudication labels and rationales, agreement status, final adjudicated label, duplicate identifiers, and prompt-cluster identifiers. The original 850-row audit obtains 95.4\% multiclass agreement with Cohen's $\kappa=0.845$. The balanced 1,000-row add-on was independently labeled by two human annotators blinded to detector output and endpoint identity, and disagreements were resolved by adjudication. It obtains 96.8\% multiclass agreement with $\kappa=0.866$ and 100.0\% binary contradiction agreement with $\kappa=1.000$. Across all 1,850 rows, multiclass agreement is 96.2\% with $\kappa=0.856$. The final labels are 1,602 \code{supported}, 94 \code{contradiction}, 114 \code{incomplete\_or\_vacuous}, 36 \code{abstention}, 3 \code{unsupported\_extra\_claim}, and 1 \code{needs\_review}.
+
+
+\begin{table}[H]
+\centering
+\small
+\caption{Agreement between the two pre-adjudication labels. Binary contradiction agreement collapses all non-contradiction labels into one negative class.}
+\label{tab:annotation-agreement}
+\begin{tabular}{lrrrrr}
+\toprule
+Audit group & $n$ & Multiclass agreement & Multiclass $\kappa$ & Binary agreement & Binary $\kappa$\\
+\midrule
+Original 850-row audit & 850 & 95.4\% & 0.845 & 100.0\% & 1.000\\
+Balanced 1,000-row add-on & 1,000 & 96.8\% & 0.866 & 100.0\% & 1.000\\
+All audit rows & 1,850 & 96.2\% & 0.856 & 100.0\% & 1.000\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Within the balanced add-on, category-level multiclass agreement is 100.0\% for causal reasoning, 94.5\% for citation-grounded answering, 94.5\% for long-form explanation, 96.5\% for nuanced uncertainty, and 98.5\% for synthesis. The corresponding multiclass $\kappa$ values are 1.000, 0.761, 0.805, 0.870, and 0.928. Binary contradiction agreement is 100.0\% in every category. Category-level binary $\kappa$ is undefined for causal reasoning and citation-grounded answering because both annotators assign zero contradiction labels in those categories.
+
+The full audit contains 617 prompt identities and 1,671 unique prompt-response pairs. The false-positive taxonomy is reported as an adjudicated descriptive classification of the 274 balanced-add-on false positives into mutually exclusive mechanism categories.
+
+\section*{Appendix B: Detector Thresholds and Defaults}
 The following table lists key detector threshold values.
 \begin{table}[H]
 \centering
 \small
 \caption{Key detector thresholds.}
+\label{tab:thresholds}
 \begin{tabular}{p{0.28\linewidth}p{0.18\linewidth}p{0.44\linewidth}}
 \toprule
 Parameter & Value & Meaning\\
@@ -465,14 +518,64 @@ atomic resp max tokens & 5 & Atomic mismatch heuristic: max response tokens.\\
 \end{tabular}
 \end{table}
 
+\section*{Appendix C: Single-run descriptive visuals}
+The repository includes graphs per run: \code{hallucinations by template.png}, \code{hallucinations by keywords.png}, and \code{feature correlation heatmap.png}. Figures 2--4 show the visual summaries for gpt-3.5-turbo-0125 run gpt3.5-turbo test.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/page009_img001.png}
+\caption{Detector-labeled contradiction-style hallucination rate by template for gpt-3.5-turbo-0125 (run gpt3.5-turbo test).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/page010_img001.png}
+\caption{Detector-labeled contradiction-style hallucination rate by keyword for gpt-3.5-turbo-0125 (run gpt3.5-turbo test).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.70\linewidth]{figures/page010_img002.png}
+\caption{Feature correlation heatmap for gpt-3.5-turbo-0125 (run gpt3.5-turbo test). Note: the repo defines ``is correct'' as ``not hallucinated'' for plotting convenience.}
+\end{figure}
+
+Table~\ref{tab:template-extremes} summarizes template-level extremes for a representative early endpoint and the final gpt-5 run. Counts are shown with denominators.
+
+\begin{table}[H]
+\centering
+\caption{Top detector-labeled contradiction-style hallucination-rate templates in gpt-3.5-turbo-0125 (run gpt3.5-turbo test) vs gpt-5-2025-08-07 (run gpt-5-2025-08-07 test5). Rates are detector-labeled.}
+\label{tab:template-extremes}
+\begin{tabular}{lclc}
+\toprule
+\multicolumn{2}{c}{gpt-3.5-turbo-0125} & \multicolumn{2}{c}{gpt-5-2025-08-07}\\
+\midrule
+Template & Rate (count) & Template & Rate (count)\\
+\midrule
+finance & 100.0\% (1/1) & chemistry & 25.0\% (4/16)\\
+math & 50.0\% (4/8) & geography & 14.3\% (1/7)\\
+computer science & 50.0\% (1/2) & physics & 5.9\% (1/17)\\
+geography & 42.9\% (3/7) & logic & 5.3\% (1/19)\\
+biology & 33.3\% (2/6) & astronomy & 0.0\% (0/13)\\
+science & 33.3\% (2/6) & economics & 0.0\% (0/1)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Length correlations.}
+
+Across all runs, prompt length and response length are weak predictors of detector-labeled contradiction. The maximum absolute Pearson correlation observed between the detector label and prompt length across runs is below 0.22, and between the detector label and response length below 0.20. This supports the conclusion that shallow surface features are insufficient for contradiction prediction, motivating semantic checks and contradiction heuristics.
+
+
+
+
 \section*{Repo Artifacts and Reproduction Notes}
-The paper references prompt CSVs, labeled outputs, run-level rates, enhanced benchmark outputs, and plots in the repository output directories. If outputs are regenerated with different endpoints or decoding settings, the tables and figures should be updated accordingly.
+The paper references prompt CSVs, labeled outputs, run-level rates, balanced non-atomic benchmark outputs, audit files, and plots in the repository output directories. The released materials include both pre-adjudication label columns, agreement and confusion-matrix files, the audit sampling design, analysis weights, category estimates, confidence intervals, and model-by-run composition used in the revised tables. If outputs are regenerated with different endpoints or decoding settings, the tables and figures should be updated accordingly.
 
 \section*{Acknowledgments}
-The author acknowledges limited use of language-editing tools for formatting, grammar, and clarity checks during manuscript revision. The author reviewed the manuscript, audit interpretations, tables, and conclusions and is responsible for the final content.
+The author acknowledges use of language-editing tools for formatting, grammar, and clarity checks. The author reviewed the manuscript, audit interpretations, tables, and conclusions and is responsible for the final content.
 
 \section*{Data and Code Availability}
-The code, prompts, benchmark files, and evaluation outputs used in this study are available at \url{https://doi.org/10.6084/m9.figshare.32095732}.
+The code, prompts, benchmark files, and evaluation outputs used in this study are available at \url{https://github.com/seun829/HalluDetector}.
 
 \section*{References}
 \small

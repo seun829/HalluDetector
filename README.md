@@ -1,221 +1,307 @@
-### HalluDetector
-HalluDetector
+# HalluDetector
 
-## Overview:
-This project explores how often and why AI language models hallucinate—i.e., generate incorrect, misleading, or fabricated information—especially in response to complex or rare factual prompts. The repo provides a Flask web app, CLI utilities, a rule-based detector (semantic similarity + NLI), visualization scripts, and a prompt-only BERT baseline. Understanding and detecting hallucinations is critical to ensure AI systems remain trustworthy in high-risk fields.
+HalluDetector is a reference-based research toolkit for measuring explicit contradictions in language-model answers. Given a model response and a known correct answer, it combines deterministic checks, sentence embeddings, and natural-language inference (NLI) to look for positive evidence that the response conflicts with the reference.
 
----
+The repository includes the detector, OpenAI and Hugging Face generation helpers, an end-to-end Flask pipeline, graph and metric scripts, a human-audit workflow, current experiment artifacts, and archived datasets from earlier experiments.
 
-## Objectives:
-- Measure hallucination rates across **pre-made** and **auto-generated** question sets that are made to trick the AI with logic.  
-- Analyze patterns in hallucination behavior (topics, keywords, lengths).  
-- Explore preliminary methods to **predict** hallucinations from output and prompt characteristics.
+> HalluDetector is not an open-world fact checker. It cannot verify a claim without a supplied reference answer, and a non-hallucinated label means only that the detector found no supported contradiction under its current rules.
 
----
+## What it does
 
-## Methods:
-- Prompt a language model with sets of logic-based factual and riddle questions.  
-- Collect and fact-check responses; label with a rule-based detector (semantic similarity + NLI).  
-- Analyze hallucination frequency, severity, and topic sensitivity; visualize keyword/feature correlations.  
-- (Optional) Train a prompt-only BERT classifier to predict hallucination risk from prompts alone.
+- Normalizes text, scientific notation, coordinates, short codes, and numeric answers.
+- Detects numeric conflicts, explicit negation, nonexistence claims, atomic answer mismatches, and strong NLI contradictions.
+- Uses `sentence-transformers/all-MiniLM-L6-v2` for semantic similarity and `roberta-large-mnli` for bidirectional NLI.
+- Generates answers through OpenAI models or local Hugging Face causal language models.
+- Produces labeled CSVs, summary metrics, keyword/template charts, a correlation heatmap, and browsable HTML output.
+- Builds balanced samples for human review of detector decisions.
 
----
+The decision policy is intentionally conservative: incompleteness alone is not considered a hallucination. See [docs/methodology.md](docs/methodology.md) for the full rules, thresholds, and limitations.
 
-## Repository Structure
-```
-ai-hallucination-detection-main/
-├── README.md
-├── audit                         # contains human audit set
-│   └── audit_set.csv            
-├── app.py                        # Flask app: serves UI + /detect, /predict, /run_pipeline
-├── requirements.txt              # Core Python deps
-├── docs/
-│   └── methodology.md            # hallucination detection methodology
-├── scripts/
-│   ├── generate_responses.py     # Generate model outputs + label with rule-based detector
-│   ├── graph_patterns.py         # Build graphs + simple results page
-│   └── make_prompts.py           # Combine CSVs or auto-generate via OpenAI + cross validation
-│   └── make_audit_set.py         # Creates audit set based on parameters
-├── simulation_data/
-│   └── raw/
-│       ├── prompts_factual.csv            # example prompts (truncated)
-│       └── prompts_riddle.csv            # example prompts (truncated)
-├── src/
-│   └── hallu_detector/
-│       ├── __init__.py
-│       ├── detect.py              # similarity (all-MiniLM-L6-v2) + NLI (roberta-large-mnli)
-│       ├── evaluate.py            # compute hallucination metrics from labeled CSVs
-│       └── generate.py            # HF/OpenAI helpers
-│       └── download.py           # downloads/checks for models required for hallucination detection
-├── static/
-│   ├── index.html                 # frontend UI (3 panels)
-│   ├── script.js                  # front-end logic
-│   └── style.css                  # styling
-├── tests/
-│   └── test_detect.py             # unit tests for is_hallucinated
-└── output/
-    └── <run_id>/
-        ├── raw/                   # copied prompts
-        ├── processed/             # responses_labeled_*.csv
-        └── graphs/                # accuracy_by_keywords.png, feature_correlation_heatmap.png, index.html
+## Repository structure
+
+```text
+HalluDetector/
+|-- app.py                         # Flask API and end-to-end pipeline runner
+|-- requirements.txt              # Python dependencies
+|-- audit/
+|   `-- audit_set.csv              # Human-audit dataset
+|-- docs/
+|   |-- methodology.md             # Detector design and decision policy
+|   `-- paper.tex                  # Research paper source
+|-- scripts/
+|   |-- generate_responses.py      # Generate, normalize, and label model answers
+|   |-- graph_patterns.py          # Create charts, processed tables, and HTML
+|   |-- make_audit_set.py          # Sample labeled outputs for human review
+|   `-- make_prompts.py            # Generate prompt/reference pairs with OpenAI
+|-- simulation_data/
+|   `-- raw/
+|       `-- hard_prompts3.csv      # Active 400-question benchmark
+|-- src/
+|   `-- hallu_detector/
+|       |-- __init__.py            # Public package exports
+|       |-- detect.py              # Reference-based contradiction detector
+|       |-- download.py            # Optional model pre-download helper
+|       |-- evaluate.py            # Rates and bootstrap confidence intervals
+|       `-- generate.py            # OpenAI and Hugging Face generation backends
+|-- static/
+|   |-- index.html                 # Browser interface
+|   |-- script.js                  # Front-end behavior
+|   `-- style.css                  # Front-end styles
+|-- tests/
+|   `-- test_detect.py             # Detector unit tests
+|-- output/                        # Current experiment runs
+|-- old_prompts/                   # Archived factual, riddle, and hard prompts
+`-- output_old/                    # Archived legacy experiment runs
 ```
 
-> Some files include literal `...` where code is abridged, but the interfaces are present (e.g., `is_hallucinated`, `compute_metrics`, CLI stubs).
+Each experiment in `output/` follows this layout:
 
----
+```text
+output/<run-directory>/
+|-- raw/                            # Prompt CSVs used for the run
+|-- processed/                      # Responses and detector labels
+|-- metrics/                        # Hallucination-rate JSON files
+`-- graphs/
+    |-- hallucinations_by_template.png
+    |-- hallucinations_by_keywords.png
+    |-- feature_correlation_heatmap.png
+    |-- index.html
+    `-- user/processed/             # Combined CSV and HTML tables
+```
+
+The checked-in runs use model/timestamp names such as `gpt4o_20260703_212121_9c56c41f`. New Flask runs use a timestamp and short UUID. `output/` contains the newer `hard_prompts3` experiments, while `output_old/` preserves earlier runs across the factual, riddle, auto-generated, and previous hard-prompt sets.
 
 ## Installation
-**Python 3.10+** recommended.
+
+Python 3.10 or newer is recommended.
 
 ```bash
+git clone <repository-url>
+cd HalluDetector
 python -m venv .venv
-source .venv/bin/activate           # Windows: .venv\Scripts\activate
+```
+
+Activate the environment:
+
+```bash
+# macOS/Linux
+source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+Install the dependencies:
+
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
-# Additional packages used by the code but not listed in requirements.txt:
-pip install flask datasets
 ```
 
-### Optional setup
-- **OpenAI API** (for generation/auto-prompts):  
-  Set `OPENAI_API_KEY` in your environment.
-  ```bash
-  export OPENAI_API_KEY=sk-...       # PowerShell: $env:OPENAI_API_KEY="sk-..."
-  ```
-- **GPU** (recommended): `torch`/`sentence_transformers` will use CUDA if available.
+The detector loads its two Hugging Face models on first use. They can be downloaded ahead of time with:
 
----
-
-## Data Formats
-
-### Prompts (CSV)
-Required columns:
-```csv
-question_type, template, id,prompt,correct_answer
-1,"How many months have 28 days?",12
-2,"Which weighs more, a pound of feathers or a pound of gold?",They weigh the same
+```bash
+python src/hallu_detector/download.py
 ```
 
-### Labeled Responses (CSV)
-Produced by `generate_responses.py`:
-```csv
-question_type, template, id, prompt, correct_answer, model_response, hallucinated[,label]
+Model downloads require an internet connection and enough local storage. Detection is strict by default: if an enabled embedding or NLI dependency is unavailable, the detector raises an error instead of silently switching methods.
+
+### OpenAI setup
+
+An OpenAI API key is required only for OpenAI generation and automatic prompt creation. API use may incur charges.
+
+```bash
+# macOS/Linux
+export OPENAI_API_KEY="your-key"
+
+# Windows PowerShell
+$env:OPENAI_API_KEY="your-key"
 ```
-- `hallucinated` is `"True"`/`"False"` from the rule-based detector.
-- Some outputs also include `label` mirroring `hallucinated` for training convenience.
 
----
+## Quick start
 
-## Quickstart
+### Detect one response
 
-### Run the Web App
+Use the package directly from the repository root:
+
+```python
+from src.hallu_detector.detect import detect_details, is_hallucinated
+
+flag = is_hallucinated("London", "Paris")
+details = detect_details("London", "Paris")
+
+print(flag)               # True
+print(details["reason"])  # Decision rationale
+```
+
+`detect_details` returns the final decision plus normalization, numeric, embedding, NLI, and heuristic diagnostics. `is_hallucinated` returns only the boolean decision.
+
+### Run the web server
+
 ```bash
 python app.py
-# open http://localhost:5000
 ```
 
-**UI panels**
-1. **Detect with Ground Truth** → calls `/detect`  
-2. **Run Entire Pipeline** → calls `/run_pipeline` to copy prompts → generate → analyze → evaluate
+Open <http://127.0.0.1:5000>. The server uses `HOST`, `PORT`, `FLASK_DEBUG`, and `APP_LOGLEVEL` environment variables when set.
 
-**Endpoints**
-- `POST /detect`  
-  Body: `{"answer":"Paris","correct":"Paris"}` → `{"hallucinated": false}`
-- `POST /run_pipeline`  
-  Body: `{"model":"gpt2"}` `{"model":"gpt-3.5-turbo"}`  `{"model":"gpt-4"}`   `{"model":"gpt-4o"}`  
-  Returns `{ stage, run_id, logs, graphs, metrics, processed_csvs }` and writes files under `static/output/<run_id>/...`.
+Implemented routes:
 
----
+- `GET /` serves the browser interface.
+- `GET /health` returns a liveness check.
+- `POST /detect` accepts `{"answer": "London", "correct": "Paris"}`.
+- `POST /run_pipeline` accepts `{"model": "gpt-4o"}` and runs the active CSVs from `simulation_data/raw/` through generation, detection, graphs, and metrics.
 
-## CLI Usage
+Pipeline runs are written to `output/<timestamp>_<run-id>/`. The endpoint returns per-stage logs and a `generated` object listing the raw CSVs, processed CSVs, graphs, and metric files.
 
-### 1) Make prompts
-Concatenate CSVs in `simulation_data/raw`:
+## Command-line workflow
+
+The Flask pipeline uses the checked-in prompt files. The same stages can be run independently for more control.
+
+### 1. Generate prompt/reference pairs (optional)
+
+`make_prompts.py` uses the modern OpenAI Python client and writes exactly one file named `prompts_auto-generated.csv`.
+
 ```bash
-python scripts/make_prompts.py   --input-dir simulation_data/raw   --output-dir output/<RUN_ID>/raw
-# writes: output/<RUN_ID>/raw/prompts.csv
+python scripts/make_prompts.py \
+  --output-dir output/manual/raw \
+  --exact-total 50
 ```
 
-Auto-generate via OpenAI + Wikipedia (requires `OPENAI_API_KEY`):
+Optional flags include `--config`, `--seeds`, `--questions-per-seed`, and `--random-seed`. A YAML config can override the defaults in `scripts/make_prompts.py`, including the model, topics, temperatures, token limits, and self-consistency vote count.
+
+### 2. Generate and label responses
+
+OpenAI models are selected automatically when the model name starts with `gpt-`:
+
 ```bash
-python scripts/make_prompts.py   --config configs/prompts.yaml   --output-dir output/<RUN_ID>/raw
+python scripts/generate_responses.py \
+  --prompt-files simulation_data/raw/hard_prompts3.csv \
+  --output-dir output/manual/processed \
+  --model gpt-4o
 ```
 
-### 2) Generate responses (+ label)
+For a Hugging Face causal language model, provide its model ID. Models whose IDs start with `gpt-` require `--use-openai` behavior, so choose a different Hugging Face ID when using the local backend.
+
 ```bash
-# Hugging Face (default: gpt2)
-python scripts/generate_responses.py   --prompt-files output/<RUN_ID>/raw/prompts_easy.csv output/<RUN_ID>/raw/prompts_hard.csv   --output-dir  output/<RUN_ID>/processed   --model gpt2
-
-# OpenAI
-python scripts/generate_responses.py   --prompt-files output/<RUN_ID>/raw/prompts.csv   --output-dir  output/<RUN_ID>/processed   --model gpt-4o --use-openai
+python scripts/generate_responses.py \
+  --prompt-files simulation_data/raw/hard_prompts3.csv \
+  --output-dir output/manual/processed \
+  --model gpt2
 ```
 
-### 3) Visualize patterns
+Instead of `--output-dir`, use `--response-files` to provide one exact output path for each input file. The script accepts common input aliases such as `text` or `question` for `prompt`, and `answer` or `gold` for `correct_answer`.
+
+### 3. Create graphs and HTML
+
 ```bash
-python scripts/graph_patterns.py   --input-dir  output/<RUN_ID>/processed   --output-dir output/<RUN_ID>/graphs   --top-keywords 10
+python scripts/graph_patterns.py \
+  --input-dir output/manual/processed \
+  --output-dir output/manual/graphs \
+  --top-keywords 10
 ```
-Creates:
-- `accuracy_by_keywords.png`
-- `feature_correlation_heatmap.png`
-- `graphs/index.html` (embeds `graphs/user/processed/processed_data.html`)
 
-### 4) Compute metrics
+The script combines compatible labeled CSVs, then creates template and TF-IDF keyword summaries, a feature correlation heatmap, processed CSV/HTML tables, and `graphs/index.html`.
+
+### 4. Compute metrics
+
+Create `output/manual/metrics/`, then run:
+
 ```bash
-python src/hallu_detector/evaluate.py   --response-files output/<RUN_ID>/processed/responses_labeled_easy.csv                    output/<RUN_ID>/processed/responses_labeled_hard.csv   --metric-files   output/<RUN_ID>/metrics_easy.json                    output/<RUN_ID>/metrics_hard.json
+python src/hallu_detector/evaluate.py \
+  --response-files output/manual/processed/hard_responses_labeled3.csv \
+  --metric-files output/manual/metrics/hard_responses_labeled3_metrics.json \
+  --bootstrap 1000 \
+  --seed 1337
 ```
-Each JSON: `{"hallucination_rate": <float|null>}`
 
----
+Without `--bootstrap`, the JSON contains `hallucination_rate`. With bootstrapping enabled, it also contains the sample size, hallucination count, 95% confidence interval, bootstrap sample count, and seed.
 
-## Core Components
+### 5. Build a human-audit sample
 
-### Rule-based detector (`src/hallu_detector/detect.py`)
-- **Sentence-BERT** (`all-MiniLM-L6-v2`) for semantic similarity  
-- **RoBERTa-MNLI** for textual entailment  
-- Public API:
-  ```python
-  is_hallucinated(answer: str, correct_answer: str,
-                  sem_thresh: float = 0.75,
-                  nli_thresh: float = 0.80) -> bool
-  ```
+The audit builder samples approximately equal numbers of detector-positive and detector-negative rows. It refuses to overwrite an existing audit file.
 
-### Generation helpers (`src/hallu_detector/generate.py`)
-- `simple_generate_hf(prompt_list, model_name="gpt2")` (Hugging Face)  
-- `simple_generate_openai(prompt_list, model=None, ...)` (OpenAI; uses the **old** `openai.ChatCompletion.create`)
+```bash
+python scripts/make_audit_set.py \
+  --input-root output \
+  --pattern "*responses_labeled*.csv" \
+  --n 300 \
+  --seed 1337 \
+  --output audit/audit_sample.csv
+```
 
-### Metrics (`src/hallu_detector/evaluate.py`)
-- `compute_metrics(labels)` → hallucination rate  
-- CLI function `process_files(...)` reads CSVs and writes JSON metrics.
+Reviewers fill in `human_hallucinated` and, optionally, `human_notes`.
 
----
+## Data formats
+
+### Prompt CSV
+
+The canonical schema is:
+
+```csv
+template,id,prompt,correct_answer
+geography,1,What is the capital of France?,Paris
+```
+
+`prompt` and `correct_answer` are required. `id` is generated when absent, and `template` is derived from the filename when absent.
+
+### Labeled response CSV
+
+`generate_responses.py` writes:
+
+```text
+template
+id
+prompt
+model_response
+correct_answer
+hallucinated
+baseline_exact
+baseline_embed
+baseline_embed_score
+baseline_embed_method
+reasoning
+```
+
+Empty generated answers are treated as abstentions and recorded as non-hallucinations by the batch-generation script.
+
+### Audit CSV
+
+`make_audit_set.py` writes:
+
+```text
+source_file
+template
+id
+prompt
+correct_answer
+model_response
+detector_hallucinated
+human_hallucinated
+human_notes
+```
 
 ## Testing
+
 ```bash
 python -m unittest tests/test_detect.py
 ```
-Covers baseline behaviors of `is_hallucinated`.
 
----
+The detector tests load the embedding and NLI models, so the first run may be slower while model files are downloaded and initialized.
 
-## Known Gaps / Caveats
-- Several files contain abridged sections (`...`) that you must fill to run end-to-end:
-  - `app.py`, `src/hallu_detector/detect.py`, `src/hallu_detector/evaluate.py`, `src/hallu_detector/generate.py`
-  - `scripts/generate_responses.py`, `scripts/graph_patterns.py`, `scripts/make_prompts.py`
-  - `static/index.html` / `static/script.js` minor polish
-- Section regarding "Predicting whether a hallucination will occur" is tied to the "train_model.py" script which has not yet been run before. In order to use that section you must first run the script and have your model saved
----
+## Current limitations
 
-## Future Work:
-- Automate hallucination detection using calibrated uncertainty or output features (self-consistency, log-prob stats, abstention).  
-- Test additional models and compare results.  
-- Apply/adapt techniques in high-risk fields (medical, legal).  
-- Harden the detector and complete the abridged sections.
+- Detection is reference-based and focuses on explicit inconsistency. It does not perform retrieval, source verification, or general factuality checking.
+- A response can be incomplete or unsupported without triggering a contradiction label. Conversely, cautious source-limit language can resemble a contradiction cue on non-atomic prompts.
+- The browser's prompt-only prediction panel references a removed `/predict` backend and is not currently functional.
+- Pipeline artifacts are created correctly under the repository-level `output/` directory, but the current front end still expects an older response shape and static output path, so generated graphs and CSVs may not render in the browser. They remain available on disk and through the endpoint's JSON response.
+- Local Hugging Face generation and NLI can be slow without a GPU. OpenAI runs require network access, a valid model available to the account, and sufficient API quota.
 
----
+For the project's experimental design and a fuller analysis of detector scope, see [docs/paper.tex](docs/paper.tex).
 
-## Important Note
-In order for the hallucination detection to work at it's intended function you must already have the SentenceTransformers models "all-MiniLM-L6-v2" and "roberta-large-mnli" downloaded on your computer.
+## License
 
----
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
 
-## Citation:
-If you use or extend this work, please cite the repository and this README.
+## Citation
+
+If you use or extend HalluDetector, cite this repository and the accompanying paper in `docs/paper.tex`.
